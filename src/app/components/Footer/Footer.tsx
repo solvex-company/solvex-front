@@ -1,9 +1,26 @@
+import Image from "next/image";
+
 const Footer = () => {
     return (
-        <footer className="bg-gray-800 rounded-lg shadow-sm m-4">
-            <div className="w-full mx-auto max-w-screen-xl p-4 flex justify-center">
-            <span className="text-sm text-gray-500 text-center sm:text-center dark:text-gray-400">© 2025</span>
+        <footer className="flex justify-between bg-gray-700 p-7">
+            <div className="flex">
+              <Image 
+                src={"https://ik.imagekit.io/SolvexCompany/logoSolvex3.png"}
+                width={150}
+                height={150}
+                alt="Solvex Logo"
+                className="object-contain" />
+              <Image
+                src={"https://ik.imagekit.io/SolvexCompany/SolvexCompany.png"}
+                width={250}
+                height={20}
+                alt="Solvex Company"
+                className="object-contain ml-9" />
             </div>
+            <div className="flex flex-col">
+            <span className="text-lg">Hecho con</span>
+            <span className="text-lg">© 2025</span>
+            </div>  
         </footer>
     )
 }

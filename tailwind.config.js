@@ -17,6 +17,7 @@ module.exports = {
         mainBg: "#f5f5f5", // gris muy claro (ideal para fondos)
         secondBg: "#75e2fb", // celeste claro (hover, detalles, fondos secundarios)
         accent: "#4da6ff", // celeste saturado (botones, elementos destacados)
+        inputBg: "#BFE5D7", //verde claro (fondo de los inputs de los formularios de register y login)
 
         // COLORES SECUNDARIOS
         pending: "#FFD54F", // Amarillo suave para Pendiente

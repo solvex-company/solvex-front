@@ -12,7 +12,7 @@ function Home() {
         </p>
       </section>
 
-      <h2 className="text-center text-5xl font-bold p-24">Caracteristicas</h2>
+      <h2 className="text-center text-5xl text-mainText font-bold p-24">Caracteristicas</h2>
       <section className="flex justify-center items-center pb-32 gap-10 text-white">
         <div className="relative flex flex-col justify-start bg-secondBg h-[237px] w-[310px] rounded-lg p-4 z-0">
           <Image
@@ -58,8 +58,8 @@ function Home() {
           className="object-contain"
         />
         <div className="flex flex-col justify-center">
-          <h2 className="text-3xl font-bold pb-3">Sobre la pagina</h2>
-          <p className=" text-lg w-[600px]">
+          <h2 className="text-3xl text-mainText font-bold pb-3">Sobre la pagina</h2>
+          <p className=" text-lg text-mainText w-[600px]">
             Este sistema centraliza la gestión de incidentes internos, permitiendo reportar fallas técnicas, operativas o de
             seguridad de manera estructurada. Está diseñado para equipos ágiles, facilitando la colaboración entre departamentos y
             el seguimiento en tiempo real. Los usuarios autorizados pueden escalar problemas, adjuntar evidencias (logs, imágenes)

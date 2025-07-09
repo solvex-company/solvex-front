@@ -4,51 +4,27 @@ import React from "react";
 function Home() {
   return (
     <>
-      <section>
+      <section className="bg-banner bg-contain bg-center h-[600px] text-white p-8">
         <h1>Gestión Centralizada de Incidentes</h1>
         <p>
           Bienvenido a la plataforma de gestión centralizada de incidentes de Solvex. Aquí podrás registrar, gestionar y resolver
           incidentes de manera eficiente.
         </p>
-        <Image
-          src={"https://ik.imagekit.io/SolvexCompany/hero1-1.png?updatedAt=1752011567139"}
-          alt="imgHome"
-          width={800}
-          height={288}
-        />
       </section>
 
-      <section>
-        <h2>Caracteristicas</h2>
-        <div>
+      <h2>Caracteristicas</h2>
+      <section className="flex gap-2">
+        <div className="bg-secondBg bg-cruz">
           <h3>Reporta un nuevo incidente</h3>
           <p>Inicia el proceso de resolución registrando los detalles del problema.</p>
-          <Image
-            src={"https://ik.imagekit.io/SolvexCompany/anadir.png?updatedAt=1751901538346"}
-            alt="imgCruz"
-            width={800}
-            height={288}
-          />
         </div>
-        <div>
+        <div className="bg-secondBg bg-rueda">
           <h3>Gestiona incidentes activos</h3>
           <p>Revisa, prioriza o reasigna casos en progreso.</p>
-          <Image
-            src={"https://ik.imagekit.io/SolvexCompany/gestionar.png?updatedAt=1751901538624"}
-            alt="imgRueda"
-            width={800}
-            height={288}
-          />
         </div>
-        <div>
+        <div className="bg-secondBg bg-tacho">
           <h3>Cierra o archiva casos resueltos</h3>
           <p>Marca incidentes como solucionados y libera recursos.</p>
-          <Image
-            src={"https://ik.imagekit.io/SolvexCompany/eliminar.png?updatedAt=1751901538530"}
-            alt="imgTacho"
-            width={800}
-            height={288}
-          />
         </div>
       </section>
 

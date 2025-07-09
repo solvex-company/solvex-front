@@ -24,6 +24,9 @@ module.exports = {
         process: "#4DA6FF", // Celeste saturado para En proceso (ya está en la paleta, mantiene coherencia)
         resolved: "#81C784", // Verde suave para Resuelto
       },
+      backgroundImage: {
+        banner: 'url("https://ik.imagekit.io/SolvexCompany/hero1-1.png?updatedAt=1752011567139")',
+      },
     },
   },
   plugins: [],

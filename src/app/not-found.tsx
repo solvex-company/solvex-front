@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
 const notFound = () => {
   return (
@@ -17,7 +17,7 @@ const notFound = () => {
         <span className='text-2xl'>Rápido, <Link className='text-accent underline underline-offset-1 hover:text-blue-800' href='/'> vuelve</Link> a Solvex Company</span>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default notFound;

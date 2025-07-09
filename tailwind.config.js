@@ -25,9 +25,6 @@ module.exports = {
       },
       backgroundImage: {
         banner: 'url("https://ik.imagekit.io/SolvexCompany/hero1-1.png?updatedAt=1752011567139")',
-        cruz: 'url("https://ik.imagekit.io/SolvexCompany/anadir.png?updatedAt=1751901538346")',
-        rueda: 'url("https://ik.imagekit.io/SolvexCompany/gestionar.png?updatedAt=1751901538624")',
-        tacho: 'url("https://ik.imagekit.io/SolvexCompany/eliminar.png?updatedAt=1751901538530")',
       },
     },
   },

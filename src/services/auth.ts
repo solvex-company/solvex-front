@@ -31,3 +31,4 @@ export const postRegister = async (data: FormikValues) => {
         };
     }
 }
+

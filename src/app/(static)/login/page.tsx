@@ -4,8 +4,9 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Link from "next/link";
+import { postLogin } from "@/services/auth";
 
-const login: React.FC = () => {
+const Login: React.FC = () => {
   // 1. Definimos el esquema de validación con Yup
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -26,6 +27,7 @@ const login: React.FC = () => {
     onSubmit: (values) => {
       // Aquí manejamos el envio del formulario
       console.log("Valores del formulario:", values);
+      postLogin(values);
       alert("Login exitoso (simulado)! Revisa la consola para los datos.");
       // redirigir al usuario
     },
@@ -97,4 +99,4 @@ const login: React.FC = () => {
   );
 };
 
-export default login;
+export default Login;

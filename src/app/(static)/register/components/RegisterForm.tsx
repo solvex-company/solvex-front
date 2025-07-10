@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { postRegister } from "@/services/auth";
 
 const RegisterForm: React.FC = () => {
     const validationSchema = Yup.object().shape({
@@ -18,10 +19,47 @@ const RegisterForm: React.FC = () => {
           onSubmit={(values, { setSubmitting }) => {
             console.log(values);
             setSubmitting(false);
+            postRegister(values);
           }}
         >
         {({ isSubmitting }) => (
           <Form noValidate>
+            <div className="flex flex-col items-center">
+                <Field 
+                    name="first_name"
+                    type="text"
+                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                    placeholder="first_name"
+                    />
+                <ErrorMessage name="first_name" component="div" className="error text-red-300 text-left" />
+            </div>
+            <div className="flex flex-col items-center">
+                <Field 
+                    name="second_name"
+                    type="text"
+                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                    placeholder="second_name"
+                    />
+                <ErrorMessage name="second_name" component="div" className="error text-red-300 text-left" />
+            </div>
+            <div className="flex flex-col items-center">
+                <Field 
+                    name="first_surname"
+                    type="text"
+                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                    placeholder="first_surname"
+                    />
+                <ErrorMessage name="first_surname" component="div" className="error text-red-300 text-left" />
+            </div>
+            <div className="flex flex-col items-center">
+                <Field 
+                    name="second_surname"
+                    type="text"
+                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                    placeholder="second_surname"
+                    />
+                <ErrorMessage name="second_surname" component="div" className="error text-red-300 text-left" />
+            </div>
             <div className="flex flex-col items-center">
                 <Field 
                     name="email"
@@ -31,6 +69,53 @@ const RegisterForm: React.FC = () => {
                     />
                 <ErrorMessage name="email" component="div" className="error text-red-300 text-left" />
             </div>
+            <div className="flex flex-col items-center">
+                <Field 
+                    name="password"
+                    type="password"
+                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                    placeholder="password"
+                    />
+                <ErrorMessage name="password" component="div" className="error text-red-300 text-left" />
+            </div>
+            <div className="flex flex-col items-center">
+                <Field 
+                    name="identification_number"
+                    type="number"
+                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                    placeholder="identification_number"
+                    />
+                <ErrorMessage name="identification_number" component="div" className="error text-red-300 text-left" />
+            </div>
+            <div className="flex flex-col items-center">
+                <Field 
+                    name="phone"
+                    type="number"
+                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                    placeholder="phone"
+                    />
+                <ErrorMessage name="phone" component="div" className="error text-red-300 text-left" />
+            </div>
+            <div className="flex flex-col items-center">
+                <Field 
+                    name="typeId"
+                    type="number"
+                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                    placeholder="typeId"
+                    />
+                <ErrorMessage name="typeId" component="div" className="error text-red-300 text-left" />
+            </div>
+            <div className="flex flex-col items-center">
+                <Field 
+                    name="role"
+                    type="number"
+                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                    placeholder="role"
+                    />
+                <ErrorMessage name="role" component="div" className="error text-red-300 text-left" />
+            </div>
+
+            
             <div className="flex flex-col items-center">
                 <button
                   type="submit"

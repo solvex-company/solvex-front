@@ -1,4 +1,4 @@
-import Image from 'next/image';
+/* import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -30,4 +30,4 @@ export const LayoutAuth: React.FC<ILayout> = ({children}) => {
     )
 };
 
-export default LayoutAuth;
+export default LayoutAuth; */

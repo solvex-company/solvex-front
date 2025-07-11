@@ -4,123 +4,184 @@ import Image from "next/image";
 import Link from "next/link";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import Swal from 'sweetalert2';
 import { postRegister } from "@/services/auth";
+import { useRouter } from "next/navigation";
 
 const RegisterForm: React.FC = () => {
+  const router = useRouter();
     const validationSchema = Yup.object().shape({
-      email: Yup.string().email('* Email inválido').required('* Requerido'),
+      name: Yup.string()
+        .required('El nombre es requerido'),
+      lastname: Yup.string()
+        .required('El apellido es requerido'),
+      typeId: Yup.string()
+        .required("Debes seleccionar un tipo de identificación")  // Campo obligatorio
+        .oneOf(["1", "2", "3"], "Tipo de identificación no válido"),
+      email: Yup.string()
+        .email('Email inválido')
+        .required('El correo es requerido'),
+      identification_number: Yup.string()
+        .min(4, 'El numero de identificación debe tener 4 numeros')
+        .required('El numero de identificación es requerido'),
+      phone: Yup.string()
+        .min(4, 'El numero de teléfono debe tener 4 números')
+        .required('El teléfono es requerido'),
+      password: Yup.string()
+        .min(6, 'La contraseña debe tener al menos 6 caracteres')
+        .required('La contraseña es requerida'),
+      password2: Yup.string()
+        .required("Confirma tu contraseña")
+        .oneOf([Yup.ref("password")], "Las contraseñas no coinciden"),
     });
 
     return(
       <div className=" w-full">
         <Formik
-          initialValues={{email: ''}}
+          initialValues={
+            {
+              name: '',
+              lastname: '',
+              typeId: '',
+              identification_number: '',
+              phone: '',
+              email: '',
+              password: '',
+              password2: '',
+            }
+          }
           validationSchema={validationSchema}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit= {async (values, { setSubmitting }) => {
             console.log(values);
             setSubmitting(false);
-            postRegister(values);
+            try {
+              const res = await postRegister(values);
+              if (res.errors) {
+                console.log('1-', res.errors)
+                if((res.errors).includes('Email')) {
+                  return Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'El correo ya está registrado',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#4da6ff'
+                  });
+                }
+                if((res.errors).includes('identification')) {
+                  return Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'El número de identificación ya está registrado',
+                    confirmButtonText: 'Aceptar',
+                    confirmButtonColor: '#4da6ff'
+                  });
+                }
+                
+              }
+              return Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: 'El usuario ha sido registrado',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#4da6ff'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  router.push('/login');
+                }
+              });
+              
+            } catch (error) {
+              console.log('2-', error)
+            }
           }}
         >
         {({ isSubmitting }) => (
           <Form noValidate>
             <div className="flex flex-col items-center">
                 <Field 
-                    name="first_name"
-                    type="text"
-                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
-                    placeholder="first_name"
-                    />
-                <ErrorMessage name="first_name" component="div" className="error text-red-300 text-left" />
+                  name="name"
+                  type="text"
+                  className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                  placeholder="Nombre"
+                />
+                <ErrorMessage name="name" component="div" className="error text-red-300 align-left" />
+            </div>
+            
+            <div className="flex flex-col items-center">
+                <Field 
+                  name="lastname"
+                  type="text"
+                  className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                  placeholder="Apellido"
+                />
+                <ErrorMessage name="lastname" component="div" className="error text-red-300 text-left" />
             </div>
             <div className="flex flex-col items-center">
                 <Field 
-                    name="second_name"
-                    type="text"
-                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
-                    placeholder="second_name"
-                    />
-                <ErrorMessage name="second_name" component="div" className="error text-red-300 text-left" />
-            </div>
-            <div className="flex flex-col items-center">
-                <Field 
-                    name="first_surname"
-                    type="text"
-                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
-                    placeholder="first_surname"
-                    />
-                <ErrorMessage name="first_surname" component="div" className="error text-red-300 text-left" />
-            </div>
-            <div className="flex flex-col items-center">
-                <Field 
-                    name="second_surname"
-                    type="text"
-                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
-                    placeholder="second_surname"
-                    />
-                <ErrorMessage name="second_surname" component="div" className="error text-red-300 text-left" />
-            </div>
-            <div className="flex flex-col items-center">
-                <Field 
-                    name="email"
-                    type="email"
-                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
-                    placeholder="Ej: ejemplo@mail.com"
-                    />
-                <ErrorMessage name="email" component="div" className="error text-red-300 text-left" />
-            </div>
-            <div className="flex flex-col items-center">
-                <Field 
-                    name="password"
-                    type="password"
-                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
-                    placeholder="password"
-                    />
-                <ErrorMessage name="password" component="div" className="error text-red-300 text-left" />
-            </div>
-            <div className="flex flex-col items-center">
-                <Field 
-                    name="identification_number"
-                    type="number"
-                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
-                    placeholder="identification_number"
-                    />
-                <ErrorMessage name="identification_number" component="div" className="error text-red-300 text-left" />
-            </div>
-            <div className="flex flex-col items-center">
-                <Field 
-                    name="phone"
-                    type="number"
-                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
-                    placeholder="phone"
-                    />
-                <ErrorMessage name="phone" component="div" className="error text-red-300 text-left" />
-            </div>
-            <div className="flex flex-col items-center">
-                <Field 
-                    name="typeId"
-                    type="number"
-                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
-                    placeholder="typeId"
-                    />
+                  name="typeId"
+                  as="select"
+                  className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                >
+                  <option value="">Tipo de Identificación</option>
+                  <option value="1">CC</option>
+                  <option value="2">DNI</option>
+                  <option value="3">Pasaporte</option>
+                </Field>
                 <ErrorMessage name="typeId" component="div" className="error text-red-300 text-left" />
             </div>
             <div className="flex flex-col items-center">
                 <Field 
-                    name="role"
-                    type="number"
-                    className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
-                    placeholder="role"
-                    />
-                <ErrorMessage name="role" component="div" className="error text-red-300 text-left" />
+                  name="identification_number"
+                  type="number"
+                  className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                  placeholder="Número de Identificación"
+                />
+                <ErrorMessage name="identification_number" component="div" className="error text-red-300 text-left" />
             </div>
-
+            <div className="flex flex-col items-center">
+                <Field 
+                  name="phone"
+                  type="number"
+                  className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                  placeholder="Telefono"
+                />
+                <ErrorMessage name="phone" component="div" className="error text-red-300 text-left" />
+            </div>
+            <div className="flex flex-col items-center">
+                <Field 
+                  name="email"
+                  type="email"
+                  className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                  placeholder="Correo Ej: ejemplo@mail.com"
+                />
+                <ErrorMessage name="email" component="div" className="error text-red-300 text-left" />
+            </div>
+            <div className="flex flex-col items-center">
+                <Field 
+                  name="password"
+                  type="password"
+                  className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                  placeholder="Contraseña"
+                />
+                <ErrorMessage name="password" component="div" className="error text-red-300 text-left" />
+            </div>
+            <div className="flex flex-col items-center">
+                <Field 
+                  name="password2"
+                  type="password"
+                  className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                  placeholder="Repite tu contraseña"
+                />
+                <ErrorMessage name="password2" component="div" className="error text-red-300 text-left" />
+            </div>
             
             <div className="flex flex-col items-center">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="mt-3 p-1 bg-black w-[380px] h-[40px] rounded-md text-sm text-mainBg hover:bg-secondText">Registrarse con correo electrónico
+                  className="mt-7 p-1 bg-black w-[380px] h-[40px] rounded-md text-md text-mainBg hover:bg-secondText"
+                >
+                  Registrarse
                 </button>
             </div>
             <div className="flex flex-col items-center pt-4">

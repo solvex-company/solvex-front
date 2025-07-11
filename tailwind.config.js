@@ -26,7 +26,7 @@ module.exports = {
         resolved: "#81C784", // Verde suave para Resuelto
       },
       backgroundImage: {
-        banner: 'url("https://ik.imagekit.io/SolvexCompany/hero1-1.png?updatedAt=1752011567139")',
+        banner: 'url("https://ik.imagekit.io/SolvexCompany/gestionIncidentes.png?updatedAt=1752250793840")',
       },
     },
   },

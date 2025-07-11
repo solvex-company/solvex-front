@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -21,9 +20,6 @@ const Footer = () => {
         />
       </div>
       <div className="flex flex-col justify-center">
-        <Link href={"/about"} className="text-lg text-mainBg">
-          Sobre Nosotros
-        </Link>
         <span className="text-lg text-mainBg">Contáctanos en: companysolvex@gmail.com</span>
         <span className="text-lg text-mainBg">Hecho con 💙 © 2025</span>
       </div>

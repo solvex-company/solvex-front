@@ -4,7 +4,7 @@ import React from "react";
 function Home() {
   return (
     <>
-      <section className="bg-banner bg-contain bg-center h-[640px] flex flex-col items-start justify-center text-white pl-40">
+      <section className="bg-banner bg-contain bg-no-repeat bg-center h-[640px] flex flex-col items-start justify-center text-white pl-40">
         <h1 className="text-5xl font-bold">Gestión Centralizada de Incidentes</h1>
         <p className="text-2xl pt-52">
           Bienvenido a la plataforma de gestión centralizada de incidentes de Solvex. <br /> Reporta problemas tecnicos o de

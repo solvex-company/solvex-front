@@ -53,6 +53,7 @@ export const postLogin = async (data: FormikValues) => {
         errors: res.data,
       };
     }
+    console.log("Respuesta del servidor:", res.data);
     return {
       message: "Usuario ha iniciado sesion correctamente",
       data: res.data,

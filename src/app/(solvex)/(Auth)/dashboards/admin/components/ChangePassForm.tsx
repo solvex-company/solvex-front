@@ -108,7 +108,7 @@ const ChangePassForm: React.FC = () => {
         <button
           onClick={handleSubmit}
           disabled={isSubmitting}
-          className="w-[279px] h-[40px] bg-accent text-2xl text-white rounded-lg"
+          className="w-[279px] h-[40px] bg-accent text-2xl text-white rounded-lg hover:bg-secondBg transition duration-300"
         >
           {isSubmitting ? "Cambiando..." : "Cambiar contraseña"}
         </button>

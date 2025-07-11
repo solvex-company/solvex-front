@@ -3,7 +3,7 @@ import { adminData } from "@/helpers/usersData";
 
 function AdminInfo() {
   return (
-    <section className="grid grid-cols-2 justify-center items-center w-full gap-3 py-10">
+    <section className="grid grid-cols-2 justify-center items-center w-full gap-3 py-6">
       <div>
         <h2>Nombre</h2>
         <h3 className="border border-accent rounded-lg p-1">{adminData.name}</h3>

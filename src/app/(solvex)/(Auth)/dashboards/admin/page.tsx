@@ -5,14 +5,14 @@ import AdminLicense from "./components/AdminLicense";
 
 function AdminDash() {
   return (
-    <div className="w-[967px] m-auto">
-      <h1>Datos del Usuario</h1>
+    <div className="w-[967px] m-auto py-10">
+      <h2 className="text-3xl font-bold">Datos del Usuario</h2>
       <AdminInfo />
 
-      <h2>Cambiar contraseña</h2>
+      <h3 className="text-2xl font-bold pt-5">Cambiar contraseña</h3>
       <AdminPassword />
 
-      <h2>Tu Licencia / Suscripcion</h2>
+      <h2 className="text-3xl font-bold pt-5">Tu Licencia / Suscripcion</h2>
       <AdminLicense />
     </div>
   );

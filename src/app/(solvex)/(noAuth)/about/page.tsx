@@ -1,7 +1,11 @@
-import React from "react";
+import AboutSection from "./components/AboutSection";
 
 function About() {
-  return <div>Aca esta el acerca de</div>;
+  return (
+    <>
+      <AboutSection />
+    </>
+  );
 }
 
 export default About;

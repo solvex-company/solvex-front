@@ -8,7 +8,7 @@ export interface ILayout {
 
 export const LayoutAuth: React.FC<ILayout> = ({ children }) => {
   return (
-    <div className="flex w-screen h-screen">
+    <div className="flex w-screen h-screen bg-blue-500">
       <div className="flex-[.5] flex flex-col justify-center items-center bg-blue-500">
         <Link href="/" className="flex flex-col items-center">
           <Image
@@ -20,8 +20,8 @@ export const LayoutAuth: React.FC<ILayout> = ({ children }) => {
           />
         </Link>
       </div>
-      <div className="flex-[.5] flex flex-col justify-center items-center">
-        <div className="flex flex-col items-center justify-center p-3 w-[450px]">
+      <div className="flex-[.5] flex flex-col justify-center items-center rounded-l-3xl bg-white">
+        <div className="flex flex-col items-center justify-center p-3 w-[450px] ">
           {children}
         </div>
       </div>

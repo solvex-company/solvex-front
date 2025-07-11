@@ -7,6 +7,7 @@ import { postLogin } from "@/services/auth";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
@@ -29,13 +30,40 @@ const LoginForm: React.FC = () => {
       password: "",
     },
     validationSchema: LoginSchema,
-    onSubmit: (values) => {
-      // Aquí manejamos el envio del formulario
-      console.log("Valores del formulario:", values);
-      postLogin(values);
+    onSubmit: async (values) => {
+      try {
+        const response = await postLogin(values);
+        if (response.success) {
+          Swal.fire({
+            icon: "success",
+            title: "¡Login exitoso!",
+            text: response.message || "Bienvenido",
+          });
+          router.push("/dashboards/admin");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: response.message || "Credenciales incorrectas",
+          });
+        }
+      } catch (error: unknown) {
+        let errorMessage = "Intenta nuevamente más tarde";
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        }
+        Swal.fire({
+          icon: "error",
+          title: "Error de conexión",
+          text: errorMessage || "Intenta nuevamente más tarde",
+        });
+      }
+      // // Aquí manejamos el envio del formulario
+      // console.log("Valores del formulario:", values);
+      // postLogin(values);
 
-      // redirigir al usuario
-      router.push("/dashboard");
+      // // redirigir al usuario
+      // router.push("/dashboard");
     },
   });
 
@@ -46,8 +74,8 @@ const LoginForm: React.FC = () => {
           type="email"
           id="email"
           name="email"
-          placeholder="correoelectrónico@dominio.com"
-          className={`w-full px-4 py-3 rounded-lg text-gray-700 placeholder-gray-500 bg-green-50 focus:outline-none ${
+          placeholder="Correoelectrónico@dominio.com"
+          className={`w-full mt-3 p-1 pl-4 h-[40px] rounded-md text-gray-700 placeholder-gray-600 bg-inputBg focus:outline-none ${
             formik.touched.email && formik.errors.email
               ? "border-red-500 border-2"
               : ""
@@ -62,7 +90,7 @@ const LoginForm: React.FC = () => {
       </div>
       <div className="mb-6">
         <div
-          className={`flex justify-between w-full px-4 py-3 rounded-lg text-gray-700  placeholder-gray-500 bg-green-50 focus:outline-none  ${
+          className={`flex justify-between items-center w-full mt-3 p-1 pl-4 h-[40px] rounded-md text-gray-700   bg-inputBg focus:outline-none  ${
             formik.touched.password && formik.errors.password
               ? "border-red-500 border-2"
               : ""
@@ -72,8 +100,8 @@ const LoginForm: React.FC = () => {
             type={showPassword ? "text" : "password"}
             id="password"
             name="password"
-            placeholder="contraseña"
-            className="text-gray-700  placeholder-gray-500 bg-green-50 focus:outline-none"
+            placeholder="Contraseña"
+            className="text-md text-gray-700  placeholder-gray-600 bg-inputBg focus:outline-none"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.password}
@@ -95,7 +123,7 @@ const LoginForm: React.FC = () => {
       </div>
       <button
         type="submit"
-        className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 transition duration-200"
+        className="w-full bg-black text-white p-1 h-[40px] rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 transition duration-200"
         disabled={formik.isSubmitting}
       >
         {formik.isSubmitting ? "Iniciando Sesión..." : "Iniciar Sesión"}

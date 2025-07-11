@@ -104,7 +104,7 @@ const ChangePassForm: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex justify-end pt-2">
+      <div className="flex justify-end pt-3">
         <button
           onClick={handleSubmit}
           disabled={isSubmitting}

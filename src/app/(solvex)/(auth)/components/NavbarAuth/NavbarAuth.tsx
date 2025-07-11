@@ -4,14 +4,14 @@ import React from "react";
 
 const NavbarAuth = () => {
   return (
-    <div className="h-screen w-[250px] bg-navAuthBg">
+    <div className="h-full w-[250px] bg-navAuthBg">
       {/* [calc(100vh-206px)] */}
       <Image
         src={"https://ik.imagekit.io/SolvexCompany/solvex.png"}
         width={242}
         height={80}
         alt="Logo de Solvex azul"
-        className="m-1 mt-3 mb-6"
+        className="mb-6"
       />
       <div className="flex flex-col">
         <span className="text-[24px] text-center">Nombre de Usuario</span>

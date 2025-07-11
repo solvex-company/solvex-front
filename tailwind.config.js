@@ -18,6 +18,7 @@ module.exports = {
         secondBg: "#75e2fb", // celeste claro (hover, detalles, fondos secundarios)
         accent: "#4da6ff", // celeste saturado (botones, elementos destacados)
         inputBg: "#BFE5D7", //verde claro (fondo de los inputs de los formularios de register y login)
+        navAuthBg: "#D9D9D9", //gris claro (forndo del Navbar Usuarios)
 
         // COLORES SECUNDARIOS
         pending: "#FFD54F", // Amarillo suave para Pendiente

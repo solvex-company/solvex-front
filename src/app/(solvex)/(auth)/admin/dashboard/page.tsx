@@ -5,7 +5,7 @@ import AdminLicense from "./components/AdminLicense";
 
 function AdminDash() {
   return (
-    <div className="w-[967px] h-screen m-auto">
+    <div className="">
       <h2 className="text-3xl font-bold pt-5">Datos del Usuario</h2>
       <AdminInfo />
 

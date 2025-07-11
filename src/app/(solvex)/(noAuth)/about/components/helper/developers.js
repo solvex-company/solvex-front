@@ -1,0 +1,70 @@
+const frontend = [
+  {
+    imgSrc:
+      "https://ik.imagekit.io/SolvexCompany/user.png?updatedAt=1752251986928",
+    name: "Franco Paganoni",
+    hobbies:
+      "Desarrollador Full Stack, amante de la tecnología y la programación, siempre explorando nuevas herramientas y lenguajes para crear soluciones innovadoras.",
+    linkedInSrc: "https://www.linkedin.com/in/franco-paganoni/",
+    githubSrc: "",
+  },
+  {
+    imgSrc:
+      "https://ik.imagekit.io/SolvexCompany/user.png?updatedAt=1752251986928",
+    name: "Franco Gomez",
+    hobbies:
+      "Desarrollador Full Stack, amante de la tecnología y la programación, siempre explorando nuevas herramientas y lenguajes para crear soluciones innovadoras.",
+    linkedInSrc: "https://www.linkedin.com/in/franco-paganoni/",
+    githubSrc: "",
+  },
+  {
+    imgSrc:
+      "https://ik.imagekit.io/SolvexCompany/user.png?updatedAt=1752251986928",
+    name: "Mariana Lopez",
+    hobbies:
+      "Desarrollador Full Stack, amante de la tecnología y la programación, siempre explorando nuevas herramientas y lenguajes para crear soluciones innovadoras.",
+    linkedInSrc: "https://www.linkedin.com/in/franco-paganoni/",
+    githubSrc: "",
+  },
+];
+
+const backend = [
+  {
+    imgSrc:
+      "https://ik.imagekit.io/SolvexCompany/user.png?updatedAt=1752251986928",
+    name: "Diego baca",
+    hobbies:
+      "Desarrollador Full Stack, amante de la tecnología y la programación, siempre explorando nuevas herramientas y lenguajes para crear soluciones innovadoras.",
+    linkedInSrc: "https://www.linkedin.com/in/franco-paganoni/",
+    githubSrc: "",
+  },
+  {
+    imgSrc:
+      "https://ik.imagekit.io/SolvexCompany/user.png?updatedAt=1752251986928",
+    name: "Luis Mendez",
+    hobbies:
+      "Desarrollador Full Stack, amante de la tecnología y la programación, siempre explorando nuevas herramientas y lenguajes para crear soluciones innovadoras.",
+    linkedInSrc: "https://www.linkedin.com/in/franco-paganoni/",
+    githubSrc: "",
+  },
+  {
+    imgSrc:
+      "https://ik.imagekit.io/SolvexCompany/user.png?updatedAt=1752251986928",
+    name: "Tobias Gonzalez",
+    hobbies:
+      "Desarrollador Full Stack, amante de la tecnología y la programación, siempre explorando nuevas herramientas y lenguajes para crear soluciones innovadoras.",
+    linkedInSrc: "https://www.linkedin.com/in/franco-paganoni/",
+    githubSrc: "",
+  },
+  {
+    imgSrc:
+      "https://ik.imagekit.io/SolvexCompany/user.png?updatedAt=1752251986928",
+    name: "Andrea Lopez",
+    hobbies:
+      "Desarrollador Full Stack, amante de la tecnología y la programación, siempre explorando nuevas herramientas y lenguajes para crear soluciones innovadoras.",
+    linkedInSrc: "https://www.linkedin.com/in/franco-paganoni/",
+    githubSrc: "",
+  },
+];
+
+export { frontend, backend };

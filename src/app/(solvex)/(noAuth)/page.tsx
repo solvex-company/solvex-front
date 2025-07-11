@@ -4,9 +4,10 @@ import React from "react";
 function Home() {
   return (
     <>
-      <section className="bg-banner bg-contain bg-no-repeat bg-center h-[640px] flex flex-col items-start justify-center text-white pl-40">
-        <h1 className="text-5xl font-bold">Gestión Centralizada de Incidentes</h1>
-        <p className="text-2xl pt-52">
+      <section className=" relative bg-banner bg-contain bg-no-repeat bg-center h-[640px] flex flex-col items-start justify-center text-white pl-40">
+        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <h1 className="text-5xl font-bold z-10">Gestión Centralizada de Incidentes</h1>
+        <p className="text-2xl pt-52 z-10">
           Bienvenido a la plataforma de gestión centralizada de incidentes de Solvex. <br /> Reporta problemas tecnicos o de
           seguridad de manera eficiente.
         </p>

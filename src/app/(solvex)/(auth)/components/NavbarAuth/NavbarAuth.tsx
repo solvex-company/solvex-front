@@ -4,7 +4,8 @@ import React from "react";
 
 const NavbarAuth = () => {
   return (
-    <div className="h-[calc(100vh-206px)] w-[250px] bg-navAuthBg">
+    <div className="h-screen w-[250px] bg-navAuthBg">
+      {/* [calc(100vh-206px)] */}
       <Image
         src={"https://ik.imagekit.io/SolvexCompany/solvex.png"}
         width={242}

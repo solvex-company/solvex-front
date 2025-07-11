@@ -15,12 +15,8 @@ const LoginForm: React.FC = () => {
 
   // 1. Definimos el esquema de validación con Yup
   const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Formato de correo electrónico inválido")
-      .required("El correo electrónico es requerido"),
-    password: Yup.string()
-      .min(6, "La contraseña debe tener al menos 6 caracteres")
-      .required("La contraseña es requerida"),
+    email: Yup.string().email("Formato de correo electrónico inválido").required("El correo electrónico es requerido"),
+    password: Yup.string().min(6, "La contraseña debe tener al menos 6 caracteres").required("La contraseña es requerida"),
   });
 
   // 2. Inicializa Formik
@@ -39,7 +35,7 @@ const LoginForm: React.FC = () => {
             title: "¡Login exitoso!",
             text: response.message || "Bienvenido",
           });
-          router.push("/dashboards/admin");
+          router.push("/admin/dashboard");
         } else {
           Swal.fire({
             icon: "error",
@@ -76,24 +72,18 @@ const LoginForm: React.FC = () => {
           name="email"
           placeholder="Correoelectrónico@dominio.com"
           className={`w-full mt-3 p-1 pl-4 h-[40px] rounded-md text-gray-700 placeholder-gray-600 bg-inputBg focus:outline-none ${
-            formik.touched.email && formik.errors.email
-              ? "border-red-500 border-2"
-              : ""
+            formik.touched.email && formik.errors.email ? "border-red-500 border-2" : ""
           }`}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.email}
         />
-        {formik.touched.email && formik.errors.email && (
-          <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
-        )}
+        {formik.touched.email && formik.errors.email && <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>}
       </div>
       <div className="mb-6">
         <div
           className={`flex justify-between items-center w-full mt-3 p-1 pl-4 h-[40px] rounded-md text-gray-700   bg-inputBg focus:outline-none  ${
-            formik.touched.password && formik.errors.password
-              ? "border-red-500 border-2"
-              : ""
+            formik.touched.password && formik.errors.password ? "border-red-500 border-2" : ""
           }`}
         >
           <input
@@ -106,19 +96,13 @@ const LoginForm: React.FC = () => {
             onBlur={formik.handleBlur}
             value={formik.values.password}
           />
-          <span
-            className=" text-gray-500 cursor-pointer text-2xl"
-            onClick={() => setShowPassword((prev) => !prev)}
-            tabIndex={-1}
-          >
+          <span className=" text-gray-500 cursor-pointer text-2xl" onClick={() => setShowPassword((prev) => !prev)} tabIndex={-1}>
             {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
           </span>
         </div>
 
         {formik.touched.password && formik.errors.password && (
-          <div className="text-red-500 text-sm mt-1">
-            {formik.errors.password}
-          </div>
+          <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
         )}
       </div>
       <button

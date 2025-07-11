@@ -13,6 +13,7 @@ export const postRegister = async (data: FormikValues) => {
     const res = await axiosApiBack.post("/auth/signup", data);
 
     if (!res.data) {
+      console.log(1, res.data)
       return {
         message: "Error al registrar al usuario",
         errors: res.data,
@@ -22,14 +23,23 @@ export const postRegister = async (data: FormikValues) => {
       message: "Usuario registrado correctamente",
     };
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.warn("Error al hacer el post de registro", error.message); // Error es seguro aquí
+      if (axios.isAxiosError(error)) {  // 👈 Verifica si es un error de Axios
+        const errorMessage = error.response?.data?.message || error.message;
+        const statusCode = error.response?.status; // 👈 Obtiene el código (ej: 409)
+        console.warn(`Error ${statusCode}:`, errorMessage);
+
+        return {
+          message: "Error al registrar al usuario",
+          errors: errorMessage,
+          statusCode,  // 👈 Incluye el código en la respuesta
+        };
+      }
+
+      return {
+        message: "Error desconocido",
+        errors: "Ocurrió un error inesperado",
+      };
     }
-    return {
-      message: "Error al registrar al usuario",
-      errors: (error as Error).message || "Error desconocido",
-    };
-  }
 };
 
 export const postLogin = async (data: FormikValues) => {
@@ -48,12 +58,21 @@ export const postLogin = async (data: FormikValues) => {
       data: res.data,
     };
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.warn("Error al hacer el post de login", error.message); // Error es seguro aquí
+      if (axios.isAxiosError(error)) {  //Verifica si es un error de Axios
+        const errorMessage = error.response?.data?.message || error.message;
+        const statusCode = error.response?.status; //Obtiene el código (ej: 409)
+        console.warn(`Error ${statusCode}:`, errorMessage);
+
+        return {
+          message: "Error al registrar al usuario",
+          errors: errorMessage,
+          statusCode,  //Incluye el código en la respuesta
+        };
+      }
+
+      return {
+        message: "Error desconocido",
+        errors: "Ocurrió un error inesperado",
+      };
     }
-    return {
-      message: "Error al iniciar sesion",
-      errors: (error as Error).message || "Error desconocido",
-    };
-  }
 };

@@ -39,7 +39,7 @@ const LoginForm: React.FC = () => {
             title: "¡Login exitoso!",
             text: response.message || "Bienvenido",
           });
-          router.push("/dashboard");
+          router.push("/dashboards/admin");
         } else {
           Swal.fire({
             icon: "error",

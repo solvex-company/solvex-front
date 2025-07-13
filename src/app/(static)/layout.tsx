@@ -21,9 +21,7 @@ export const LayoutAuth: React.FC<ILayout> = ({ children }) => {
         </Link>
       </div>
       <div className="flex-[.5] flex flex-col justify-center items-center rounded-l-3xl bg-white">
-        <div className="flex flex-col items-center justify-center p-3 w-[450px] ">
-          {children}
-        </div>
+        {children}
       </div>
     </div>
   );

@@ -7,9 +7,13 @@ import * as Yup from "yup";
 import Swal from "sweetalert2";
 import { postRegister } from "@/services/auth";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const RegisterForm: React.FC = () => {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("El nombre es requerido"),
     lastname: Yup.string().required("El apellido es requerido"),
@@ -92,37 +96,41 @@ const RegisterForm: React.FC = () => {
         {({ isSubmitting }) => (
           <Form noValidate>
             <div className="flex flex-col items-center">
+              <label className="mt-1 w-[380px] text-sm">Nombre</label>
               <Field
                 name="name"
                 type="text"
-                className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
                 placeholder="Nombre"
               />
               <ErrorMessage
                 name="name"
                 component="div"
-                className="error text-red-300 align-left"
+                className="error w-[380px] text-red-500 text-left"
               />
             </div>
 
             <div className="flex flex-col items-center">
+              <label className="mt-1 w-[380px] text-sm">Apellido</label>
               <Field
                 name="lastname"
                 type="text"
-                className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
                 placeholder="Apellido"
               />
               <ErrorMessage
                 name="lastname"
                 component="div"
-                className="error text-red-300 text-left"
+                className="error w-[380px] text-red-500 text-left"
               />
             </div>
+
             <div className="flex flex-col items-center">
+              <label className="mt-1 w-[380px] text-sm">Tipo de Identificación</label>
               <Field
                 name="typeId"
                 as="select"
-                className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
               >
                 <option value="">Tipo de Identificación</option>
                 <option value="1">CC</option>
@@ -132,72 +140,90 @@ const RegisterForm: React.FC = () => {
               <ErrorMessage
                 name="typeId"
                 component="div"
-                className="error text-red-300 text-left"
+                className="error w-[380px] text-red-500 text-left"
               />
             </div>
+
             <div className="flex flex-col items-center">
+              <label className="mt-1 w-[380px] text-sm">Número de Identificación</label>
               <Field
                 name="identification_number"
                 type="number"
-                className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
                 placeholder="Número de Identificación"
               />
               <ErrorMessage
                 name="identification_number"
                 component="div"
-                className="error text-red-300 text-left"
+                className="error w-[380px] text-red-500 text-left"
               />
             </div>
+
             <div className="flex flex-col items-center">
+              <label className="mt-1 w-[380px] text-sm">Teléfono</label>
               <Field
                 name="phone"
                 type="number"
-                className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
                 placeholder="Telefono"
               />
               <ErrorMessage
                 name="phone"
                 component="div"
-                className="error text-red-300 text-left"
+                className="error w-[380px] text-red-500 text-left"
               />
             </div>
+
             <div className="flex flex-col items-center">
+              <label className="mt-1 w-[380px] text-sm">Correo</label>
               <Field
                 name="email"
                 type="email"
-                className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
                 placeholder="Correo Ej: ejemplo@mail.com"
               />
               <ErrorMessage
                 name="email"
                 component="div"
-                className="error text-red-300 text-left"
+                className="error w-[380px] text-red-500 text-left"
               />
             </div>
             <div className="flex flex-col items-center">
-              <Field
-                name="password"
-                type="password"
-                className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
-                placeholder="Contraseña"
-              />
+            <label className="mt-1 w-[380px] text-sm">Contraseña</label>
+              <div className="flex justify-between w-[380px] relative">
+                <Field
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  className="p-1 pl-4 bg-inputBg w-full h-[40px] rounded-md placeholder-gray-600"
+                  placeholder="Contraseña"
+                />
+                <span className="absolute -m-2 -mr-1 top-1/2 right-2 text-gray-500 cursor-pointer text-2xl" onClick={() => setShowPassword((prev) => !prev)} tabIndex={-1}>
+                  {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                </span>
+              </div>
               <ErrorMessage
                 name="password"
                 component="div"
-                className="error text-red-300 text-left"
+                className="error w-[380px] text-red-500 text-left"
               />
             </div>
             <div className="flex flex-col items-center">
-              <Field
-                name="password2"
-                type="password"
-                className="mt-3 p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
-                placeholder="Repite tu contraseña"
-              />
+            <label className="mt-1 w-[380px] text-sm">Repetir Contraseña</label>
+              <div className="flex justify-between w-[380px] relative">
+                <Field
+                  name="password2"
+                  type={showPassword2 ? "text" : "password"}
+                  className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+                  placeholder="Repite tu contraseña"
+                />
+                <span className="absolute -m-2 -mr-1 top-1/2 right-2 text-gray-500 cursor-pointer text-2xl" onClick={() => setShowPassword2((prev) => !prev)} tabIndex={-1}>
+                  {showPassword2 ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                </span>
+              </div>
               <ErrorMessage
                 name="password2"
                 component="div"
-                className="error text-red-300 text-left"
+                className="error w-[380px] text-red-500 text-left"
               />
             </div>
 

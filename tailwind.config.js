@@ -21,9 +21,9 @@ module.exports = {
         navAuthBg: "#D9D9D9", //gris claro (forndo del Navbar Usuarios)
 
         // COLORES SECUNDARIOS
-        pending: "#FFD54F", // Amarillo suave para Pendiente
+        pending: "#F3C623", // Amarillo suave para Pendiente
         process: "#4DA6FF", // Celeste saturado para En proceso (ya está en la paleta, mantiene coherencia)
-        resolved: "#81C784", // Verde suave para Resuelto
+        resolved: "#8AD247", // Verde suave para Resuelto
       },
       backgroundImage: {
         banner: 'url("https://ik.imagekit.io/SolvexCompany/gestionIncidentes.png?updatedAt=1752250793840")',

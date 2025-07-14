@@ -2,12 +2,12 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="flex justify-between bg-mainText p-7 pl-12 pr-12">
+    <footer className="flex justify-between bg-mainText p-2 pl-12 pr-12">
       <div className="flex">
         <Image
           src={"https://ik.imagekit.io/SolvexCompany/logoSolvex3.png"}
-          width={150}
-          height={150}
+          width={100}
+          height={100}
           alt="Solvex Logo"
           className="object-contain"
         />

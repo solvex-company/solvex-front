@@ -27,7 +27,7 @@ const AboutSection: React.FC = () => {
 
       <div className="w-full flex flex-col items-center gap-4 mb-5">
         <h2 className="text-2xl mt-8 mb-4">Desarrolladores de Back-End</h2>
-        <div className="flex flex-wrap justify-center gap-9">
+        <div className="flex flex-wrap justify-center gap-5">
           {backend.map((dev: CardProps) => (
             <Card
               key={dev.name}

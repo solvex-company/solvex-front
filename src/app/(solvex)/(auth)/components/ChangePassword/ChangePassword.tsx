@@ -1,8 +1,8 @@
 import React from "react";
 import { adminData } from "@/helpers/usersData";
-import ChangePassForm from "./ChangePassForm";
+import ChangePassForm from "./ChangePassForm/ChangePassForm";
 
-function AdminPassword() {
+function ChangePassword() {
   return (
     <section className="py-5">
       <div>
@@ -14,4 +14,4 @@ function AdminPassword() {
   );
 }
 
-export default AdminPassword;
+export default ChangePassword;

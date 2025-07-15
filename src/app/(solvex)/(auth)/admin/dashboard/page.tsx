@@ -1,6 +1,6 @@
 import React from "react";
-import AdminInfo from "./components/AdminInfo";
-import AdminPassword from "./components/AdminPassword";
+import AdminInfo from "../../components/InfoDashboard/InfoDashboard";
+import AdminPassword from "../../components/ChangePassword/ChangePassword";
 import AdminLicense from "./components/AdminLicense";
 
 function AdminDash() {

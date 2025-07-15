@@ -1,7 +1,7 @@
 import React from "react";
 import { adminData } from "@/helpers/usersData";
 
-function AdminInfo() {
+function InfoDashboard() {
   return (
     <section className="grid grid-cols-2 justify-center items-center w-full gap-3 py-6">
       <div>
@@ -24,4 +24,4 @@ function AdminInfo() {
   );
 }
 
-export default AdminInfo;
+export default InfoDashboard;

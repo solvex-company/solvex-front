@@ -1,5 +1,5 @@
-import AdminInfo from "../../admin/dashboard/components/AdminInfo";
-import AdminPassword from "../../admin/dashboard/components/AdminPassword";
+import AdminInfo from "../../components/InfoDashboard/InfoDashboard";
+import AdminPassword from "../../components/ChangePassword/ChangePassword";
 
 function dashboardHelper() {
   return (

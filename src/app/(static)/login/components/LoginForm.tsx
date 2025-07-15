@@ -100,7 +100,7 @@ const LoginForm: React.FC = () => {
               type={showPassword ? "text" : "password"}
               id="password"
               name="password"
-              placeholder="Contraseña"
+              placeholder="********"
               className="text-md text-gray-700  placeholder-gray-600 bg-inputBg focus:outline-none"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

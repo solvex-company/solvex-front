@@ -1,4 +1,4 @@
-export const ticketData = {
+export const mainDetailTicketData = {
   codigo: "COD-01",
   titulo: "Error al guardar formulario de cliente",
   estado: "PENDIENTE",
@@ -11,7 +11,35 @@ export const ticketData = {
   ],
 };
 
-export const otherTicketData = {
+export const otherDetailTicketData = {
   employee: "Luciana Torres",
   date: "04/07/2025",
 };
+
+export const EmployeeTicketsData = [
+  {
+    titulo: "Error al iniciar sesión",
+    fecha: "02/07/2025",
+    estado: "Pendiente",
+  },
+  {
+    titulo: "Problema con carga de reportes",
+    fecha: "03/07/2025",
+    estado: "En proceso",
+  },
+  {
+    titulo: "Acceso a módulo de usuarios",
+    fecha: "04/07/2025",
+    estado: "Resuelto",
+  },
+  {
+    titulo: "404 en el inicio",
+    fecha: "05/07/2025",
+    estado: "Resuelto",
+  },
+  {
+    titulo: "No me carga la pagina",
+    fecha: "06/07/2025",
+    estado: "Pendiente",
+  },
+];

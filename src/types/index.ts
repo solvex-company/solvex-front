@@ -1,36 +1,39 @@
-export interface Credentials {
+export interface ICredentials {
   id_credentials: number;
   email: string;
-  user: User;
+  user: IUser;
 }
 
-export interface Roles {
+export interface IRoles {
   id_role: number;
   role_name: string;
-  users: User[];
+  users: IUser[];
 }
 
 export enum Role {
-  ADMIN = 'admin',
-  HELPER = 'soporte',
-  EMPLOYEE = 'empleado',
+  ADMIN = "admin",
+  HELPER = "soporte",
+  EMPLOYEE = "empleado",
 }
 
-export interface TypeId {
+export interface ITypeId {
   id_typeid: number;
   name: string;
-  users: User[];
+  users: IUser[];
 }
 
-export interface User {
+export interface IUser {
+  credentials: ICredentials;
+}
+
+/* export interface IUser {
   id_user: string;
-  first_name: string;
-  second_name: string;
-  first_surname: string;
-  second_surname: string;
+  name: string;
+  surname: string;
   identification_number: string;
   phone: string;
   typeId: TypeId;
   credentials: Credentials;
   role: Role;
 }
+*/

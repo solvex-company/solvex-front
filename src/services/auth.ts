@@ -46,6 +46,7 @@ export const postRegister = async (data: FormikValues) => {
 export const postLogin = async (data: FormikValues) => {
   try {
     const res = await axiosApiBack.post("/auth/signin", data);
+    console.log("Respuesta del servidor:", res.data);
 
     if (!res.data) {
       console.warn("Formato de datos de inicio de sesion invalido", res.data);

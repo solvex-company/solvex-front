@@ -1,6 +1,6 @@
 import React from "react";
 import TicketDetail from "../../components/TicketDetail/TicketDetail";
-import { otherTicketData } from "@/helpers/ticketData";
+import { otherDetailTicketData } from "@/helpers/ticketData";
 
 function EmTicketDetail() {
   return (
@@ -9,7 +9,7 @@ function EmTicketDetail() {
       <TicketDetail />
       <div className="w-full pt-6">
         <h3>Fecha</h3>
-        <p className="border border-accent rounded-md  p-2">{otherTicketData.date}</p>
+        <p className="border border-accent rounded-md  p-2">{otherDetailTicketData.date}</p>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import { useAuthContext } from "@/context/authContextM";
+import { useAuthContext } from "@/context/authContext";
 
 const LoginForm: React.FC = () => {
   const router = useRouter();

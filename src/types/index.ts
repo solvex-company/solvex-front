@@ -1,13 +1,13 @@
-export interface Credentials {
+export interface ICredentials {
   id_credentials: number;
   email: string;
-  user: User;
+  user: IUser;
 }
 
-export interface Roles {
+export interface IRoles {
   id_role: number;
   role_name: string;
-  users: User[];
+  users: IUser[];
 }
 
 export enum Role {
@@ -16,13 +16,17 @@ export enum Role {
   EMPLOYEE = "empleado",
 }
 
-export interface TypeId {
+export interface ITypeId {
   id_typeid: number;
   name: string;
-  users: User[];
+  users: IUser[];
 }
 
-export interface User {
+export interface IUser {
+  credentials: ICredentials;
+}
+
+/* export interface IUser {
   id_user: string;
   name: string;
   surname: string;
@@ -32,3 +36,4 @@ export interface User {
   credentials: Credentials;
   role: Role;
 }
+*/

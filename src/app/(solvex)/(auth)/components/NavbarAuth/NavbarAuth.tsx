@@ -1,5 +1,5 @@
 'use client';
-import { useAuthContext } from "@/context/authContextM";
+import { useAuthContext } from "@/context/authContext";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -58,7 +58,7 @@ const NavbarAuth = () => {
 
           { isAdmin && //Es un usuario ADMIN
             <div className="flex flex-col">
-              <span className="text-[24px] text-center">{user?.email || 'Nombre de Usuario'}</span>
+              <span className="text-[24px] text-center">{user?.name || 'Nombre de Usuario'}</span>
               <span className="text-[24px] text-center font-bold">ADMIN</span>
               <span className="pl-3 text-[20px] font-medium">Información</span>
               <Link
@@ -85,7 +85,7 @@ const NavbarAuth = () => {
 
           { isHelper && //Es un usuario HELPER
             <div className="flex flex-col">
-              <span className="text-[24px] text-center">{user?.email || 'Nombre de Usuario'}</span>
+              <span className="text-[24px] text-center">{user?.name || 'Nombre de Usuario'}</span>
               <span className="text-[24px] text-center font-bold">SOPORTE</span>
               <span className="pl-3 text-[20px] font-medium">Información</span>
               <Link
@@ -112,7 +112,7 @@ const NavbarAuth = () => {
 
           { isEmployee && //Es un usuario EMPLOYEE
             <div className="flex flex-col">
-              <span className="text-[24px] text-center">Nombre de Usuario</span>
+              <span className="text-[24px] text-center">{user?.name || 'Nombre de Usuario'}</span>
               <span className="text-[24px] text-center font-bold">EMPLEADO</span>
               <span className="pl-3 text-[20px] font-medium">Información</span>
               <Link

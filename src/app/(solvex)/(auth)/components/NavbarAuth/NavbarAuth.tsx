@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useAuthContext } from "@/context/authContext";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,8 +16,8 @@ const NavbarAuth = () => {
 
   const logout = () => {
     resetUserData();
-    location.href='/';
-  }
+    location.href = "/";
+  };
 
   if (user?.id_role === 1) {
     isAdmin = true;
@@ -30,19 +30,19 @@ const NavbarAuth = () => {
   }
 
   useEffect(() => {
-  if (!user) return;
+    if (!user) return;
 
-  if (user.id_role === 1) {
-    router.push('/admin/dashboard');
-  } else if (user.id_role === 2) {
-    router.push('/helper/dashboard');
-  } else if (user.id_role === 3) {
-    router.push('/employee/dashboard');
-  }
-}, [user]);
+    if (user.id_role === 1) {
+      router.push("/admin/dashboard");
+    } else if (user.id_role === 2) {
+      router.push("/helper/dashboard");
+    } else if (user.id_role === 3) {
+      router.push("/employee/dashboard");
+    }
+  }, [user, router]);
 
-  console.log('1.La variable is Auth es:', isAuth);
-  console.log('El user es:',user)
+  console.log("1.La variable is Auth es:", isAuth);
+  console.log("El user es:", user);
   if (isAuth) {
     return (
       <div className="flex flex-col h-full w-[250px] bg-navAuthBg place-content-between">
@@ -56,18 +56,22 @@ const NavbarAuth = () => {
             className="mb-6"
           />
 
-          { isAdmin && //Es un usuario ADMIN
+          {isAdmin && ( //Es un usuario ADMIN
             <div className="flex flex-col">
-              <span className="text-[24px] text-center">{user?.name || 'Nombre de Usuario'}</span>
+              <span className="text-[24px] text-center">
+                {user?.name || "Nombre de Usuario"}
+              </span>
               <span className="text-[24px] text-center font-bold">ADMIN</span>
               <span className="pl-3 text-[20px] font-medium">Información</span>
               <Link
-                href={'/admin/dashboard'}
+                href={"/admin/dashboard"}
                 className="flex flex-col m-1 ml-3 mr-3 h-[40px] justify-center text-center text-[24px] text-secondText rounded-lg hover:text-mainBg hover:bg-accent"
               >
                 Inicio
               </Link>
-              <span className="pl-3 text-[20px] font-medium">Gestión de Soporte</span>
+              <span className="pl-3 text-[20px] font-medium">
+                Gestión de Soporte
+              </span>
               <Link
                 href={""}
                 className="flex flex-col m-1 ml-3 mr-3 h-[40px] justify-center text-center text-[24px] text-secondText rounded-lg hover:text-mainBg hover:bg-accent"
@@ -80,21 +84,25 @@ const NavbarAuth = () => {
               >
                 Estadísticas
               </Link>
-            </div> 
-          }
+            </div>
+          )}
 
-          { isHelper && //Es un usuario HELPER
+          {isHelper && ( //Es un usuario HELPER
             <div className="flex flex-col">
-              <span className="text-[24px] text-center">{user?.name || 'Nombre de Usuario'}</span>
+              <span className="text-[24px] text-center">
+                {user?.name || "Nombre de Usuario"}
+              </span>
               <span className="text-[24px] text-center font-bold">SOPORTE</span>
               <span className="pl-3 text-[20px] font-medium">Información</span>
               <Link
-                href={'/helper/dashboard'}
+                href={"/helper/dashboard"}
                 className="flex flex-col m-1 ml-3 mr-3 h-[40px] justify-center text-center text-[24px] text-secondText rounded-lg hover:text-mainBg hover:bg-accent"
               >
                 Inicio
               </Link>
-              <span className="pl-3 text-[20px] font-medium">Gestión de Soporte</span>
+              <span className="pl-3 text-[20px] font-medium">
+                Gestión de Soporte
+              </span>
               <Link
                 href={""}
                 className="flex flex-col m-1 ml-3 mr-3 h-[40px] justify-center text-center text-[24px] text-secondText rounded-lg hover:text-mainBg hover:bg-accent"
@@ -102,26 +110,32 @@ const NavbarAuth = () => {
                 Tickets
               </Link>
               <Link
-                href={'/helper/chat'}
+                href={"/helper/chat"}
                 className="flex flex-col m-1 ml-3 mr-3 h-[40px] justify-center text-center text-[24px] text-secondText rounded-lg hover:text-mainBg hover:bg-accent"
               >
                 Chat
               </Link>
-            </div> 
-          }
+            </div>
+          )}
 
-          { isEmployee && //Es un usuario EMPLOYEE
+          {isEmployee && ( //Es un usuario EMPLOYEE
             <div className="flex flex-col">
-              <span className="text-[24px] text-center">{user?.name || 'Nombre de Usuario'}</span>
-              <span className="text-[24px] text-center font-bold">EMPLEADO</span>
+              <span className="text-[24px] text-center">
+                {user?.name || "Nombre de Usuario"}
+              </span>
+              <span className="text-[24px] text-center font-bold">
+                EMPLEADO
+              </span>
               <span className="pl-3 text-[20px] font-medium">Información</span>
               <Link
-                href={'/employee/dashboard'}
+                href={"/employee/dashboard"}
                 className="flex flex-col m-1 ml-3 mr-3 h-[40px] justify-center text-center text-[24px] text-secondText rounded-lg hover:text-mainBg hover:bg-accent"
               >
                 Inicio
               </Link>
-              <span className="pl-3 text-[20px] font-medium">Gestión de Soporte</span>
+              <span className="pl-3 text-[20px] font-medium">
+                Gestión de Soporte
+              </span>
               <Link
                 href={""}
                 className="flex flex-col m-1 ml-3 mr-3 h-[40px] justify-center text-center text-[24px] text-secondText rounded-lg hover:text-mainBg hover:bg-accent"
@@ -140,25 +154,25 @@ const NavbarAuth = () => {
               >
                 Chat
               </Link>
-            </div> 
-          }
-
-
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col mb-6">
-          {(isEmployee && license) &&
+          {isEmployee && license && (
             <Link
-              href=''
+              href=""
               className="flex flex-col m-1 ml-3 mr-3 h-[80px] justify-center text-center text-[24px] rounded-lg bg-secondText text-mainBg hover:text-mainBg hover:bg-accent"
             >
               Obtén derechos de administrador
             </Link>
-          }
+          )}
           <button
             onClick={logout}
             className="flex flex-col m-1 ml-3 mr-3 h-[40px] justify-center text-center text-[24px] text-secondText rounded-lg bg-mainText hover:text-mainBg hover:bg-accent"
-          >Cerrar Sesión</button>
+          >
+            Cerrar Sesión
+          </button>
         </div>
       </div>
     );

@@ -10,7 +10,7 @@ import CardProps from "./interface";
 const Card = (props: CardProps) => {
   return (
     <div
-      className={`w-[350px]  h-[430px] p-5 flex flex-col items-center rounded-3xl shadow-lg ${
+      className={`w-[350px]  h-[430px] p-5 flex flex-col items-center rounded-3xl hover:scale-105 transition-transform duration-300 shadow-lg ${
         props.className ?? ""
       }`}
     >

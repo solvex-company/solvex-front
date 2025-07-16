@@ -10,10 +10,10 @@ export interface IRoles {
   users: IUser[];
 }
 
-export enum eRole {
-  ADMIN = 'admin',
-  HELPER = 'soporte',
-  EMPLOYEE = 'empleado',
+export enum Role {
+  ADMIN = "admin",
+  HELPER = "soporte",
+  EMPLOYEE = "empleado",
 }
 
 export interface ITypeId {
@@ -29,10 +29,11 @@ export interface IUser {
 /* export interface IUser {
   id_user: string;
   name: string;
-  lastname: string;
+  surname: string;
   identification_number: string;
   phone: string;
-  typeId: ITypeId;
-  credentials: ICredentials;
-  role: IRoles;
-} */
+  typeId: TypeId;
+  credentials: Credentials;
+  role: Role;
+}
+*/

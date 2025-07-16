@@ -8,9 +8,11 @@ import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { useAuthContext } from "@/context/authContext";
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
+  const { saveUserData } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);
 
   // 1. Definimos el esquema de validación con Yup
@@ -39,6 +41,12 @@ const LoginForm: React.FC = () => {
             title: "¡Login exitoso!",
             text: response.message || "Bienvenido",
           });
+          console.log(response);
+          const { message, data, success } = response;
+          void message;
+          const login = success;
+          const token = data;
+          saveUserData({token, login});
           router.push("/admin/dashboard");
         } else {
           Swal.fire({

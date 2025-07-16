@@ -11,9 +11,9 @@ export interface Roles {
 }
 
 export enum Role {
-  ADMIN = 'admin',
-  HELPER = 'soporte',
-  EMPLOYEE = 'empleado',
+  ADMIN = "admin",
+  HELPER = "soporte",
+  EMPLOYEE = "empleado",
 }
 
 export interface TypeId {
@@ -24,10 +24,8 @@ export interface TypeId {
 
 export interface User {
   id_user: string;
-  first_name: string;
-  second_name: string;
-  first_surname: string;
-  second_surname: string;
+  name: string;
+  surname: string;
   identification_number: string;
   phone: string;
   typeId: TypeId;

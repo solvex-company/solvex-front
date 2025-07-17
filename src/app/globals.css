@@ -39,6 +39,14 @@ a {
   text-decoration: none;
 }
 
+.swal2-timer-progress-bar {
+  @apply bg-accent h-2 rounded-md; /* Aplica clases de Tailwind */
+}
+
+.swal2-popup {
+  @apply pb-10;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

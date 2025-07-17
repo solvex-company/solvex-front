@@ -2,21 +2,94 @@
 
 // components
 import CardComponentForAdmin from "./cardComponent/CardComponentForAdmin";
+import ButtonComponent from "./buttonComponent/ButtonComponent";
 
 // types
 import User from "./types";
+
+// vedors
+import Swal from "sweetalert2";
 
 // helpers
 import { employees, supportStaff } from "./helper";
 
 const ManageProfiles: React.FC = () => {
-  const handleEmployeeToSupport = (user: User) => {
-    console.log(`Cambiando a ${user.name} a Soporte`);
-    // Lógica específica para cambiar a soporte
+  const handleEmployeeToSupport = async (user: User) => {
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esta acción!",
+      icon: "warning",
+      showCancelButton: true, // Muestra el botón de cancelar
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, ¡adelante!",
+      cancelButtonText: "No, cancelar",
+    });
+
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "¡Empleado modificado!",
+        text: `¡El empleado ${user.name} ahora pertenece a Empleados`,
+        icon: "success",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+
+        // Aca podemos ejecutar la lógica que depende de la confirmación:
+        // Por ejemplo, llamar a una API para modificar el role.
+        // Lógica específica para cambiar a soporte
+      });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire({
+        title: "¡Cancelado!",
+        text: "¡No hubo modificaciones!",
+        icon: "error",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+    }
   };
 
-  const handleSupportToEmployee = (user: User) => {
-    console.log(`Cambiando a ${user.name} a Empleado`);
+  const handleSupportToEmployee = async (user: User) => {
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: `¡El usuario ${user.name} será modificado!`,
+      icon: "warning",
+      showCancelButton: true, // Muestra el botón de cancelar
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, ¡adelante!",
+      cancelButtonText: "No, cancelar",
+    });
+
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "¡Soporte modificado!",
+        text: `¡El soporte ${user.name} ahora pertenece a Soporte`,
+        icon: "success",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+
+        // Aca podemos ejecutar la lógica que depende de la confirmación:
+        // Por ejemplo, llamar a una API para modificar el role.
+        // Lógica específica para cambiar a soporte
+      });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire({
+        title: "¡Cancelado!",
+        text: "¡No hubo modificaciones!",
+        icon: "error",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+    }
+
+    // if (confirm(`Esdtas seguro de cambiar a ${user.name} como Empleado`))
+    //   console.log(`Cambiando a ${user.name} a Empleado`);
+
     // Lógica específica para cambiar a empleado
   };
 
@@ -31,12 +104,11 @@ const ManageProfiles: React.FC = () => {
           {supportStaff.map((helper) => {
             return (
               <CardComponentForAdmin key={helper.id} user={helper}>
-                <button
-                  className="bg-gray-400 hover:bg-accent hover:shadow-md px-4 py-2 rounded transition-bg duration-300"
-                  onClick={() => handleEmployeeToSupport(helper)}
+                <ButtonComponent
+                  handleClick={() => handleEmployeeToSupport(helper)}
                 >
                   Cambiar a empleado
-                </button>
+                </ButtonComponent>
               </CardComponentForAdmin>
             );
           })}
@@ -51,12 +123,11 @@ const ManageProfiles: React.FC = () => {
           {employees.map((employee) => {
             return (
               <CardComponentForAdmin key={employee.id} user={employee}>
-                <button
-                  className="bg-gray-400 hover:bg-accent hover:shadow-md px-4 py-2 rounded transition-bg duration-300"
-                  onClick={() => handleSupportToEmployee(employee)}
+                <ButtonComponent
+                  handleClick={() => handleSupportToEmployee(employee)}
                 >
                   Cambiar a Soporte
-                </button>
+                </ButtonComponent>
               </CardComponentForAdmin>
             );
           })}

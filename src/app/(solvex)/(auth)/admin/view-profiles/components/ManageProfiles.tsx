@@ -20,10 +20,14 @@ const ManageProfiles: React.FC = () => {
       text: "¡No podrás revertir esta acción!",
       icon: "warning",
       showCancelButton: true, // Muestra el botón de cancelar
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, ¡adelante!",
-      cancelButtonText: "No, cancelar",
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cancelar",
+      customClass: {
+        confirmButton:
+          "text-#545454 font-semibold bg-green-700 hover:bg-green-600 hover:shadow-md px-4 py-2 rounded ",
+        cancelButton:
+          "text-#545454 font-semibold bg-red-700 hover:bg-red-600 hover:shadow-md px-4 py-2 rounded  ",
+      },
     });
 
     if (result.isConfirmed) {
@@ -34,6 +38,9 @@ const ManageProfiles: React.FC = () => {
         timer: 3000,
         timerProgressBar: true,
         showConfirmButton: false,
+        customClass: {
+          popup: "swal2-popup--success", // Añade esta clase personalizada
+        },
 
         // Aca podemos ejecutar la lógica que depende de la confirmación:
         // Por ejemplo, llamar a una API para modificar el role.
@@ -47,6 +54,9 @@ const ManageProfiles: React.FC = () => {
         timer: 3000,
         timerProgressBar: true,
         showConfirmButton: false,
+        customClass: {
+          popup: "swal2-popup--cancel", // clase personalizada
+        },
       });
     }
   };
@@ -57,10 +67,14 @@ const ManageProfiles: React.FC = () => {
       text: `¡El usuario ${user.name} será modificado!`,
       icon: "warning",
       showCancelButton: true, // Muestra el botón de cancelar
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, ¡adelante!",
-      cancelButtonText: "No, cancelar",
+      confirmButtonText: "Aceptar",
+      cancelButtonText: "Cancelar",
+      customClass: {
+        confirmButton:
+          "text-#545454 font-semibold bg-green-700 hover:bg-green-600 hover:shadow-md px-4 py-2 rounded ",
+        cancelButton:
+          "text-#545454 font-semibold bg-red-700 hover:bg-red-600 hover:shadow-md px-4 py-2 rounded  ",
+      },
     });
 
     if (result.isConfirmed) {
@@ -71,6 +85,9 @@ const ManageProfiles: React.FC = () => {
         timer: 3000,
         timerProgressBar: true,
         showConfirmButton: false,
+        customClass: {
+          popup: "swal2-popup--success", // Añade esta clase personalizada
+        },
 
         // Aca podemos ejecutar la lógica que depende de la confirmación:
         // Por ejemplo, llamar a una API para modificar el role.
@@ -84,11 +101,11 @@ const ManageProfiles: React.FC = () => {
         timer: 3000,
         timerProgressBar: true,
         showConfirmButton: false,
+        customClass: {
+          popup: "swal2-popup--cancel", // clase personalizada
+        },
       });
     }
-
-    // if (confirm(`Esdtas seguro de cambiar a ${user.name} como Empleado`))
-    //   console.log(`Cambiando a ${user.name} a Empleado`);
 
     // Lógica específica para cambiar a empleado
   };

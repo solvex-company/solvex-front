@@ -39,12 +39,22 @@ a {
   text-decoration: none;
 }
 
+/* Clases personalizadas de Swal   */
+
 .swal2-timer-progress-bar {
   @apply bg-accent h-2 rounded-md; /* Aplica clases de Tailwind */
 }
 
 .swal2-popup {
   @apply pb-10;
+}
+
+.swal2-popup--success .swal2-timer-progress-bar {
+  @apply bg-green-400 hover:bg-green-500; /* Estilo para el popup de éxito */
+}
+
+.swal2-popup--cancel .swal2-timer-progress-bar {
+  @apply bg-red-400 hover:bg-red-500; /* Estilo para el popup de cancelación */
 }
 
 @media (prefers-color-scheme: dark) {

@@ -1,51 +1,51 @@
 const ticketsHelper = [
   {
     id: "COD-01",
-    title: "Título 1",
+    title: "No puedo iniciar sesión en la aplicación de gestión de proyectos",
     date: "04/07/2025",
-    employee: "Empleado 1",
+    employee: "Sofía Martínez",
   },
   {
     id: "COD-02",
-    title: "Título 2",
+    title: "Problema de conectividad Wi-Fi en la sala de reuniones",
     date: "04/07/2025",
-    employee: "Empleado 2",
+    employee: "Ricardo Gómez",
   },
   {
     id: "COD-03",
-    title: "Título 3",
+    title: "Solicitud de acceso a la carpeta compartida de marketing",
     date: "05/07/2025",
-    employee: "Empleado 3",
+    employee: "Ana Fernández",
   },
   {
     id: "COD-04",
-    title: "Título 4",
+    title: "Mi impresora del departamento de ventas no funciona",
     date: "05/07/2025",
-    employee: "Empleado 4",
+    employee: "Sofía Martínez", // Sofía se repite
   },
   {
     id: "COD-05",
-    title: "Título 5",
+    title: "Error al generar informe mensual en el sistema CRM",
     date: "06/07/2025",
-    employee: "Empleado 5",
+    employee: "Javier López",
   },
   {
     id: "COD-06",
-    title: "Título 6",
+    title: "El micrófono de mi portátil no se detecta en videollamadas",
     date: "06/07/2025",
-    employee: "Empleado 6",
+    employee: "Ricardo Gómez", // Ricardo se repite
   },
   {
     id: "COD-07",
-    title: "Título 7",
+    title: "Necesito configurar Outlook en mi nuevo equipo",
     date: "07/07/2025",
-    employee: "Empleado 7",
+    employee: "Laura Pérez",
   },
   {
     id: "COD-08",
-    title: "Título 8",
+    title: "La aplicación de recursos humanos se cierra inesperadamente",
     date: "07/07/2025",
-    employee: "Empleado 8",
+    employee: "Miguel Santos",
   },
 ];
 

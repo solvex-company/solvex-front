@@ -4,7 +4,7 @@ import CreateTicketForm from "./components/CreateTicketForm";
 function CreateTicket() {
   return (
     <div>
-      <h2>Generar Ticket</h2>
+      <h2 className="font-bold text-start text-2xl ml-8">Generar Ticket</h2>
       <CreateTicketForm />
     </div>
   );

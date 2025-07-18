@@ -45,7 +45,7 @@ export default function CreateTicketForm() {
 
   return (
     <FormikProvider value={formik}>
-      <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4 w-[967px] mx-auto mt-8">
+      <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4 w-[967px] mx-auto mt-6">
         {/* Componente separado con los campos: código, área y fecha */}
         <TicketHeaderFields />
 
@@ -83,7 +83,7 @@ export default function CreateTicketForm() {
         <ImageUpload images={images} setImages={setImages} />
 
         {/* Botón de envío */}
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded mt-4 hover:bg-blue-600">
+        <button type="submit" className="h-12 bg-blue-500 text-white text-xl font-bold p-2 rounded  hover:bg-blue-600">
           Crear Ticket
         </button>
       </form>

@@ -11,9 +11,18 @@ import User from "./types";
 import Swal from "sweetalert2";
 
 // helpers
-import { employees, supportStaff } from "./helper";
+// import { employees, supportStaff } from "./helper";
+
+// hooks
+import useUsers from "@/hooks/useUsers";
 
 const ManageProfiles: React.FC = () => {
+  const { data, isLoading, error } = useUsers();
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (error) return <div>Error al cargar productos</div>;
+
   const handleEmployeeToSupport = async (user: User) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
@@ -118,7 +127,7 @@ const ManageProfiles: React.FC = () => {
           Soporte
         </h3>
         <div className="flex flex-wrap gap-8">
-          {supportStaff.map((helper) => {
+          {data?.map((helper: User) => {
             return (
               <CardComponentForAdmin key={helper.id} user={helper}>
                 <ButtonComponent
@@ -137,7 +146,7 @@ const ManageProfiles: React.FC = () => {
           Empleados
         </h3>
         <div className="flex flex-wrap gap-8">
-          {employees.map((employee) => {
+          {data?.map((employee) => {
             return (
               <CardComponentForAdmin key={employee.id} user={employee}>
                 <ButtonComponent

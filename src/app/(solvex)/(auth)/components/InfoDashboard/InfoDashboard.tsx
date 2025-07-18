@@ -1,7 +1,7 @@
-'use client';
+"use client";
 import React from "react";
 import { adminData } from "@/helpers/usersData";
-import { useAuthContext } from "@/context/authContext";
+import { useAuthContext } from "@/context/AuthContext";
 
 function InfoDashboard() {
   const { user } = useAuthContext();
@@ -10,9 +10,7 @@ function InfoDashboard() {
     <section className="grid grid-cols-2 justify-center items-center w-full gap-3 py-6">
       <div>
         <h2>Nombre</h2>
-        <h3 className="border border-accent rounded-lg p-1">
-          {fullName}
-        </h3>
+        <h3 className="border border-accent rounded-lg p-1">{fullName}</h3>
       </div>
       <div>
         <h2>Correo</h2>

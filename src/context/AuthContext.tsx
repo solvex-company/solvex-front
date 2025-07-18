@@ -1,5 +1,6 @@
-'use client';
+"use client";
 
+import AxiosApi from "@/app/api/axiosInstance";
 import { jwtDecode } from "jwt-decode";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -15,7 +16,7 @@ interface User {
 type SaveUserPayload = {
   token: string;
   login: boolean;
-}
+};
 
 type AuthContextType = {
   //States
@@ -29,35 +30,37 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const USER_LOCAL_KEY = 'user';
+const USER_LOCAL_KEY = "user";
 
-export const AuthProvider = ({children}: {children: React.ReactNode}) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [isAuth, setIsAuth] = useState<AuthContextType['isAuth']>(null);
+  const [isAuth, setIsAuth] = useState<AuthContextType["isAuth"]>(null);
 
   const saveUserData = (data: SaveUserPayload) => {
     setToken(data.token);
     setIsAuth(data.login);
 
-    const payload = jwtDecode<User>(data.token)
-    console.log('El payload es:', payload);
+    const payload = jwtDecode<User>(data.token);
 
-    const userData:User = {
+    const userData: User = {
       email: payload.email,
       id_role: payload.id_role,
       name: payload.name,
       lastname: payload.lastname,
       phone: payload.phone,
       identification_number: payload.identification_number,
-    }
-    
+    };
+
     setUser(userData);
-    localStorage.setItem(USER_LOCAL_KEY, JSON.stringify({
-      token: data.token,
-      login: data.login,
-      user: userData,
-    }));
+    localStorage.setItem(
+      USER_LOCAL_KEY,
+      JSON.stringify({
+        token: data.token,
+        login: data.login,
+        user: userData,
+      })
+    );
   };
 
   const resetUserData = () => {
@@ -68,12 +71,18 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   };
 
   useEffect(() => {
-    const storage = JSON.parse(localStorage.getItem(USER_LOCAL_KEY) || '{}');
+    const storage = JSON.parse(localStorage.getItem(USER_LOCAL_KEY) || "{}");
 
     if (storage === undefined || !Object.keys(storage)?.length) {
       setIsAuth(false);
       return;
-    };
+    }
+
+    if (storage.token) {
+      setToken(storage.token);
+      const payload = jwtDecode<User>(storage.token);
+      setUser(payload); // Ajusta la interfaz si es necesario
+    }
 
     const storageType: Storage = storage;
     setUser(storage.user);
@@ -81,14 +90,60 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     setIsAuth(storage?.login);
   }, []);
 
+  // configuracion de interceptor AXIOS
+  // añade el token de autorizacion a cada solicitud
+  // interceptor de solicitud
+  useEffect(() => {
+    const requestInterceptor = AxiosApi.interceptors.request.use(
+      (config) => {
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+
+    // interceptor de respuesta
+    // para manejar errores globales, ej: token expirados
+    const responseInterceptor = AxiosApi.interceptors.response.use(
+      (response) => response,
+
+      // Si la API nos devuelve un 401 - no autorizado
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          console.warn("Requerimiento NO autorizado.");
+          // limpiar el estado de autenticacion
+          resetUserData();
+        }
+        // rechazar la promesa para propagar el error
+        return Promise.reject(error);
+      }
+    );
+
+    // función de limpieza:
+    // muy importante para eliminar los interceptores cuando el componente se desmonte
+    // o cuando el token cambie, para evitar que se dupliquen o usen un token obsoleto.
+    return () => {
+      AxiosApi.interceptors.request.eject(requestInterceptor);
+      AxiosApi.interceptors.response.eject(responseInterceptor);
+    };
+  }, [token]);
+
   return (
-    <AuthContext.Provider value={{
-      user,
-      token,
-      isAuth,
-      saveUserData,
-      resetUserData
-    }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        isAuth,
+        saveUserData,
+        resetUserData,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 };
 
@@ -96,8 +151,8 @@ export const useAuthContext = () => {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error('El useAuthContext debe usarse dentro de un AuthProvider');
-  };
+    throw new Error("El useAuthContext debe usarse dentro de un AuthProvider");
+  }
 
   return context;
 };

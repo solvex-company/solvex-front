@@ -1,11 +1,13 @@
 "use client";
 import { useAuthContext } from "@/context/authContext";
+import usePrivate from "@/hooks/usePrivate";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 const NavbarAuth = () => {
+  usePrivate();
   const router = useRouter();
   const { user, isAuth, resetUserData } = useAuthContext();
 

@@ -1,10 +1,10 @@
 "use server";
 
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { FormikValues } from "formik";
 
 const axiosApiBack = axios.create({
-  baseURL: process.env.API_URL, //localhost:4000
+  baseURL: /* 'http://localhost:3001' */ process.env.API_URL, //localhost:4000
 });
 
 export const postRegister = async (data: FormikValues) => {

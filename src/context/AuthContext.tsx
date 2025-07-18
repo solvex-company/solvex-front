@@ -4,13 +4,13 @@ import AxiosApi from "@/app/api/axiosInstance";
 import { jwtDecode } from "jwt-decode";
 import { createContext, useContext, useEffect, useState } from "react";
 
-interface User {
+export interface User {
   email: string;
   id_role: number;
-  name: string;
-  lastname: string;
-  phone: string;
-  identification_number: string;
+  name?: string;
+  lastname?: string;
+  phone?: string;
+  identification_number?: string;
 }
 
 type SaveUserPayload = {

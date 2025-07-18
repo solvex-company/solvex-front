@@ -6,34 +6,40 @@ import { useState } from "react";
 import TicketHeaderFields from "./TicketHeaderFields";
 import { TicketFormValues } from "@/types/ITickets";
 import ImageUpload from "./ImageUpload";
+import { postCreateTicket } from "@/services/tickets";
+import { useAuthContext } from "@/context/authContext";
 
 export default function CreateTicketForm() {
   const [images, setImages] = useState<File[]>([]);
+  const { token } = useAuthContext();
 
   const formik = useFormik<TicketFormValues>({
     initialValues: {
       codigo: "COD-01",
-      area: "TI",
+      area: null,
       fecha: new Date().toISOString().split("T")[0],
       titulo: "",
       descripcion: "",
     },
     validationSchema: Yup.object({
-      area: Yup.string().required("Área es requerida"),
+      area: Yup.object().required("Área es requerida").nullable(),
       titulo: Yup.string().min(3, "Mínimo 3 caracteres").required("Requerido"),
       descripcion: Yup.string().min(10, "Mínimo 10 caracteres").required("Requerido"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const formData = new FormData();
-      images.forEach((img) => formData.append("imagenes", img));
-      for (const key in values) {
-        formData.append(key, values[key as keyof TicketFormValues]);
-      }
 
-      console.log("Ticket enviado:", values);
-      console.log("Imágenes adjuntas:", images);
-      alert("Ticket creado exitosamente!");
-      // Podés hacer un fetch o axios.post acá
+      images.forEach((img) => formData.append("images", img));
+
+      // Manejar cada campo por separado
+      formData.append("id_area", values.area?.id_area.toString() ?? "");
+      formData.append("title", values.titulo);
+      formData.append("description", values.descripcion);
+
+      const response = await postCreateTicket(formData, token!);
+      console.log(token);
+
+      console.log("Respuesta del post:", response);
     },
   });
 

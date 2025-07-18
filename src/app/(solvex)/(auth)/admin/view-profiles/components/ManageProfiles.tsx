@@ -10,25 +10,34 @@ import { UserDto } from "@/dto/userDto";
 // vedors
 import Swal from "sweetalert2";
 
-// helpers
-// import { employees, supportStaff } from "./helper";
-
 // hooks
-import useUsers from "@/hooks/useUsers";
+import useEmployees from "@/hooks/useEmployees";
+import useHelpers from "@/hooks/useHelpers";
+import useUpdateUserRole from "@/hooks/useUpdateUserRole";
 
 const ManageProfiles: React.FC = () => {
-  const { data, isLoading, error } = useUsers();
+  const {
+    data: employees,
+    isLoading: isLoadingEmployees,
+    error: errorEmployees,
+  } = useEmployees();
+  const {
+    data: helpers,
+    isLoading: isLoadingHelpers,
+    error: errorHelpers,
+  } = useHelpers();
+  const { mutate: changeUserRole, isPending: isUpdating } = useUpdateUserRole();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoadingEmployees || isLoadingHelpers)
+    return <div>Cargando datos...</div>;
 
-  if (error) return <div>Error al cargar productos</div>;
+  if (errorEmployees) return <div>Error al cargar empleados</div>;
+  if (errorHelpers) return <div>Error al cargar soporte</div>;
 
-  console.log(data);
-
-  const handleEmployeeToSupport = async (user: UserDto) => {
+  const handleSupportToEmployee = async (user: UserDto) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
-      text: "¡No podrás revertir esta acción!",
+      text: `¡El usuario ${user.name} ${user.lastname} será modificado!`,
       icon: "warning",
       showCancelButton: true, // Muestra el botón de cancelar
       confirmButtonText: "Aceptar",
@@ -42,21 +51,34 @@ const ManageProfiles: React.FC = () => {
     });
 
     if (result.isConfirmed) {
-      Swal.fire({
-        title: "¡Empleado modificado!",
-        text: `¡El empleado ${user.name} ahora pertenece a Empleados`,
-        icon: "success",
-        timer: 3000,
-        timerProgressBar: true,
-        showConfirmButton: false,
-        customClass: {
-          popup: "swal2-popup--success", // Añade esta clase personalizada
-        },
+      try {
+        await changeUserRole(user.id_user);
 
-        // Aca podemos ejecutar la lógica que depende de la confirmación:
-        // Por ejemplo, llamar a una API para modificar el role.
-        // Lógica específica para cambiar a soporte
-      });
+        Swal.fire({
+          title: "¡Empleado modificado!",
+          text: `¡El empleado ${user.name} ${user.lastname} ahora pertenece a Empleados`,
+          icon: "success",
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          customClass: {
+            popup: "swal2-popup--success", // Añade esta clase personalizada
+          },
+        });
+      } catch (error) {
+        Swal.fire({
+          title: "¡Error!",
+          text: `Hubo un error al modificar el rol de ${user.name} ${user.lastname}.`,
+          icon: "error",
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          customClass: {
+            popup: "swal2-popup--error",
+          },
+        });
+        console.log("Error al confirmar cambio de rol despues del Swal", error);
+      }
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       Swal.fire({
         title: "¡Cancelado!",
@@ -72,10 +94,10 @@ const ManageProfiles: React.FC = () => {
     }
   };
 
-  const handleSupportToEmployee = async (user: UserDto) => {
+  const handleEmployeeToSupport = async (user: UserDto) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
-      text: `¡El usuario ${user.name} será modificado!`,
+      text: `¡El usuario ${user.name} ${user.lastname} será modificado!`,
       icon: "warning",
       showCancelButton: true, // Muestra el botón de cancelar
       confirmButtonText: "Aceptar",
@@ -89,21 +111,38 @@ const ManageProfiles: React.FC = () => {
     });
 
     if (result.isConfirmed) {
-      Swal.fire({
-        title: "¡Soporte modificado!",
-        text: `¡El soporte ${user.name} ahora pertenece a Soporte`,
-        icon: "success",
-        timer: 3000,
-        timerProgressBar: true,
-        showConfirmButton: false,
-        customClass: {
-          popup: "swal2-popup--success", // Añade esta clase personalizada
-        },
+      try {
+        await changeUserRole(user.id_user);
 
-        // Aca podemos ejecutar la lógica que depende de la confirmación:
-        // Por ejemplo, llamar a una API para modificar el role.
-        // Lógica específica para cambiar a soporte
-      });
+        Swal.fire({
+          title: "¡Soporte modificado!",
+          text: `¡El soporte ${user.name} ahora pertenece a Soporte`,
+          icon: "success",
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          customClass: {
+            popup: "swal2-popup--success", // Añade esta clase personalizada
+          },
+
+          // Aca podemos ejecutar la lógica que depende de la confirmación:
+          // Por ejemplo, llamar a una API para modificar el role.
+          // Lógica específica para cambiar a soporte
+        });
+      } catch (error) {
+        Swal.fire({
+          title: "¡Error!",
+          text: `Hubo un error al modificar el rol de ${user.name} ${user.lastname}.`,
+          icon: "error",
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          customClass: {
+            popup: "swal2-popup--error",
+          },
+        });
+        console.log("Error al confirmar cambio de rol despues del Swal", error);
+      }
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       Swal.fire({
         title: "¡Cancelado!",
@@ -117,8 +156,6 @@ const ManageProfiles: React.FC = () => {
         },
       });
     }
-
-    // Lógica específica para cambiar a empleado
   };
 
   return (
@@ -129,11 +166,12 @@ const ManageProfiles: React.FC = () => {
           Soporte
         </h3>
         <div className="flex flex-wrap gap-8">
-          {data?.map((soporte) => {
+          {helpers?.map((soporte) => {
             return (
               <CardComponentForAdmin key={soporte.id_user} user={soporte}>
                 <ButtonComponent
-                  handleClick={() => handleEmployeeToSupport(soporte)}
+                  handleClick={() => handleSupportToEmployee(soporte)}
+                  disabled={isUpdating}
                 >
                   Cambiar a empleado
                 </ButtonComponent>
@@ -148,11 +186,12 @@ const ManageProfiles: React.FC = () => {
           Empleados
         </h3>
         <div className="flex flex-wrap gap-8">
-          {data?.map((employee) => {
+          {employees?.map((employee) => {
             return (
               <CardComponentForAdmin key={employee.id_user} user={employee}>
                 <ButtonComponent
-                  handleClick={() => handleSupportToEmployee(employee)}
+                  handleClick={() => handleEmployeeToSupport(employee)}
+                  disabled={isUpdating}
                 >
                   Cambiar a Soporte
                 </ButtonComponent>

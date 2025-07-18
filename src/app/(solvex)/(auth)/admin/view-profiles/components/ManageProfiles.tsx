@@ -5,7 +5,7 @@ import CardComponentForAdmin from "./cardComponent/CardComponentForAdmin";
 import ButtonComponent from "./buttonComponent/ButtonComponent";
 
 // types
-import User from "./types";
+import { UserDto } from "@/dto/userDto";
 
 // vedors
 import Swal from "sweetalert2";
@@ -23,7 +23,9 @@ const ManageProfiles: React.FC = () => {
 
   if (error) return <div>Error al cargar productos</div>;
 
-  const handleEmployeeToSupport = async (user: User) => {
+  console.log(data);
+
+  const handleEmployeeToSupport = async (user: UserDto) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
       text: "¡No podrás revertir esta acción!",
@@ -70,7 +72,7 @@ const ManageProfiles: React.FC = () => {
     }
   };
 
-  const handleSupportToEmployee = async (user: User) => {
+  const handleSupportToEmployee = async (user: UserDto) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
       text: `¡El usuario ${user.name} será modificado!`,
@@ -127,11 +129,11 @@ const ManageProfiles: React.FC = () => {
           Soporte
         </h3>
         <div className="flex flex-wrap gap-8">
-          {data?.map((helper: User) => {
+          {data?.map((soporte) => {
             return (
-              <CardComponentForAdmin key={helper.id} user={helper}>
+              <CardComponentForAdmin key={soporte.id_user} user={soporte}>
                 <ButtonComponent
-                  handleClick={() => handleEmployeeToSupport(helper)}
+                  handleClick={() => handleEmployeeToSupport(soporte)}
                 >
                   Cambiar a empleado
                 </ButtonComponent>
@@ -148,7 +150,7 @@ const ManageProfiles: React.FC = () => {
         <div className="flex flex-wrap gap-8">
           {data?.map((employee) => {
             return (
-              <CardComponentForAdmin key={employee.id} user={employee}>
+              <CardComponentForAdmin key={employee.id_user} user={employee}>
                 <ButtonComponent
                   handleClick={() => handleSupportToEmployee(employee)}
                 >

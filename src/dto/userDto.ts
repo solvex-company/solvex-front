@@ -1,4 +1,4 @@
-export default interface UserData {
+export interface UserDto {
   id_user: string;
   name: string;
   lastname: string;

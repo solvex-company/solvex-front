@@ -1,14 +1,9 @@
 import axios from "axios";
 import AxiosApi from "@/app/api/axiosInstance";
 
-interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  currentRole: "employee" | "support";
-}
+import { UserDto } from "@/dto/userDto";
 
-const fetchUsers = async (): Promise<IUser[]> => {
+const fetchUsers = async (): Promise<UserDto[]> => {
   try {
     const response = await AxiosApi.get("/users");
 

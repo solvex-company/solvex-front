@@ -8,6 +8,7 @@ import { TicketFormValues } from "@/types/ITickets";
 import ImageUpload from "./ImageUpload";
 import { postCreateTicket } from "@/services/tickets";
 import { useAuthContext } from "@/context/authContext";
+import Swal from "sweetalert2";
 
 export default function CreateTicketForm() {
   const [images, setImages] = useState<File[]>([]);
@@ -26,7 +27,7 @@ export default function CreateTicketForm() {
       titulo: Yup.string().min(3, "Mínimo 3 caracteres").required("Requerido"),
       descripcion: Yup.string().min(10, "Mínimo 10 caracteres").required("Requerido"),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       const formData = new FormData();
 
       images.forEach((img) => formData.append("images", img));
@@ -37,9 +38,16 @@ export default function CreateTicketForm() {
       formData.append("description", values.descripcion);
 
       const response = await postCreateTicket(formData, token!);
-      console.log(token);
-
       console.log("Respuesta del post:", response);
+
+      Swal.fire({
+        title: "Ticket creado exitosamente!",
+        text: "Gracias por reportar el problema.",
+        icon: "success",
+      });
+
+      resetForm(); // Limpiar el formulario
+      setImages([]); // Limpiar las imágenes
     },
   });
 

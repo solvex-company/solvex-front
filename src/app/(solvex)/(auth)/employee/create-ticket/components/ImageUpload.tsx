@@ -36,6 +36,7 @@ export default function ImageUpload({ images, setImages }: ImageUploadProps) {
         <div className="border border-accent rounded-md bg-mainBg p-3 text-gray-400">No hay imagenes adjuntadas </div>
       )}
 
+      {/* Botón para seleccionar archivos */}
       <div className="mt-2">
         <label
           htmlFor="fileInput"

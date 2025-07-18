@@ -6,15 +6,17 @@ import { getAreaTicket } from "@/services/tickets";
 
 import { TicketFormValues } from "@/types/ITickets";
 import { Area } from "@/types/ITickets";
+import { useAuthContext } from "@/context/authContext";
 
 function TicketHeaderFields() {
   const { values, setFieldValue } = useFormikContext<TicketFormValues>();
   const [areas, setAreas] = useState<Area[]>([]);
+  const { token } = useAuthContext();
 
   useEffect(() => {
     const fetchAreas = async () => {
       try {
-        const areasData = await getAreaTicket();
+        const areasData = await getAreaTicket(token!);
 
         // Verificar si es un array (respuesta exitosa)
         if (Array.isArray(areasData)) {
@@ -31,7 +33,7 @@ function TicketHeaderFields() {
     };
 
     fetchAreas();
-  }, []);
+  }, [token]);
 
   const handleAreaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedAreaId = parseInt(e.target.value);
@@ -67,6 +69,7 @@ function TicketHeaderFields() {
           className="bg-mainBg border border-accent rounded-md p-2 h-[45px] w-full"
         >
           <option value="">Seleccione un área</option>
+
           {areas.map((area: Area) => (
             <option key={area.id_area} value={area.id_area}>
               {area.name}

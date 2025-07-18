@@ -37,6 +37,7 @@ export default function CreateTicketForm() {
       formData.append("description", values.descripcion);
 
       const response = await postCreateTicket(formData, token!);
+      console.log(token);
 
       console.log("Respuesta del post:", response);
     },

@@ -30,9 +30,13 @@ export const postCreateTicket = async (formData: FormData, token: string) => {
   }
 };
 
-export const getAreaTicket = async () => {
+export const getAreaTicket = async (token: string) => {
   try {
-    const res = await axiosApiBack.get("/tickets/getAreas");
+    const res = await axiosApiBack.get("/tickets/getAreas", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res.data; // Esto debería ser el array directamente
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {

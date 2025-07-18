@@ -10,7 +10,7 @@ const usePublic = () => {
     if (isAuth) {
       router.push('/not-found');
       if (user?.id_role === 1) {
-        router.push('/admin/dashborad');
+        router.push('/admin/dashboard');
       } else if (user?.id_role === 2) {
         router.push('/helper/dashboard');
       } else if (user?.id_role === 3) {
@@ -18,7 +18,7 @@ const usePublic = () => {
       }
     };
   }, [isAuth, router]);
-  return null;
+  return <div>Verificando ruta...</div>;
 };
 
 export default usePublic;

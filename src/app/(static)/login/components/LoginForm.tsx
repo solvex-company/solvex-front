@@ -9,8 +9,10 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { useAuthContext } from "@/context/authContext";
+import usePublic from "@/hooks/usePublic";
 
 const LoginForm: React.FC = () => {
+  usePublic();
   const router = useRouter();
   const { saveUserData } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);

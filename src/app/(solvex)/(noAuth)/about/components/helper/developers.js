@@ -15,8 +15,8 @@ const frontend = [
     name: "Franco Gomez",
     hobbies:
       "Soy desarrollador Full Stack, aunque lo que realmente me encanta es el Frontend. Disfruto creando interfaces que se vean bien y funcionen mejor. Amante de los gatos, los videojuegos y siempre con ganas de aprender algo nuevo y meterle onda a cada proyecto.",
-    linkedInSrc: "www.linkedin.com/in/franco-gómez-rosell",
-    githubSrc: "",
+    linkedInSrc: "https://linkedin.com/in/franco-gómez-rosell",
+    githubSrc: " https://github.com/Franki09",
   },
   {
     imgSrc:
@@ -24,7 +24,7 @@ const frontend = [
     name: "Mariana Lopez",
     hobbies:
       "🍥Desarrolladora Full Stack, apasionada del mundo digital, donde el código, los videojuegos y el anime se combinan para crear algo increíble🎮✨",
-    linkedInSrc: "www.linkedin.com/in/meryanne98",
+    linkedInSrc: "https://linkedin.com/in/meryanne98",
     githubSrc: "https://github.com/MCLopezMoreno",
   },
 ];

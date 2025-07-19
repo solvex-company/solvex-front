@@ -8,10 +8,10 @@ import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import { useAuthContext } from "@/context/authContext";
+import { useAuthContext } from "@/context/AuthContext";
 import usePublic from "@/hooks/usePublic";
-import GoogleLoginButton from "../../register/components/GoogleLoginButton";
 import Link from "next/link";
+import GoogleLoginButton from "../../register/components/GoogleLoginButton";
 
 const LoginForm: React.FC = () => {
   usePublic();
@@ -44,17 +44,14 @@ const LoginForm: React.FC = () => {
             icon: "success",
             title: "¡Login exitoso!",
             text: response.message || "Bienvenido",
-          }).then((result) => {
-              if (result.isConfirmed) {
-
-                console.log(response);
-                const { message, data, success } = response;
-                void message;
-                const login = success;
-                const token = data;
-                saveUserData({token, login});
-              }
-            });
+          });
+          console.log(response);
+          const { message, data, success } = response;
+          void message;
+          const login = success;
+          const token = data;
+          saveUserData({ token, login });
+          router.push("/admin/dashboard");
         } else {
           Swal.fire({
             icon: "error",
@@ -99,11 +96,16 @@ const LoginForm: React.FC = () => {
           </label>
 
           {formik.touched.email && formik.errors.email && (
-            <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
+            <div className="text-red-500 text-sm mt-1">
+              {formik.errors.email}
+            </div>
           )}
         </div>
         <div className="mb-6 ">
-          <label htmlFor="password" className="flex flex-col text-sm items-start">
+          <label
+            htmlFor="password"
+            className="flex flex-col text-sm items-start"
+          >
             Contraseña
             <div
               className={`flex justify-between items-center w-full p-1 pl-4 h-[40px] rounded-md text-gray-700   bg-inputBg focus:outline-none  ${
@@ -153,12 +155,11 @@ const LoginForm: React.FC = () => {
           Registrate
         </Link>
       </div>
-      
+
       <div className="flex flex-col items-center pt-4">
         <p className="text-gray-400">———————— o continuar con ————————</p>
       </div>
       <GoogleLoginButton />
-
     </div>
   );
 };

@@ -1,6 +1,7 @@
-export default interface User {
-  id: string;
+export default interface UserData {
+  id_user: string;
   name: string;
-  currentRole: "employee" | "support";
+  lastname: string;
   email: string;
+  role: number | string;
 }

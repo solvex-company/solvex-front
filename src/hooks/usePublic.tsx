@@ -17,7 +17,7 @@ const usePublic = () => {
         router.push("/employee/dashboard");
       }
     }
-  }, [isAuth, router]);
+  }, [isAuth, router, user]);
   return <div>Verificando ruta...</div>;
 };
 

@@ -7,8 +7,9 @@ import TicketHeaderFields from "./TicketHeaderFields";
 import { TicketFormValues } from "@/types/ITickets";
 import ImageUpload from "./ImageUpload";
 import { postCreateTicket } from "@/services/tickets";
-import { useAuthContext } from "@/context/AuthContext";
+
 import Swal from "sweetalert2";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function CreateTicketForm() {
   const [images, setImages] = useState<File[]>([]);

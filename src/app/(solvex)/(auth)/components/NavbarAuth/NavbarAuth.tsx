@@ -43,8 +43,6 @@ const NavbarAuth = () => {
     }
   }, [user, router]);
 
-  console.log("1.La variable is Auth es:", isAuth);
-  console.log("El user es:", user);
   if (isAuth) {
     return (
       <div className="flex flex-col h-full w-[250px] bg-navAuthBg place-content-between">

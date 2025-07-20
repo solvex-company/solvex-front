@@ -1,10 +1,10 @@
 "use server";
 
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 import { FormikValues } from "formik";
 
 const axiosApiBack = axios.create({
-  baseURL: /* 'http://localhost:3001' */ process.env.API_URL, //localhost:4000
+  baseURL: process.env.API_URL, //localhost:4000
 });
 
 export const postRegister = async (data: FormikValues) => {
@@ -79,6 +79,30 @@ export const postLogin = async (data: FormikValues) => {
 
     return {
       success: false,
+      message: "Error desconocido",
+      errors: "Ocurrió un error inesperado",
+    };
+  }
+};
+
+export const getUsersInfo = async (token: string) => {
+  try {
+    const res = await axiosApiBack.get("/users/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data; // Esto debería ser el array directamente
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.response?.data?.message || error.message;
+      console.warn("Error al obtener informacion del usuario", errorMessage);
+      return {
+        message: "Error al obtener la informacion del usuario",
+        errors: errorMessage,
+      };
+    }
+    return {
       message: "Error desconocido",
       errors: "Ocurrió un error inesperado",
     };

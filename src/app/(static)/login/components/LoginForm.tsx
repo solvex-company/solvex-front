@@ -9,12 +9,12 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { useAuthContext } from "@/context/AuthContext";
-import usePublic from "@/hooks/usePublic";
+/* import usePublic from "@/hooks/usePublic"; */
 import Link from "next/link";
 import GoogleLoginButton from "../../register/components/GoogleLoginButton";
 
 const LoginForm: React.FC = () => {
-  usePublic();
+  /* usePublic(); */
   const router = useRouter();
   const { saveUserData } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);

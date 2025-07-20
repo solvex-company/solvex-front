@@ -1,6 +1,7 @@
 "use client";
 
 import AxiosApi from "@/app/api/axiosInstance";
+import { getUsersInfo } from "@/services/auth";
 import { jwtDecode } from "jwt-decode";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -37,15 +38,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isAuth, setIsAuth] = useState<AuthContextType["isAuth"]>(null);
 
-  const saveUserData = (data: SaveUserPayload) => {
+  const saveUserData = async (data: SaveUserPayload) => {
     setToken(data.token);
     setIsAuth(data.login);
 
-    const payload = jwtDecode<User>(data.token);
+    const payload = await getUsersInfo(data.token);
+    const payload2 = jwtDecode<User>(data.token);
 
     const userData: User = {
-      email: payload.email,
-      id_role: payload.id_role,
+      email: payload2.email,
+      id_role: payload2.id_role,
       name: payload.name,
       lastname: payload.lastname,
       phone: payload.phone,

@@ -1,6 +1,7 @@
 type buttonFunction = {
   handleClick: () => void;
   children: string;
+  disabled: boolean;
 };
 
 const ButtonComponent: React.FC<buttonFunction> = ({

@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { useAuthContext } from "@/context/AuthContext";
 import usePublic from "@/hooks/usePublic";
-import GoogleLoginButton from "../../register/components/GoogleLoginButton";
 import Link from "next/link";
+import GoogleLoginButton from "../../register/components/GoogleLoginButton";
 
 const LoginForm: React.FC = () => {
   usePublic();
@@ -40,16 +40,14 @@ const LoginForm: React.FC = () => {
             icon: "success",
             title: "¡Login exitoso!",
             text: response.message || "Bienvenido",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              console.log(response);
-              const { message, data, success } = response;
-              void message;
-              const login = success;
-              const token = data;
-              saveUserData({ token, login });
-            }
           });
+          console.log(response);
+          const { message, data, success } = response;
+          void message;
+          const login = success;
+          const token = data;
+          saveUserData({ token, login });
+          router.push("/admin/dashboard");
         } else {
           Swal.fire({
             icon: "error",

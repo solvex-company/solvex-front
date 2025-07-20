@@ -237,6 +237,9 @@ const ManageProfiles: React.FC = () => {
   //   }
   // };
 
+  const empleados = employees?.filter((emple) => emple.role === "employee");
+  console.log(empleados);
+
   return (
     <div className="w-full h-screen">
       <h2 className="text-2xl font-bold">Administrar Perfiles</h2>

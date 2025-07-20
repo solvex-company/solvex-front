@@ -1,5 +1,4 @@
 import React from "react";
-import { adminData } from "@/helpers/usersData";
 import ChangePassForm from "./ChangePassForm/ChangePassForm";
 
 function ChangePassword() {
@@ -8,7 +7,7 @@ function ChangePassword() {
       <div>
         <h2>Contraseña actual</h2>
         <h3 className="border border-accent rounded-lg w-[480px] p-1">
-          {adminData.password}
+          Ingrese su contraseña actual
         </h3>
         <ChangePassForm />
       </div>

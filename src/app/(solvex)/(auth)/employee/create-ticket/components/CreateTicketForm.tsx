@@ -1,14 +1,19 @@
 "use client";
 
+//Para el form
 import { useFormik, FormikProvider } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
+import Swal from "sweetalert2";
+
+//Componentes
 import TicketHeaderFields from "./TicketHeaderFields";
-import { TicketFormValues } from "@/types/ITickets";
 import ImageUpload from "./ImageUpload";
+
+//Otros (Tipos, servicios, contextos)
+import { TicketFormValues } from "@/types/ITickets";
 import { postCreateTicket } from "@/services/tickets";
 import { useAuthContext } from "@/context/AuthContext";
-import Swal from "sweetalert2";
 
 export default function CreateTicketForm() {
   const [images, setImages] = useState<File[]>([]);

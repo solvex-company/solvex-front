@@ -16,7 +16,7 @@ function InfoDashboard() {
         <h3 className="border border-accent rounded-lg p-1">{user ? user.email : `Correo del usuario`}</h3>
       </div>
       <div>
-        <h2>Numero de identificacion (DNI)</h2>
+        <h2>Numero de identificacion</h2>
         <h3 className="border border-accent rounded-lg p-1">
           {user?.identification_number ? user.identification_number : `Numero de identificacion del usuario`}
         </h3>

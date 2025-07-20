@@ -6,7 +6,7 @@ import { getAreaTicket } from "@/services/tickets";
 
 import { TicketFormValues } from "@/types/ITickets";
 import { Area } from "@/types/ITickets";
-import { useAuthContext } from "@/context/authContext";
+import { useAuthContext } from "@/context/AuthContext";
 
 function TicketHeaderFields() {
   const { values, setFieldValue } = useFormikContext<TicketFormValues>();

@@ -1,5 +1,5 @@
 "use client";
-import { useAuthContext } from "@/context/authContext";
+import { useAuthContext } from "@/context/AuthContext";
 // import usePrivate from "@/hooks/usePrivate";
 import Image from "next/image";
 import Link from "next/link";

@@ -7,7 +7,7 @@ import TicketHeaderFields from "./TicketHeaderFields";
 import { TicketFormValues } from "@/types/ITickets";
 import ImageUpload from "./ImageUpload";
 import { postCreateTicket } from "@/services/tickets";
-import { useAuthContext } from "@/context/authContext";
+import { useAuthContext } from "@/context/AuthContext";
 import Swal from "sweetalert2";
 
 export default function CreateTicketForm() {

@@ -1,7 +1,5 @@
 "use client";
 
-// import { EmployeeTicketsData } from "@/helpers/ticketData";
-
 // components
 import Loader from "@/app/components/Loader/Loader";
 
@@ -11,13 +9,16 @@ import { useAuthContext } from "@/context/AuthContext";
 
 // import Link from "next/link";
 import React from "react";
+import { format, parseISO } from "date-fns";
+import { es } from "date-fns/locale";
 
 function TicketCards() {
-  const { token } = useAuthContext();
+  const { user } = useAuthContext();
   const { data: tickets, isLoading, error } = useTickets();
 
   const filteredTickets = tickets?.filter(
-    (ticket) => ticket.id_empleado.id_user === token
+    (ticket) =>
+      ticket.id_empleado.identification_number === user?.identification_number
   );
 
   if (isLoading) return <Loader />;
@@ -41,10 +42,10 @@ function TicketCards() {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-5 pt-5">
+    <div className="grid grid-cols-3 gap-5 pt-5 cursor-pointer">
       {filteredTickets.map((ticket, index) => (
-        // <Link href={""}>
         <div
+          onClick={() => console.log(`Ticket ID: ${ticket.id_ticket} clicked`)}
           key={index}
           className={`flex flex-col justify-between items-center w-[300px] h-[200px] border border-l-[20px] rounded-md p-5 gap-5 
             ${getBorderColor(ticket.id_status.name)}`}
@@ -53,7 +54,10 @@ function TicketCards() {
             {ticket.title}
           </h2>
           <p className="text-xl">
-            <strong>Fecha:</strong> {ticket.creation_date}
+            <strong>Fecha:</strong>{" "}
+            {format(parseISO(ticket.creation_date), "dd/MM/yyyy HH:ss", {
+              locale: es,
+            })}
           </p>
           <p className="text-xl">
             <strong>Estado: </strong>

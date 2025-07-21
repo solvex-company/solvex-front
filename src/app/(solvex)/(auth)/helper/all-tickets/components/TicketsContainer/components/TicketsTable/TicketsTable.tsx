@@ -27,10 +27,15 @@ const TicketsTable: React.FC<{ tickets: ITicketsDto[] }> = ({ tickets }) => {
               locale: es,
             });
 
+            const handleClick = () => {
+              console.log(`Ticket ID: ${ticket.id_ticket} clicked`);
+            };
+
             return (
               <tr
                 key={ticket.id_ticket}
-                className="w-full flex items-center justify-between px-5 py-2  border-2 border-accent rounded-lg"
+                className="w-full flex items-center justify-between px-5 py-2  border-2 border-accent rounded-lg cursor-pointer"
+                onClick={handleClick}
               >
                 <td className="w-1/6">COD-{ticket.id_ticket}</td>
                 <td className="w-2/6">{ticket.title}</td>

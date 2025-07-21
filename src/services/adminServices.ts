@@ -73,3 +73,27 @@ export const updateUserRole = async (id: string): Promise<UpdateUserDto> => {
 
   throw new Error("Error desconocido");
 };
+
+export const fetchAllUsers = async (): Promise<UserDto[]> => {
+  try {
+    const response = await AxiosApi.get("/users");
+
+    if (!response.data) {
+      console.log("Data not found");
+
+      throw new Error("No hay data retornada");
+    }
+
+    return response.data;
+  } catch (error: unknown) {
+    console.log("error al fetchear usuarios", error);
+
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.response?.data?.message || error.message;
+
+      throw new Error(`Error al obtener los usuarios: ${errorMessage}`);
+    }
+
+    throw new Error("Error desconocido");
+  }
+};

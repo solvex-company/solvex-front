@@ -41,7 +41,7 @@ const LoginForm: React.FC = () => {
             title: "¡Login exitoso!",
             text: response.message || "Bienvenido",
           });
-          console.log(response);
+
           const { message, data, success } = response;
           void message;
           const login = success;
@@ -52,7 +52,7 @@ const LoginForm: React.FC = () => {
           Swal.fire({
             icon: "error",
             title: "Error",
-            text: response.message || "Credenciales incorrectas",
+            text: "Credenciales incorrectas",
           });
         }
       } catch (error: unknown) {

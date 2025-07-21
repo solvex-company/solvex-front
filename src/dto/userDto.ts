@@ -18,9 +18,16 @@ export interface UserDto {
   id_user: string;
   name: string;
   lastname: string;
-  email: string;
-  role: number | string;
-  credentials: Credentials;
+  identification_number: string;
+  phone: string;
+  role: {
+    id_role: number;
+    role_name: string;
+  };
+  credentials: {
+    id_credentials: string;
+    email: string;
+  };
 }
 
 export interface UpdateUserDto {

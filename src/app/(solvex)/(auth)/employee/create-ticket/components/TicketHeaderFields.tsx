@@ -42,7 +42,9 @@ function TicketHeaderFields() {
   const handleAreaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedAreaId = parseInt(e.target.value);
     if (selectedAreaId) {
-      const selectedArea = areas.find((area) => area.id_area === selectedAreaId);
+      const selectedArea = areas.find(
+        (area) => area.id_area === selectedAreaId
+      );
       if (selectedArea) {
         setFieldValue("area", selectedArea);
       }
@@ -68,7 +70,11 @@ function TicketHeaderFields() {
         <select
           name="area"
           id="area"
-          value={values.area && typeof values.area === "object" ? values.area.id_area : values.area || ""}
+          value={
+            values.area && typeof values.area === "object"
+              ? values.area.id_area
+              : values.area || ""
+          }
           onChange={handleAreaChange}
           className="bg-mainBg border border-accent rounded-md p-2 h-[45px] w-full"
         >

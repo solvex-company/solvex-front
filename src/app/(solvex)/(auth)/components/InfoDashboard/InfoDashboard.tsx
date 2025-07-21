@@ -13,9 +13,7 @@ function InfoDashboard() {
       </div>
       <div>
         <h2>Correo</h2>
-        <h3 className="border border-accent rounded-lg p-1">
-          {user ? user.email: `Correo del usuario`}
-        </h3>
+        <h3 className="border border-accent rounded-lg p-1">{user ? user.email : `Correo del usuario`}</h3>
       </div>
       <div>
         <h2>Numero de identificacion</h2>
@@ -25,9 +23,7 @@ function InfoDashboard() {
       </div>
       <div>
         <h2>Numero de Telefono</h2>
-        <h3 className="border border-accent rounded-lg p-1">
-          {user?.phone ? user.phone : `Numero de telefono del usuario`}
-        </h3>
+        <h3 className="border border-accent rounded-lg p-1">{user?.phone ? user.phone : `Numero de telefono del usuario`}</h3>
       </div>
     </section>
   );

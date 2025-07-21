@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -63,12 +62,37 @@ const RegisterForm: React.FC = () => {
         }}
         validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          console.log('Valores:', values);
           setSubmitting(false);
           try {
             const res = await postRegister(values);
+
+            if (!res.errors && res.message === "Usuario registrado correctamente") {
+              return Swal.fire({
+              icon: "success",
+              title: "Éxito",
+              text: "El usuario ha sido registrado",
+              confirmButtonText: "Aceptar",
+              confirmButtonColor: "#4da6ff",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  router.push("/login");
+                }
+              });
+            }
+
             if (res.errors) {
               console.log("1-", res.errors);
+
+              if (res.statusCode === 503 || res.statusCode === 408) {
+                return Swal.fire({
+                  icon: "error",
+                  title: "Error de conexion",
+                  text: "No se pudo conectar con el servidor. Por favor intente mas tarde.",
+                  confirmButtonText: "Aceptar",
+                  confirmButtonColor: "#4da6ff",
+                });
+              }
+
               if (res.errors.includes("Email")) {
                 return Swal.fire({
                   icon: "error",
@@ -88,19 +112,24 @@ const RegisterForm: React.FC = () => {
                 });
               }
             }
+
             return Swal.fire({
-              icon: "success",
-              title: "Éxito",
-              text: "El usuario ha sido registrado",
+              icon: "error",
+              title: "Error",
+              text: "Ocurrio un error al registrar",
               confirmButtonText: "Aceptar",
               confirmButtonColor: "#4da6ff",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                router.push("/login");
-              }
-            });
+            })
+            
           } catch (error) {
             console.log("2-", error);
+            return Swal.fire({
+              icon: "error",
+              title: "Error inesperado",
+              text: "Ocurrio un problema desconocido",
+              confirmButtonText: "Aceptar",
+              confirmButtonColor: "#4da6ff",
+            });
           }
         }}
       >

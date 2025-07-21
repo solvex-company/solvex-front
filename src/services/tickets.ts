@@ -53,3 +53,27 @@ export const getAreaTicket = async (token: string) => {
     };
   }
 };
+
+export const getTicketById = async (ticketId: string, token: string) => {
+  try {
+    const res = await axiosApiBack.get(`${ticketId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data; // Esto debería ser el ticket directamente
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.response?.data?.message || error.message;
+      console.warn("Error al obtener el ticket:", errorMessage);
+      return {
+        message: "Error al obtener el ticket",
+        errors: errorMessage,
+      };
+    }
+    return {
+      message: "Error desconocido",
+      errors: "Ocurrió un error inesperado",
+    };
+  }
+};

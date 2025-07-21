@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -9,17 +8,20 @@ import { postRegister } from "@/services/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import usePublic from "@/hooks/usePublic";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 const RegisterForm: React.FC = () => {
+  usePublic();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("El nombre es requerido"),
     lastname: Yup.string().required("El apellido es requerido"),
-    typeId: Yup.string()
+    typeId: Yup.number()
       .required("Debes seleccionar un tipo de identificación") // Campo obligatorio
-      .oneOf(["1", "2", "3"], "Tipo de identificación no válido"),
+      .oneOf([1, 2, 3], "Tipo de identificación no válido"),
     email: Yup.string()
       .email("Email inválido")
       .required("El correo es requerido"),
@@ -30,7 +32,15 @@ const RegisterForm: React.FC = () => {
       .min(4, "El numero de teléfono debe tener 4 números")
       .required("El teléfono es requerido"),
     password: Yup.string()
-      .min(6, "La contraseña debe tener al menos 6 caracteres")
+      .min(8, "La contraseña debe tener al menos 8 caracteres")
+      .matches(
+        /^(?=.*[A-Z])/, 
+        "La contraseña debe contener al menos una mayúscula"
+      )
+      .matches(
+        /^(?=.*[!@#$%^&*(),.?":{}|<>])/, 
+        "La contraseña debe contener al menos un carácter especial"
+      )
       .required("La contraseña es requerida"),
     password2: Yup.string()
       .required("Confirma tu contraseña")
@@ -52,12 +62,37 @@ const RegisterForm: React.FC = () => {
         }}
         validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          console.log(values);
           setSubmitting(false);
           try {
             const res = await postRegister(values);
+
+            if (!res.errors && res.message === "Usuario registrado correctamente") {
+              return Swal.fire({
+              icon: "success",
+              title: "Éxito",
+              text: "El usuario ha sido registrado",
+              confirmButtonText: "Aceptar",
+              confirmButtonColor: "#4da6ff",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  router.push("/login");
+                }
+              });
+            }
+
             if (res.errors) {
               console.log("1-", res.errors);
+
+              if (res.statusCode === 503 || res.statusCode === 408) {
+                return Swal.fire({
+                  icon: "error",
+                  title: "Error de conexion",
+                  text: "No se pudo conectar con el servidor. Por favor intente mas tarde.",
+                  confirmButtonText: "Aceptar",
+                  confirmButtonColor: "#4da6ff",
+                });
+              }
+
               if (res.errors.includes("Email")) {
                 return Swal.fire({
                   icon: "error",
@@ -77,19 +112,24 @@ const RegisterForm: React.FC = () => {
                 });
               }
             }
+
             return Swal.fire({
-              icon: "success",
-              title: "Éxito",
-              text: "El usuario ha sido registrado",
+              icon: "error",
+              title: "Error",
+              text: "Ocurrio un error al registrar",
               confirmButtonText: "Aceptar",
               confirmButtonColor: "#4da6ff",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                router.push("/login");
-              }
-            });
+            })
+            
           } catch (error) {
             console.log("2-", error);
+            return Swal.fire({
+              icon: "error",
+              title: "Error inesperado",
+              text: "Ocurrio un problema desconocido",
+              confirmButtonText: "Aceptar",
+              confirmButtonColor: "#4da6ff",
+            });
           }
         }}
       >
@@ -132,10 +172,10 @@ const RegisterForm: React.FC = () => {
                 as="select"
                 className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
               >
-                <option value="">Tipo de Identificación</option>
-                <option value="1">CC</option>
-                <option value="2">DNI</option>
-                <option value="3">Pasaporte</option>
+                <option value={0}>Tipo de Identificación</option>
+                <option value={1}>CC</option>
+                <option value={2}>DNI</option>
+                <option value={3}>Pasaporte</option>
               </Field>
               <ErrorMessage
                 name="typeId"
@@ -253,23 +293,7 @@ const RegisterForm: React.FC = () => {
       <div className="flex flex-col items-center pt-4">
         <p className="text-gray-400">———————— o continuar con ————————</p>
       </div>
-      <div className="flex flex-col items-center pt-4">
-        <Link
-          href={"#"}
-          className="flex bg-gray-300 w-[380px] h-[40px] rounded-md hover:bg-gray-200"
-        >
-          <Image
-            src={"https://ik.imagekit.io/SolvexCompany/Google.png"}
-            width={20}
-            height={20}
-            alt="Solvex Company"
-            className="object-contain ml-3"
-          />
-          <span className="flex flex-col items-center justify-center w-[300px] h-[40px]">
-            Google
-          </span>
-        </Link>
-      </div>
+      <GoogleLoginButton />
     </div>
   );
 };

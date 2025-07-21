@@ -14,9 +14,9 @@ const frontend = [
       "https://ik.imagekit.io/SolvexCompany/FrancoGomez.jpg?updatedAt=1752436421231",
     name: "Franco Gomez",
     hobbies:
-      "Desarrollador Full Stack, amante de la tecnología y la programación, siempre explorando nuevas herramientas y lenguajes para crear soluciones innovadoras.",
-    linkedInSrc: "https://www.linkedin.com/in/franco-paganoni/",
-    githubSrc: "",
+      "Soy desarrollador Full Stack, aunque lo que realmente me encanta es el Frontend. Disfruto creando interfaces que se vean bien y funcionen mejor. Amante de los gatos, los videojuegos y siempre con ganas de aprender algo nuevo y meterle onda a cada proyecto.",
+    linkedInSrc: "https://linkedin.com/in/franco-gómez-rosell",
+    githubSrc: " https://github.com/Franki09",
   },
   {
     imgSrc:
@@ -24,8 +24,8 @@ const frontend = [
     name: "Mariana Lopez",
     hobbies:
       "🍥Desarrolladora Full Stack, apasionada del mundo digital, donde el código, los videojuegos y el anime se combinan para crear algo increíble🎮✨",
-    linkedInSrc: "https://www.linkedin.com/in/franco-paganoni/",
-    githubSrc: "",
+    linkedInSrc: "https://linkedin.com/in/meryanne98",
+    githubSrc: "https://github.com/MCLopezMoreno",
   },
 ];
 

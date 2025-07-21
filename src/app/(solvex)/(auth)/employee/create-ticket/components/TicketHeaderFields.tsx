@@ -9,26 +9,30 @@ import { Area } from "@/types/ITickets";
 import { useAuthContext } from "@/context/AuthContext";
 
 function TicketHeaderFields() {
-  const { values, setFieldValue } = useFormikContext<TicketFormValues>();
+  const { values, setFieldValue, touched, errors } = useFormikContext<TicketFormValues>();
   const [areas, setAreas] = useState<Area[]>([]);
   const { token } = useAuthContext();
 
   useEffect(() => {
     const fetchAreas = async () => {
-      try {
-        const areasData = await getAreaTicket(token!);
+      if (!token) {
+        console.warn("Token no disponible, evitando fetchAreas");
+        return;
+      }
 
-        // Verificar si es un array (respuesta exitosa)
+      try {
+        console.log("fetchAreas ejecutado");
+        const areasData = await getAreaTicket(token);
+
         if (Array.isArray(areasData)) {
           setAreas(areasData);
         } else {
-          // Es un objeto de error
-          console.error("Error al obtener áreas:", areasData.message);
-          setAreas([]); // Establecer array vacío
+          console.error(" Error al obtener áreas:", areasData?.message ?? areasData);
+          setAreas([]);
         }
       } catch (error) {
-        console.error("Error fetching areas:", error);
-        setAreas([]); // Establecer array vacío
+        console.error(" Error en fetchAreas:", error);
+        setAreas([]);
       }
     };
 
@@ -50,7 +54,7 @@ function TicketHeaderFields() {
   };
 
   return (
-    <div className="flex gap-4 items-center justify-between">
+    <div className="flex gap-4 items-start justify-between">
       <div className="flex flex-col w-[112px] ">
         <label htmlFor="codigo">Código</label>
         <input
@@ -82,6 +86,7 @@ function TicketHeaderFields() {
             </option>
           ))}
         </select>
+        <div className="min-h">{touched.area && errors.area && <p className="text-red-500 text-lg">{errors.area}</p>}</div>
       </div>
       <div className="flex flex-col w-[235px]">
         <label htmlFor="fecha">Fecha de creacion</label>

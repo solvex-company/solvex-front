@@ -15,14 +15,25 @@ export interface ImageUploadProps {
   setImages: (images: File[]) => void;
 }
 
+export interface Employee {
+  id_user: string;
+  name: string;
+  lastname: string;
+}
+
+export interface TicketStatus {
+  id_status: number;
+  name: string;
+}
+
 export interface IDetailTicket {
   id_ticket: string;
-  estado?: string; // Opcional porque no viene en la respuesta
   title: string;
   description: string;
   img_1?: string;
   img_2?: string;
   img_3?: string;
   creation_date: string;
-  empleado?: string; // Opcional porque no viene en la respuesta
+  id_status: TicketStatus;
+  id_empleado: Employee;
 }

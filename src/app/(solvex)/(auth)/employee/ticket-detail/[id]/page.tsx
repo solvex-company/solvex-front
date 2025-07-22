@@ -32,10 +32,6 @@ function EmTicketDetail({ params }: Props) {
     <div className="py-5 w-[967px]">
       <h2 className="font-bold text-2xl pb-5">Detalle de MI ticket</h2>
       <TicketDetail ticket={ticket} />
-      <div className="w-full pt-6">
-        <h3>Fecha</h3>
-        <p className="border border-accent rounded-md  p-2">{ticket.creation_date}</p>
-      </div>
     </div>
   );
 }

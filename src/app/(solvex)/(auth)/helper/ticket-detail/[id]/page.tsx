@@ -37,11 +37,9 @@ function HelTicketDetail({ params }: Props) {
       <div className="flex justify-between gap-4 pt-6">
         <div className="w-full">
           <h3>Empleado que genero el ticket</h3>
-          <p className="border border-accent rounded-md  p-2 ">{ticket.empleado}</p>
-        </div>
-        <div className="w-full">
-          <h3>Fecha</h3>
-          <p className="border border-accent rounded-md  p-2">{ticket.creation_date}</p>
+          <p className="border border-accent rounded-md  p-2 ">
+            {ticket.id_empleado.name} {ticket.id_empleado.lastname}
+          </p>
         </div>
       </div>
 

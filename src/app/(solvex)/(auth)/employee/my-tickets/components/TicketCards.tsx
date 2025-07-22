@@ -7,15 +7,16 @@ import Loader from "@/app/components/Loader/Loader";
 import useTickets from "@/hooks/useTickets";
 import { useAuthContext } from "@/context/AuthContext";
 
-// import Link from "next/link";
+// services
 import React from "react";
 import { format, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
-// import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function TicketCards() {
   const { user } = useAuthContext();
   const { data: tickets, isLoading, error } = useTickets();
+  const router = useRouter();
 
   const filteredTickets = tickets?.filter((ticket) => ticket.id_empleado.identification_number === user?.identification_number);
 
@@ -42,10 +43,9 @@ function TicketCards() {
   return (
     <div className="grid grid-cols-3 gap-5 pt-5 cursor-pointer">
       {filteredTickets.map((ticket, index) => (
-        // <Link key={index} href={`/employee/ticket-detail/${ticket.id_ticket}`}>
         <div
           key={index}
-          onClick={() => console.log(`Ticket ID: ${ticket.id_ticket} clicked`)}
+          onClick={() => router.push(`/employee/ticket-detail/${ticket.id_ticket}`)}
           className={`flex flex-col justify-between items-center w-[300px] h-[200px] border border-l-[20px] rounded-md p-5 gap-5 
             ${getBorderColor(ticket.id_status.name)}`}
         >
@@ -61,7 +61,6 @@ function TicketCards() {
             {ticket.id_status.name}
           </p>
         </div>
-        // </Link>
       ))}
     </div>
   );

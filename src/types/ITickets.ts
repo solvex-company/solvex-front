@@ -16,11 +16,13 @@ export interface ImageUploadProps {
 }
 
 export interface IDetailTicket {
-  codigo: string;
-  estado: string;
-  titulo: string;
-  descripcion: string;
-  imagenesAdjuntas: string[];
-  fecha: string;
-  empleado: string;
+  id_ticket: string;
+  estado?: string; // Opcional porque no viene en la respuesta
+  title: string;
+  description: string;
+  img_1?: string;
+  img_2?: string;
+  img_3?: string;
+  creation_date: string;
+  empleado?: string; // Opcional porque no viene en la respuesta
 }

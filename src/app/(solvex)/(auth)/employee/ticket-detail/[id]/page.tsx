@@ -34,7 +34,7 @@ function EmTicketDetail({ params }: Props) {
       <TicketDetail ticket={ticket} />
       <div className="w-full pt-6">
         <h3>Fecha</h3>
-        <p className="border border-accent rounded-md  p-2">{ticket.fecha}</p>
+        <p className="border border-accent rounded-md  p-2">{ticket.creation_date}</p>
       </div>
     </div>
   );

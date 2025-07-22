@@ -19,11 +19,13 @@ function HelTicketDetail({ params }: Props) {
   useEffect(() => {
     const fetchTicket = async () => {
       if (!token) return;
-      const data = await getTicketById(params.id, token);
+
+      const resolvedParams = await params;
+      const data = await getTicketById(resolvedParams.id, token);
       setTicket(data);
     };
     fetchTicket();
-  }, [token, params.id]);
+  }, [token, params]);
 
   if (!ticket) return <div>Cargando ticket...</div>;
 
@@ -39,7 +41,7 @@ function HelTicketDetail({ params }: Props) {
         </div>
         <div className="w-full">
           <h3>Fecha</h3>
-          <p className="border border-accent rounded-md  p-2">{ticket.fecha}</p>
+          <p className="border border-accent rounded-md  p-2">{ticket.creation_date}</p>
         </div>
       </div>
 

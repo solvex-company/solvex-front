@@ -56,7 +56,7 @@ export const getAreaTicket = async (token: string) => {
 
 export const getTicketById = async (ticketId: string, token: string) => {
   try {
-    const res = await axiosApiBack.get(`${ticketId}`, {
+    const res = await axiosApiBack.get(`/tickets/${ticketId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

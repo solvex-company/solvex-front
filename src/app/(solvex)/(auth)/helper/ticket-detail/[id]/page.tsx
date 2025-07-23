@@ -5,6 +5,7 @@ import TicketDetail from "../../../components/TicketDetail/TicketDetail";
 import { useAuthContext } from "@/context/AuthContext";
 import { IDetailTicket } from "@/types/ITickets";
 import { getTicketById } from "@/services/tickets";
+import TicketRespond from "./components/TicketRespond";
 
 type Props = {
   params: {
@@ -46,6 +47,8 @@ function HelTicketDetail({ params }: Props) {
       <button className="w-[967px] text-white text-center text-xl bg-accent rounded-md hover:opacity-70 p-2 mt-6">
         Gestionar Ticket
       </button>
+
+      <TicketRespond />
     </div>
   );
 }

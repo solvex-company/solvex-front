@@ -1,18 +1,25 @@
+"use client";
+
 // helper
 import mockDashboardData from "./mockStats";
+import useStatistics from "@/hooks/useStatistics";
 
 // components
 import IncidenceDoughnutChart from "./chart/IncidenceDoughnutChart";
 import SupportBarChart from "./chart/SupportBarChart";
+import Loader from "@/app/components/Loader/Loader";
 
 const IncidencesContainer: React.FC = () => {
-  // Desestructuramos los datos que necesitamos de nuestro helper mockeado
-  const {
-    incidenciasPorEstado,
-    empleadosSoporte,
-    totalIncidencias,
-    tiempoPromedioResolucionGlobal,
-  } = mockDashboardData;
+  const { data, isLoading, error } = useStatistics();
+
+  // desestructuramos los datos que necesitamos de nuestro useStatistics hook
+  const { empleadosSoporte } = mockDashboardData;
+
+  if (!data) return <div>No hay datos disponibles</div>;
+
+  if (isLoading) return <Loader />;
+
+  if (error) return <div>¡Hubo un error al cargar las estadísticas!</div>;
 
   return (
     // Contenedor principal de la página con estilos Tailwind
@@ -28,12 +35,8 @@ const IncidencesContainer: React.FC = () => {
         </h2>
         <p className="text-lg text-gray-700">
           Total de Incidencias:{" "}
-          <span className="font-bold text-blue-600">{totalIncidencias}</span>
-        </p>
-        <p className="text-lg text-gray-700">
-          Tiempo Promedio de Resolución Global:{" "}
           <span className="font-bold text-blue-600">
-            {tiempoPromedioResolucionGlobal}
+            {data.totalIncidencias}
           </span>
         </p>
       </div>
@@ -41,7 +44,7 @@ const IncidencesContainer: React.FC = () => {
       {/* Contenedor para los gráficos, usando grid para un diseño responsivo */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Renderizamos el gráfico de dona, pasándole solo los datos necesarios */}
-        <IncidenceDoughnutChart data={incidenciasPorEstado} />
+        <IncidenceDoughnutChart data={data.incidenciasPorEstado} />
 
         {/* Renderizamos el gráfico de barras, pasándole los datos de rendimiento de agentes */}
         <SupportBarChart data={empleadosSoporte} />

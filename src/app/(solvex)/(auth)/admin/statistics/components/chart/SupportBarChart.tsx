@@ -1,22 +1,20 @@
 "use client";
 
-// components/charts/SupportAgentBarChart.tsx
 import React from "react";
-import { Bar } from "react-chartjs-2"; // Importamos el componente Bar de react-chartjs-2
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
-  CategoryScale, // Necesario para el eje X (categorías como nombres de agentes)
-  LinearScale, // Necesario para el eje Y (valores numéricos como cantidad de resueltas)
-  BarElement, // Necesario para dibujar las barras
+  CategoryScale, // necesario para el eje X
+  LinearScale, // necesario para el eje Y
+  BarElement, // necesario para dibujar las barras
   Tooltip,
   Legend,
   TooltipItem,
 } from "chart.js";
 
-// --- Paso CRÍTICO: Registrar los elementos necesarios para un gráfico de barras ---
+// registrar los elementos necesarios para el grafico
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
-// --- Interfaz para los Props ---
 interface SupportAgentPerformance {
   id: number;
   nombre: string;
@@ -25,26 +23,23 @@ interface SupportAgentPerformance {
 }
 
 interface SupportAgentBarChartProps {
-  data: SupportAgentPerformance[]; // Esperamos un array de agentes de soporte
+  data: SupportAgentPerformance[];
 }
 
-// --- Componente React del Gráfico de Barras ---
 const SupportBarChart: React.FC<SupportAgentBarChartProps> = ({ data }) => {
-  // --- Transformación de Datos para Chart.js ---
   const chartData = {
-    labels: data.map((agent) => agent.nombre), // Nombres de los agentes para el eje X
+    labels: data.map((agent) => agent.nombre),
     datasets: [
       {
-        label: "Incidencias Resueltas", // Etiqueta de la serie de datos
-        data: data.map((agent) => agent.resueltas), // Número de incidencias resueltas para las barras
-        backgroundColor: "rgba(54, 162, 235, 0.7)", // Color de las barras (azul claro)
-        borderColor: "rgba(54, 162, 235, 1)", // Color del borde de las barras
-        borderWidth: 1,
+        label: "Incidencias Resueltas", // etiqueta de la serie de datos
+        data: data.map((agent) => agent.resueltas), // numero de incidencias resueltas para las barras
+        backgroundColor: "rgba(54, 162, 235, 0.7)",
+        borderColor: "rgba(54, 162, 235, 1)",
+        borderWidth: 2,
       },
     ],
   };
 
-  // --- Opciones de Configuración del Gráfico ---
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -75,24 +70,24 @@ const SupportBarChart: React.FC<SupportAgentBarChartProps> = ({ data }) => {
       },
     },
     scales: {
-      // Configuración específica para los ejes X e Y en un gráfico de barras
+      // configuracion específica para los ejes X e Y en el grafico de barras
       x: {
-        // Eje X (categorías)
+        //  X (categorías)
         grid: {
-          display: false, // No mostrar las líneas de la cuadrícula en el eje X
+          display: false, // no mostrar las lineas de la cuadricula en el eje X
         },
         ticks: {
           color: "#666", // Color de las etiquetas del eje X
         },
       },
       y: {
-        // Eje Y (valores numéricos)
-        beginAtZero: true, // Asegura que el eje Y comience en 0
+        //Y (valores numericos)
+        beginAtZero: true, //  el eje Y comienza en 0
         grid: {
-          color: "rgba(0, 0, 0, 0.1)", // Color de las líneas de la cuadrícula
+          color: "rgba(0, 0, 0, 0.1)", // color de las líneas de la cuadrícula
         },
         ticks: {
-          color: "#666", // Color de las etiquetas del eje Y
+          color: "#666", // color de las etiquetas del eje Y
         },
       },
     },

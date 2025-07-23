@@ -2,6 +2,7 @@ import axios from "axios";
 import AxiosApi from "@/app/api/axiosInstance";
 
 import { UserDto, UpdateUserDto } from "@/dto/userDto";
+import { IStatisticsDto } from "@/dto/statisticsDto";
 
 export const fetchEmployees = async (): Promise<UserDto[]> => {
   try {
@@ -92,6 +93,30 @@ export const fetchAllUsers = async (): Promise<UserDto[]> => {
       const errorMessage = error.response?.data?.message || error.message;
 
       throw new Error(`Error al obtener los usuarios: ${errorMessage}`);
+    }
+
+    throw new Error("Error desconocido");
+  }
+};
+
+export const fetchStatistics = async (): Promise<IStatisticsDto> => {
+  try {
+    const response = await AxiosApi.get("/tickets/report/summary");
+
+    if (!response.data) {
+      console.log("Data not found");
+
+      throw new Error("No hay data retornada");
+    }
+
+    return response.data;
+  } catch (error: unknown) {
+    console.log("error al fetchear estadisticas", error);
+
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.response?.data?.message || error.message;
+
+      throw new Error(`Error al obtener las estadisticas: ${errorMessage}`);
     }
 
     throw new Error("Error desconocido");

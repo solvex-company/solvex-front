@@ -1,7 +1,12 @@
-import React from "react";
+//components
+import IncidencesContainer from "./components/IncidencesContainer";
 
 function AdminStatistics() {
-  return <div>AdminStatistics</div>;
+  return (
+    <>
+      <IncidencesContainer />
+    </>
+  );
 }
 
 export default AdminStatistics;

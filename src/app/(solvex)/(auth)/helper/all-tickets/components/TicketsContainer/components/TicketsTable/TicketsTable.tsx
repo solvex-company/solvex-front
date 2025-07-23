@@ -7,7 +7,11 @@ import { es } from "date-fns/locale";
 // Dto
 import { ITicketsDto } from "@/dto/ticketsDto";
 
+import { useRouter } from "next/navigation";
+
 const TicketsTable: React.FC<{ tickets: ITicketsDto[] }> = ({ tickets }) => {
+  const router = useRouter();
+
   return (
     <div>
       <table className="flex w-full flex-col h-max gap-2 mt-5 table-fixed">
@@ -29,6 +33,7 @@ const TicketsTable: React.FC<{ tickets: ITicketsDto[] }> = ({ tickets }) => {
 
             const handleClick = () => {
               console.log(`Ticket ID: ${ticket.id_ticket} clicked`);
+              router.push(`/helper/ticket-detail/${ticket.id_ticket}`);
             };
 
             return (

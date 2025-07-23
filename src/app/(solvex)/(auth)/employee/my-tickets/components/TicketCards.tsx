@@ -7,19 +7,18 @@ import Loader from "@/app/components/Loader/Loader";
 import useTickets from "@/hooks/useTickets";
 import { useAuthContext } from "@/context/AuthContext";
 
-// import Link from "next/link";
+// services
 import React from "react";
 import { format, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
+import { useRouter } from "next/navigation";
 
 function TicketCards() {
   const { user } = useAuthContext();
   const { data: tickets, isLoading, error } = useTickets();
+  const router = useRouter();
 
-  const filteredTickets = tickets?.filter(
-    (ticket) =>
-      ticket.id_empleado.identification_number === user?.identification_number
-  );
+  const filteredTickets = tickets?.filter((ticket) => ticket.id_empleado.identification_number === user?.identification_number);
 
   if (isLoading) return <Loader />;
 
@@ -45,14 +44,12 @@ function TicketCards() {
     <div className="grid grid-cols-3 gap-5 pt-5 cursor-pointer">
       {filteredTickets.map((ticket, index) => (
         <div
-          onClick={() => console.log(`Ticket ID: ${ticket.id_ticket} clicked`)}
           key={index}
+          onClick={() => router.push(`/employee/ticket-detail/${ticket.id_ticket}`)}
           className={`flex flex-col justify-between items-center w-[300px] h-[200px] border border-l-[20px] rounded-md p-5 gap-5 
             ${getBorderColor(ticket.id_status.name)}`}
         >
-          <h2 className="text-xl text-center font-bold underline">
-            {ticket.title}
-          </h2>
+          <h2 className="text-xl text-center font-bold underline">{ticket.title}</h2>
           <p className="text-xl">
             <strong>Fecha:</strong>{" "}
             {format(parseISO(ticket.creation_date), "dd/MM/yyyy HH:ss", {
@@ -64,7 +61,6 @@ function TicketCards() {
             {ticket.id_status.name}
           </p>
         </div>
-        // </Link>
       ))}
     </div>
   );

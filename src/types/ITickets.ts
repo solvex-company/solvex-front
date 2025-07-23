@@ -1,7 +1,3 @@
-export interface Area {
-  id_area: number;
-  name: string;
-}
 export interface TicketFormValues {
   codigo: string;
   area: Area | null;
@@ -25,9 +21,14 @@ export interface TicketStatus {
   id_status: number;
   name: string;
 }
+export interface Area {
+  id_area: number;
+  name: string;
+}
 
 export interface IDetailTicket {
   id_ticket: string;
+  area: Area;
   title: string;
   description: string;
   img_1?: string;

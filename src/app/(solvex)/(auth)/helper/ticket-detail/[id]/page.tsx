@@ -1,34 +1,60 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import TicketDetail from "../../../components/TicketDetail/TicketDetail";
-import { useAuthContext } from "@/context/AuthContext";
+//React
+import React, { useEffect, useState, use, useRef } from "react";
+
+//Types, Services y context
 import { IDetailTicket } from "@/types/ITickets";
 import { getTicketById } from "@/services/tickets";
+import { useAuthContext } from "@/context/AuthContext";
+
+//Components
+import TicketDetail from "../../../components/TicketDetail/TicketDetail";
 import TicketRespond from "./components/TicketRespond";
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 function HelTicketDetail({ params }: Props) {
+  //Para el useEffect
   const { token } = useAuthContext();
   const [ticket, setTicket] = useState<IDetailTicket | null>(null);
+  const { id } = use(params);
+
+  //Para el handler (respuesta del ticket)
+  const [showTicketRespond, setShowTicketRespond] = useState(false);
+  const ticketRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchTicket = async () => {
       if (!token) return;
 
-      const resolvedParams = await params;
-      const data = await getTicketById(resolvedParams.id, token);
+      const data = await getTicketById(id, token);
       setTicket(data);
     };
     fetchTicket();
-  }, [token, params]);
+  }, [token, id]);
+
+  // Efecto para hacer scroll cuando el componente se muestra
+  useEffect(() => {
+    if (showTicketRespond && ticketRef.current) {
+      setTimeout(() => {
+        ticketRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 100);
+    }
+  }, [showTicketRespond]);
 
   if (!ticket) return <div>Cargando ticket...</div>;
+
+  const handleTicketClick = () => {
+    setShowTicketRespond(true);
+  };
 
   return (
     <div className="py-5 w-[967px]">
@@ -44,11 +70,14 @@ function HelTicketDetail({ params }: Props) {
         </div>
       </div>
 
-      <button className="w-[967px] text-white text-center text-xl bg-accent rounded-md hover:opacity-70 p-2 mt-6">
+      <button
+        onClick={handleTicketClick}
+        className="w-[967px] text-white text-center text-xl bg-accent rounded-md hover:opacity-70 p-2 mt-6"
+      >
         Gestionar Ticket
       </button>
 
-      <TicketRespond />
+      {showTicketRespond && <TicketRespond ticketRef={ticketRef} />}
     </div>
   );
 }

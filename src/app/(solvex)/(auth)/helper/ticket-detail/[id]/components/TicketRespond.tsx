@@ -2,6 +2,10 @@ import { Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
 
+type Props = {
+  ticketRef: React.RefObject<HTMLDivElement | null>;
+};
+
 const validationSchema = Yup.object({
   title: Yup.string().min(3, "Mínimo 3 caracteres").required("Requerido"),
   description: Yup.string().min(10, "Mínimo 10 caracteres").required("Requerido"),
@@ -17,13 +21,13 @@ const initialValues = {
   status: "",
 };
 
-function TicketRespond() {
+function TicketRespond({ ticketRef }: Props) {
   const handleOnSubmit = () => {
     console.log("Respuesta enviada!");
   };
 
   return (
-    <div className="mt-10 bg-mainBg border border-secondText rounded-xl">
+    <div ref={ticketRef} className="mt-10 bg-mainBg border border-secondText rounded-xl">
       <h2 className="font-bold text-start text-2xl p-3 ml-2">Respuesta del Ticket</h2>
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleOnSubmit}>
         {(formik) => (

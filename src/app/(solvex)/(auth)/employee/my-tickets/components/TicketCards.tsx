@@ -20,10 +20,7 @@ function TicketCards() {
 
   console.log("Tickets:", tickets);
 
-  const filteredTickets = tickets?.filter(
-    (ticket) =>
-      ticket.id_empleado.identification_number === user?.identification_number
-  );
+  const filteredTickets = tickets?.filter((ticket) => ticket.id_empleado.identification_number === user?.identification_number);
 
   if (isLoading) return <Loader />;
 
@@ -38,10 +35,17 @@ function TicketCards() {
     switch (estado) {
       case "pending":
         return "border-pending";
-      case "En proceso":
-        return "border-process";
-      case "Resuelto":
+      case "Completed":
         return "border-resolved";
+    }
+  };
+
+  const translateStatus = (statusName: string) => {
+    switch (statusName) {
+      case "pending":
+        return "PENDIENTE";
+      case "Completed":
+        return "RESUELTO";
     }
   };
 
@@ -50,15 +54,11 @@ function TicketCards() {
       {filteredTickets.map((ticket, index) => (
         <div
           key={index}
-          onClick={() =>
-            router.push(`/employee/ticket-detail/${ticket.id_ticket}`)
-          }
+          onClick={() => router.push(`/employee/ticket-detail/${ticket.id_ticket}`)}
           className={`flex flex-col justify-between items-center w-[300px] h-[200px] border border-l-[20px] rounded-md p-5 gap-5 
             ${getBorderColor(ticket.id_status.name)}`}
         >
-          <h2 className="text-xl text-center font-bold underline">
-            {ticket.title}
-          </h2>
+          <h2 className="text-xl text-center font-bold underline">{ticket.title}</h2>
           <p className="text-xl">
             <strong>Fecha:</strong>{" "}
             {format(parseISO(ticket.creation_date), "dd/MM/yyyy HH:ss", {
@@ -67,7 +67,7 @@ function TicketCards() {
           </p>
           <p className="text-xl">
             <strong>Estado: </strong>
-            {ticket.id_status.name}
+            {translateStatus(ticket.id_status.name)}
           </p>
         </div>
       ))}

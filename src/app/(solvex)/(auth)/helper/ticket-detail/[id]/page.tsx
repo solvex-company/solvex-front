@@ -27,16 +27,19 @@ function HelTicketDetail({ params }: Props) {
   //Para el handler (respuesta del ticket)
   const [showTicketRespond, setShowTicketRespond] = useState(false);
   const ticketRef = useRef<HTMLDivElement>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const fetchTicket = async () => {
+    if (!token) return;
+
+    const data = await getTicketById(id, token);
+    setTicket(data);
+  };
 
   useEffect(() => {
-    const fetchTicket = async () => {
-      if (!token) return;
-
-      const data = await getTicketById(id, token);
-      setTicket(data);
-    };
     fetchTicket();
-  }, [token, id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, id, refreshKey]);
 
   // Efecto para hacer scroll cuando el componente se muestra
   useEffect(() => {
@@ -59,8 +62,9 @@ function HelTicketDetail({ params }: Props) {
   return (
     <div className="py-5 w-[967px]">
       <h2 className="font-bold text-2xl pb-5">Detalle del Ticket del Empleado</h2>
-      <TicketDetail ticket={ticket} />
-
+      <div key={refreshKey}>
+        <TicketDetail ticket={ticket} />
+      </div>
       <div className="flex justify-between gap-4 pt-6">
         <div className="w-full">
           <h3>Empleado que genero el ticket</h3>
@@ -70,14 +74,31 @@ function HelTicketDetail({ params }: Props) {
         </div>
       </div>
 
-      <button
-        onClick={handleTicketClick}
-        className="w-[967px] text-white text-center text-xl bg-accent rounded-md hover:opacity-70 p-2 mt-6"
-      >
-        Gestionar Ticket
-      </button>
+      {ticket.id_status.name === "pending" ? (
+        <>
+          <button
+            onClick={handleTicketClick}
+            className="w-[967px] text-white text-center text-xl bg-accent rounded-md hover:opacity-70 p-2 mt-6"
+          >
+            Gestionar Ticket
+          </button>
 
-      {showTicketRespond && <TicketResponse ticketId={ticket.id_ticket} ticketRef={ticketRef} />}
+          {showTicketRespond && (
+            <TicketResponse
+              ticketId={ticket.id_ticket}
+              ticketRef={ticketRef}
+              onSuccess={() => setRefreshKey((prev) => prev + 1)}
+            />
+          )}
+        </>
+      ) : (
+        <div className="text-center mt-10">
+          <h2 className="text-accent italic text-2xl mb-2">
+            Este ticket ya ha sido <span className="text-resolved font-bold">RESUELTO</span>
+          </h2>
+          <p className="text-secondText text-xl">No es posible realizar más acciones sobre este ticket</p>
+        </div>
+      )}
     </div>
   );
 }

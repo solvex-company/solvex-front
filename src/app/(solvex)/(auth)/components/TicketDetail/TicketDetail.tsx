@@ -11,9 +11,7 @@ const getStatusColor = (estado: string) => {
   switch (estado) {
     case "pending":
       return "bg-pending";
-    case "in progress":
-      return "bg-process";
-    case "completed":
+    case "Completed":
       return "bg-resolved";
   }
 };
@@ -22,9 +20,7 @@ const translateStatus = (statusName: string) => {
   switch (statusName) {
     case "pending":
       return "PENDIENTE";
-    case "in progress":
-      return "EN PROCESO";
-    case "completed":
+    case "Completed":
       return "RESUELTO";
   }
 };

@@ -74,7 +74,7 @@ function TicketDetail({ ticket }: Props) {
         </div>
         <div>
           <h3>Area del ticket</h3>
-          <p className="border border-accent rounded-md w-[456px] p-2 ">Nombre del area del ticket</p>
+          <p className="border border-accent rounded-md w-[456px] p-2 ">{ticket.area.name}</p>
         </div>
       </section>
 

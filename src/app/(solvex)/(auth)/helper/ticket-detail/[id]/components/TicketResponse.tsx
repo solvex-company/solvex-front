@@ -11,6 +11,7 @@ import * as Yup from "yup";
 type Props = {
   ticketRef: React.RefObject<HTMLDivElement | null>;
   ticketId: string;
+  onSuccess?: () => void;
 };
 
 const validationSchema = Yup.object({
@@ -18,7 +19,7 @@ const validationSchema = Yup.object({
   status: Yup.string().required("Estado es requerido"),
 });
 
-function TicketResponse({ ticketRef, ticketId }: Props) {
+function TicketResponse({ ticketRef, ticketId, onSuccess }: Props) {
   const { user, token } = useAuthContext();
   const fullName = user?.name ? `${user.name} ${user.lastname}` : `Nombre del usuario`;
 
@@ -61,6 +62,7 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
         });
 
         resetForm();
+        if (onSuccess) onSuccess();
       } else {
         Swal.fire({
           title: "Error",

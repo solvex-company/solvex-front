@@ -14,9 +14,7 @@ type Props = {
 };
 
 const validationSchema = Yup.object({
-  title: Yup.string().min(3, "Mínimo 3 caracteres").required("Requerido"),
-  description: Yup.string().min(10, "Mínimo 10 caracteres").required("Requerido"),
-  helper: Yup.string().min(3, "Mínimo 3 caracteres").required("Requerido"),
+  description: Yup.string().min(10, "Mínimo 10 caracteres").required("Descripcion es requerida"),
   status: Yup.string().required("Estado es requerido"),
 });
 
@@ -26,7 +24,6 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
 
   const initialValues = {
     date: new Date().toISOString().split("T")[0],
-    title: "",
     description: "",
     helper: fullName,
     status: "",
@@ -37,7 +34,6 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
       // Crear el objeto de datos
       const requestData = {
         id_ticket: String(ticketId),
-        title: values.title.trim(),
         description: values.description.trim(),
         ticketStatus: values.status,
         helperEmail: user!.email,
@@ -86,24 +82,12 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
 
   return (
     <div ref={ticketRef} className="mt-10 bg-mainBg border border-secondText rounded-xl">
-      <h2 className="font-bold text-start text-2xl p-3 ml-2">Respuesta del Ticket</h2>
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleOnSubmit}>
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
-            <section className="flex justify-around pb-4">
-              <div className="flex flex-col items-start ml-2 ">
-                <label htmlFor="title">Titulo</label>
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  value={formik.values.title}
-                  onChange={formik.handleChange}
-                  className="border border-accent rounded-md p-2 h-[45px] w-[700px] bg-white"
-                />
-                {formik.touched.title && formik.errors.title && <p className="text-red-500 text-lg">{formik.errors.title}</p>}
-              </div>
-              <div className="flex flex-col mr-4 ">
+            <section className="flex justify-between items-center py-4">
+              <h2 className="font-bold text-start text-3xl ml-4">Respuesta del Ticket</h2>
+              <div className="flex flex-col mr-6 ">
                 <label htmlFor="date">Fecha de Respuesta</label>
                 <input
                   type="date"
@@ -121,6 +105,7 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
               <textarea
                 id="description"
                 name="description"
+                placeholder="Añade tus comentarios sobre la solución de este ticket"
                 value={formik.values.description}
                 onChange={formik.handleChange}
                 className="border border-accent rounded-md p-2 bg-white w-[923px] h-[170px]"
@@ -151,9 +136,10 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
                   onChange={formik.handleChange}
                   className="border border-accent rounded-md p-2 bg-white h-[45px] w-max-[453px]"
                 >
-                  <option value="">Selecciona el estado del Ticket</option>
+                  <option value="" className="text-secondText">
+                    Selecciona el estado del Ticket
+                  </option>
                   <option value="pending">Pendiente</option>
-                  <option value="inProgress">En Proceso</option>
                   <option value="Completed">Resuelto</option>
                 </select>
                 {formik.touched.status && formik.errors.status && <p className="text-red-500 text-lg">{formik.errors.status}</p>}

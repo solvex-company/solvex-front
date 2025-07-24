@@ -1,5 +1,6 @@
 import AdminInfo from "../../components/InfoDashboard/InfoDashboard";
-import AdminPassword from "../../components/ChangePassword/ChangePassword";
+
+import ChangePasswordComponentForm from "@/app/components/ChangePasswordComponent/ChangePasswordComponent";
 
 function empleadoDashboard() {
   return (
@@ -8,7 +9,8 @@ function empleadoDashboard() {
       <AdminInfo />
 
       <h3 className="text-2xl font-bold pt-5">Cambiar contraseña</h3>
-      <AdminPassword />
+
+      <ChangePasswordComponentForm />
     </div>
   );
 }

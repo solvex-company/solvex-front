@@ -6,6 +6,7 @@ import { jwtDecode } from "jwt-decode";
 import { createContext, useContext, useEffect, useState } from "react";
 
 export interface User {
+  id_user: string;
   email: string;
   id_role: number;
   name?: string;
@@ -46,6 +47,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const payload2 = jwtDecode<User>(data.token);
 
     const userData: User = {
+      id_user: payload.id_user,
       email: payload2.email,
       id_role: payload2.id_role,
       name: payload.name,

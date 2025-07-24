@@ -41,7 +41,7 @@ export interface IDetailTicket {
 
 export interface TicketResponseData {
   id_ticket: string;
-  description: string;
+  response: string;
   ticketStatus: string;
   helperEmail: string;
 }

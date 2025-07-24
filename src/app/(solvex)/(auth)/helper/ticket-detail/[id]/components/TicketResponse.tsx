@@ -34,7 +34,7 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
       // Crear el objeto de datos
       const requestData = {
         id_ticket: String(ticketId),
-        description: values.description.trim(),
+        response: values.description.trim(),
         ticketStatus: values.status,
         helperEmail: user!.email,
       };
@@ -101,7 +101,7 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
             </section>
 
             <div className="flex flex-col  items-start ml-4 mb-6">
-              <label htmlFor="description">Descripcion</label>
+              <label htmlFor="description">Descripcion de la respuesta</label>
               <textarea
                 id="description"
                 name="description"

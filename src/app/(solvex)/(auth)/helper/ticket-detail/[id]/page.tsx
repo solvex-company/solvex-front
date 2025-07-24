@@ -10,7 +10,7 @@ import { useAuthContext } from "@/context/AuthContext";
 
 //Components
 import TicketDetail from "../../../components/TicketDetail/TicketDetail";
-import TicketRespond from "./components/TicketRespond";
+import TicketResponse from "./components/TicketResponse";
 
 type Props = {
   params: Promise<{
@@ -77,7 +77,7 @@ function HelTicketDetail({ params }: Props) {
         Gestionar Ticket
       </button>
 
-      {showTicketRespond && <TicketRespond ticketRef={ticketRef} />}
+      {showTicketRespond && <TicketResponse ticketId={ticket.id_ticket} ticketRef={ticketRef} />}
     </div>
   );
 }

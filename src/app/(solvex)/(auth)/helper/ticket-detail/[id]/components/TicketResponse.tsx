@@ -1,9 +1,16 @@
+"use client";
+
+import { useAuthContext } from "@/context/AuthContext";
+import { postTicketResponse } from "@/services/tickets";
+
 import { Formik } from "formik";
 import React from "react";
+import Swal from "sweetalert2";
 import * as Yup from "yup";
 
 type Props = {
   ticketRef: React.RefObject<HTMLDivElement | null>;
+  ticketId: string;
 };
 
 const validationSchema = Yup.object({
@@ -13,17 +20,68 @@ const validationSchema = Yup.object({
   status: Yup.string().required("Estado es requerido"),
 });
 
-const initialValues = {
-  date: new Date().toISOString().split("T")[0],
-  title: "",
-  description: "",
-  helper: "Nombre del Helper",
-  status: "",
-};
+function TicketResponse({ ticketRef, ticketId }: Props) {
+  const { user, token } = useAuthContext();
+  const fullName = user?.name ? `${user.name} ${user.lastname}` : `Nombre del usuario`;
 
-function TicketRespond({ ticketRef }: Props) {
-  const handleOnSubmit = () => {
-    console.log("Respuesta enviada!");
+  const initialValues = {
+    date: new Date().toISOString().split("T")[0],
+    title: "",
+    description: "",
+    helper: fullName,
+    status: "",
+  };
+
+  const handleOnSubmit = async (values: typeof initialValues, { resetForm }: { resetForm: () => void }) => {
+    try {
+      // Crear el objeto de datos
+      const requestData = {
+        id_ticket: String(ticketId),
+        title: values.title.trim(),
+        description: values.description.trim(),
+        ticketStatus: values.status,
+        helperEmail: user!.email,
+      };
+
+      const response = await postTicketResponse(requestData, token!);
+      console.log(requestData);
+
+      // Verificar si hay error del servicio (statusCode >= 400)
+      if (response.statusCode && response.statusCode >= 400) {
+        Swal.fire({
+          title: "Error",
+          text: "No se pudo procesar la respuesta del ticket. Por favor, intenta nuevamente.",
+          icon: "error",
+        });
+        return;
+      }
+
+      // Verificar si la respuesta fue exitosa
+      if (response.id_resolution_ticket) {
+        Swal.fire({
+          title: "¡Ticket respondido correctamente!",
+          text: "Gracias por tu cooperación.",
+          icon: "success",
+        });
+
+        resetForm();
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: "No se pudo procesar la respuesta del ticket. Por favor, intenta nuevamente.",
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      // Log del error solo para desarrollo (opcional)
+      console.error("Error al responder el ticket:", error);
+
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al procesar tu solicitud. Por favor, intenta nuevamente.",
+        icon: "error",
+      });
+    }
   };
 
   return (
@@ -95,8 +153,8 @@ function TicketRespond({ ticketRef }: Props) {
                 >
                   <option value="">Selecciona el estado del Ticket</option>
                   <option value="pending">Pendiente</option>
-                  <option value="process">En Proceso</option>
-                  <option value="resolved">Resuelto</option>
+                  <option value="inProgress">En Proceso</option>
+                  <option value="Completed">Resuelto</option>
                 </select>
                 {formik.touched.status && formik.errors.status && <p className="text-red-500 text-lg">{formik.errors.status}</p>}
               </div>
@@ -115,4 +173,4 @@ function TicketRespond({ ticketRef }: Props) {
   );
 }
 
-export default TicketRespond;
+export default TicketResponse;

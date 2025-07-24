@@ -38,3 +38,11 @@ export interface IDetailTicket {
   id_status: TicketStatus;
   id_empleado: Employee;
 }
+
+export interface TicketResponseData {
+  id_ticket: string;
+  title: string;
+  description: string;
+  ticketStatus: string;
+  helperEmail: string;
+}

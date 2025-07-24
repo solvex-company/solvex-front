@@ -79,7 +79,7 @@ const NavbarAuth = () => {
                 Soportes
               </Link>
               <Link
-                href={"/admin/estadisticas"}
+                href={"/admin/statistics"}
                 className="flex flex-col m-1 ml-3 mr-3 h-[40px] justify-center text-center text-[24px] text-secondText rounded-lg hover:text-mainBg hover:bg-accent"
               >
                 Estadísticas

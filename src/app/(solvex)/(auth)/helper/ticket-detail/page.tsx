@@ -1,6 +1,6 @@
 import React from "react";
 import TicketDetail from "../../components/TicketDetail/TicketDetail";
-import { otherTicketData } from "@/helpers/ticketData";
+import { otherDetailTicketData } from "@/helpers/ticketData";
 
 function HelTicketDetail() {
   return (
@@ -11,11 +11,11 @@ function HelTicketDetail() {
       <div className="flex justify-between gap-4 pt-6">
         <div className="w-full">
           <h3>Empleado que genero el ticket</h3>
-          <p className="border border-accent rounded-md  p-2 ">{otherTicketData.employee}</p>
+          <p className="border border-accent rounded-md  p-2 ">{otherDetailTicketData.employee}</p>
         </div>
         <div className="w-full">
           <h3>Fecha</h3>
-          <p className="border border-accent rounded-md  p-2">{otherTicketData.date}</p>
+          <p className="border border-accent rounded-md  p-2">{otherDetailTicketData.date}</p>
         </div>
       </div>
 

@@ -1,26 +1,22 @@
 "use client";
 
-// components/PaymentConfirmation/PaymentConfirmation.tsx
 import React from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup"; // Importa Yup para validación de esquemas
-import Image from "next/image"; // Asegúrate de tener Next.js configurado para manejar imágenes
+import * as Yup from "yup";
+import Image from "next/image";
 
-// Define la interfaz para las props que recibirá el componente
 interface PaymentConfirmationProps {
-  userName: string;
-  productsTotal: number;
-  paymentsTotal: number;
+  userName: string | undefined;
+  userLastName: string | undefined;
 }
 
 const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
   userName,
-  productsTotal,
-  paymentsTotal,
+  userLastName,
 }) => {
   // Define el esquema de validación con Yup
   const validationSchema = Yup.object({
-    installments: Yup.string().required("Por favor, selecciona las cuotas."),
+    installments: Yup.string().required("Por favor, selecciona tu plan."),
   });
 
   // Inicializa Formik
@@ -35,6 +31,23 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
       console.log("Formulario enviado con éxito:", values);
     },
   });
+
+  const planPrices: { [key: string]: number } = {
+    "1": 100, // Precio para Basico
+    "2": 255, // Precio para Plus
+    "3": 375, // Precio para Premium
+  };
+
+  const planNames: { [key: string]: string } = {
+    "1": "Basico",
+    "2": "Plus",
+    "3": "Premium",
+  };
+
+  const selectedPlanValue = formik.values.installments;
+  const selectedPlanName = planNames[selectedPlanValue] || "";
+
+  const paymentsTotal = planPrices[selectedPlanValue] || 0;
 
   return (
     <div className="flex flex-col lg:flex-row bg-gray-100 min-h-screen p-4 sm:p-8 justify-center items-start">
@@ -54,14 +67,16 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
                 width={30}
                 height={30}
               />
-              <span className="text-gray-800 font-medium pl-3">{userName}</span>
+              <span className="text-gray-800 font-medium pl-3">
+                {userName} {userLastName}
+              </span>
             </div>
           </div>
         </div>
 
         <form onSubmit={formik.handleSubmit}>
           <h3 className="text-lg font-semibold text-gray-700 mb-4">
-            Y elegi la cantidad de cuotas
+            Elige el plan que deseas abonar
           </h3>
 
           {/* Campo de Cuotas */}
@@ -70,7 +85,7 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
               htmlFor="installments"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Cuotas
+              Planes
             </label>
             <div className="relative">
               <select
@@ -87,7 +102,9 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
                 <option value="" disabled>
                   Elige
                 </option>
-                <option value="1">1 cuota sin interés</option>
+                <option value="1">Basico</option>
+                <option value="2">Plus</option>
+                <option value="3">Premium</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-200">
                 <svg
@@ -144,12 +161,12 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
             Detalles de tu compra
           </p>
           <div className="flex justify-between items-center text-gray-600 mb-2">
-            <span>Productos</span>
-            <span>${productsTotal.toLocaleString("es-AR")}</span>{" "}
+            <span>Plan Seleccionado</span>
+            <span>{selectedPlanName}</span>{" "}
           </div>
           <div className="flex justify-between items-center text-gray-800 font-semibold border-t pt-2 mt-2 border-gray-200">
             <span>Pagos</span>
-            <span>${paymentsTotal.toLocaleString("es-AR")}</span>{" "}
+            <span>${paymentsTotal}</span>{" "}
           </div>
         </div>
 
@@ -165,7 +182,7 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
             }
           `}
         >
-          {formik.isSubmitting ? "Procesando..." : "Pagar"}
+          {formik.isSubmitting ? "Redireccionando..." : "Ir a MercadoPago"}
         </button>
       </div>
     </div>

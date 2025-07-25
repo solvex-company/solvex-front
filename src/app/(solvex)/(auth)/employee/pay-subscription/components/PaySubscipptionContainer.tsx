@@ -1,18 +1,16 @@
+"use client";
+
 import PaymentConfirmation from "./PaymentConfirmation";
+import { useAuthContext } from "@/context/AuthContext";
 
 const PaySubscriptionContainer = () => {
+  const { user } = useAuthContext();
+
+  if (!user) return;
+
   return (
-    <PaymentConfirmation
-      userName="Franco Paganoni"
-      productsTotal={255}
-      paymentsTotal={255}
-    />
+    <PaymentConfirmation userName={user?.name} userLastName={user?.lastname} />
   );
 };
-
-/* cardNumber,
-  cardBank,
-  productsTotal,
-  paymentsTotal,*/
 
 export default PaySubscriptionContainer;

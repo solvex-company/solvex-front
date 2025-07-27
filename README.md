@@ -19,9 +19,10 @@ Repositorio del Front del proyecto final.
 ### Conexión con BACK
  
  - Crear un .env.local que contenga:
+ ### Define el entorno de ejecución de Node.js (development, production, test, etc.)
+ - NODE_ENV=  
+ ### URL base de la API del backend (Ejemplo: localhost + 4000)
+ - API_URL=
+ ### URL Publica para las peticiones
+ - NEXT_PUBLIC_API_URL=
 
-# Define el entorno de ejecución de Node.js (development, production, test, etc.)
-NODE_ENV=development  
-
-# URL base de la API del backend (Ejemplo: http://localhost:4000)
-API_URL=http://localhost:4000

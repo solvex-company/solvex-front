@@ -1,6 +1,7 @@
 "use client";
 import { useAuthContext } from "@/context/AuthContext";
-
+import { deleteTokenCookie } from "@/services/auth";
+// import usePrivate from "@/hooks/usePrivate";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -16,8 +17,9 @@ const NavbarAuth = () => {
   const isEmployee = user?.id_role === 3;
   const license = true;
 
-  const logout = () => {
+  const logout = async () => {
     resetUserData();
+    await deleteTokenCookie();
     router.replace("/");
   };
 

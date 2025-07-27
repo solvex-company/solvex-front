@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuthContext} from "@/context/AuthContext";
+import { createTokenCookie } from "@/services/auth";
 
 export default function AuthCallbackPage() {
   const searchParams = useSearchParams();
@@ -15,10 +16,11 @@ export default function AuthCallbackPage() {
     if (token) {
       const login = true;
       saveUserData({ token, login });
-      /* localStorage.setItem('token', token); // Guarda el token
-      router.push('/employee/dashboard'); // Redirige al dashboard */
-      /* const payload = jwtDecode<User>(token);
-      console.log("El payload google es:", payload); */
+      const createCookie = async () => {
+        await createTokenCookie(token);
+      }
+
+      createCookie();
 
       if (!user) return;
 

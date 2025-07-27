@@ -6,7 +6,7 @@ import { jwtDecode } from "jwt-decode";
 import { createContext, useContext, useEffect, useState } from "react";
 
 export interface User {
-  email: string;
+  email?: string;
   id_role: number;
   name?: string;
   lastname?: string;

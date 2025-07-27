@@ -1,5 +1,6 @@
 "use client";
 import { useAuthContext } from "@/context/AuthContext";
+import { deleteTokenCookie } from "@/services/auth";
 // import usePrivate from "@/hooks/usePrivate";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,8 +17,9 @@ const NavbarAuth = () => {
   let isEmployee = false;
   const license = true;
 
-  const logout = () => {
+  const logout = async () => {
     resetUserData();
+    await deleteTokenCookie();
     location.href = "/";
   };
 
@@ -159,12 +161,12 @@ const NavbarAuth = () => {
         </div>
 
         <div className="flex flex-col mb-6">
-          {isEmployee && license && (
+          {(isEmployee || isHelper) && license && (
             <Link
               href="/employee/pay-plan"
               className="flex flex-col m-1 ml-3 mr-3 h-[80px] justify-center text-center text-[24px] rounded-lg bg-secondText text-mainBg hover:text-mainBg hover:bg-accent"
             >
-              Obtén derechos de administrador
+              Adquiere más beneficios
             </Link>
           )}
           <button

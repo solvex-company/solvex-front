@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
+
+import { createTokenCookie } from "@/services/auth";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
 
@@ -20,6 +22,21 @@ export default function AuthCallbackPage() {
     if (token) {
       const login = true;
       saveUserData({ token, login });
+      const createCookie = async () => {
+        await createTokenCookie(token);
+      }
+
+      createCookie();
+
+      if (!user) return;
+
+      if (user.id_role === 1) {
+        router.push("/admin/dashboard");
+      } else if (user.id_role === 2) {
+        router.push("/helper/dashboard");
+      } else if (user.id_role === 3) {
+        router.push("/employee/dashboard");
+      }
     } else {
       if (!user) {
         router.push("/login");

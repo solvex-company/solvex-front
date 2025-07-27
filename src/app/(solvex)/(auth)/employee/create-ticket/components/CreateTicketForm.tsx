@@ -88,11 +88,9 @@ export default function CreateTicketForm() {
             onChange={formik.handleChange}
             className="border border-accent bg-mainBg rounded-md p-2"
           />
-
           {formik.touched.titulo && formik.errors.titulo && (
-            <p className="text-red-500 text-sm">{formik.errors.titulo}</p>
+            <p className="text-red-500 text-lg">{formik.errors.titulo}</p>
           )}
-
         </div>
 
         {/* Descripción del problema */}
@@ -117,15 +115,16 @@ export default function CreateTicketForm() {
         {/* Botón de envío */}
         <button
           type="submit"
-
-     
           disabled={formik.isSubmitting}
           className={`h-12 text-white text-xl font-bold p-2 rounded
-             ${formik.isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}
+             ${
+               formik.isSubmitting
+                 ? "bg-gray-400 cursor-not-allowed"
+                 : "bg-blue-500 hover:bg-blue-600"
+             }
             `}
         >
           {formik.isSubmitting ? "Enviando..." : "Crear Ticket"}
-
         </button>
       </form>
     </FormikProvider>

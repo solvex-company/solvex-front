@@ -1,6 +1,6 @@
 import React from "react";
 import AdminInfo from "../../components/InfoDashboard/InfoDashboard";
-import AdminPassword from "../../components/ChangePassword/ChangePassword";
+import ChangePasswordComponentForm from "@/app/components/ChangePasswordComponent/ChangePasswordComponent";
 import AdminLicense from "./components/AdminLicense";
 
 function AdminDash() {
@@ -10,7 +10,7 @@ function AdminDash() {
       <AdminInfo />
 
       <h3 className="text-2xl font-bold pt-5">Cambiar contraseña</h3>
-      <AdminPassword />
+      <ChangePasswordComponentForm />
 
       <h2 className="text-2xl font-bold pt-5">Tu plan de Solvex</h2>
       <AdminLicense />

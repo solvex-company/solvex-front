@@ -51,7 +51,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="flex items-center bg-mainBg h-[527px] p-24 mb-16 gap-7">
+      <section className="flex items-center justify-center bg-mainBg h-[527px] p-24 mb-16 gap-7">
         <Image
           src={"https://ik.imagekit.io/SolvexCompany/hero2.png?updatedAt=1751902001380"}
           alt="imgAbout"

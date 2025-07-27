@@ -1,40 +1,84 @@
 "use client";
 
-// components/PaymentConfirmation/PaymentConfirmation.tsx
 import React from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup"; // Importa Yup para validación de esquemas
-import Image from "next/image"; // Asegúrate de tener Next.js configurado para manejar imágenes
+import * as Yup from "yup";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-// Define la interfaz para las props que recibirá el componente
+// hooks
+import useCheckout from "@/hooks/useCheckout";
+
 interface PaymentConfirmationProps {
-  userName: string;
-  productsTotal: number;
-  paymentsTotal: number;
+  userName: string | undefined;
+  userLastName: string | undefined;
 }
 
 const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
   userName,
-  productsTotal,
-  paymentsTotal,
+  userLastName,
 }) => {
-  // Define el esquema de validación con Yup
+  // obtener link de redireccionamiento a MercadoPago
+  const { isError, error, refetch, isFetching } = useCheckout();
+  const router = useRouter();
+
   const validationSchema = Yup.object({
-    installments: Yup.string().required("Por favor, selecciona las cuotas."),
+    installments: Yup.string().required("Por favor, selecciona tu plan."),
   });
 
-  // Inicializa Formik
   const formik = useFormik({
     initialValues: {
       installments: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      // Esta función solo se llama si la validación es exitosa
-      // onPay(values.installments, values.securityCode);
+    onSubmit: async (values) => {
+      // esta función solo se llama si la validacion es exitosa
+
       console.log("Formulario enviado con éxito:", values);
+
+      try {
+        const result = await refetch();
+
+        // si la llamada fue exitosa y tenemos la URL de pago, redirigimos
+        if (result.isSuccess && result.data && result.data.paymentUrl) {
+          router.push(result.data.paymentUrl);
+        } else {
+          console.error("No se recibió una URL de pago válida.");
+          alert(
+            "No se pudo obtener la URL de pago. Por favor, contacta a soporte."
+          );
+        }
+      } catch (err) {
+        console.error(
+          "Error inesperado al intentar obtener la URL de pago:",
+          err
+        );
+        alert("Ocurrió un error inesperado al preparar el pago.");
+      }
     },
   });
+
+  // solo llamamos al handleSubmit de Formik
+  const handleGoToMercadoPago = () => {
+    formik.handleSubmit();
+  };
+
+  const planPrices: { [key: string]: number } = {
+    "1": 100, // Precio para Basico
+    "2": 255, // Precio para Plus
+    "3": 375, // Precio para Premium
+  };
+
+  const planNames: { [key: string]: string } = {
+    "1": "Basico",
+    "2": "Plus",
+    "3": "Premium",
+  };
+
+  const selectedPlanValue = formik.values.installments;
+  const selectedPlanName = planNames[selectedPlanValue] || "";
+
+  const paymentsTotal = planPrices[selectedPlanValue] || 0;
 
   return (
     <div className="flex flex-col lg:flex-row bg-gray-100 min-h-screen p-4 sm:p-8 justify-center items-start">
@@ -54,28 +98,29 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
                 width={30}
                 height={30}
               />
-              <span className="text-gray-800 font-medium pl-3">{userName}</span>
+              <span className="text-gray-800 font-medium pl-3">
+                {userName} {userLastName}
+              </span>
             </div>
           </div>
         </div>
 
         <form onSubmit={formik.handleSubmit}>
           <h3 className="text-lg font-semibold text-gray-700 mb-4">
-            Y elegi la cantidad de cuotas
+            Elige el plan que deseas abonar
           </h3>
 
-          {/* Campo de Cuotas */}
           <div className="mb-4">
             <label
               htmlFor="installments"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Cuotas
+              Planes
             </label>
             <div className="relative">
               <select
                 id="installments"
-                {...formik.getFieldProps("installments")} // Enlaza con Formik
+                {...formik.getFieldProps("installments")}
                 className={`block w-full px-4 py-2 border rounded-md shadow-sm sm:text-sm appearance-none pr-8 bg-gray-500
                   ${
                     formik.touched.installments && formik.errors.installments
@@ -87,7 +132,9 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
                 <option value="" disabled>
                   Elige
                 </option>
-                <option value="1">1 cuota sin interés</option>
+                <option value="1">Basico</option>
+                <option value="2">Plus</option>
+                <option value="3">Premium</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-200">
                 <svg
@@ -144,28 +191,32 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
             Detalles de tu compra
           </p>
           <div className="flex justify-between items-center text-gray-600 mb-2">
-            <span>Productos</span>
-            <span>${productsTotal.toLocaleString("es-AR")}</span>{" "}
+            <span>Plan Seleccionado</span>
+            <span>{selectedPlanName}</span>{" "}
           </div>
           <div className="flex justify-between items-center text-gray-800 font-semibold border-t pt-2 mt-2 border-gray-200">
             <span>Pagos</span>
-            <span>${paymentsTotal.toLocaleString("es-AR")}</span>{" "}
+            <span>${paymentsTotal}</span>{" "}
           </div>
         </div>
 
         <button
-          type="submit"
-          onClick={() => formik.handleSubmit()}
-          disabled={formik.isSubmitting || !formik.isValid} // Deshabilita el botón mientras se envía o si el formulario es inválido
+          onClick={handleGoToMercadoPago}
+          disabled={formik.isSubmitting || !formik.isValid || isFetching} // deshabilita el boton mientras se envia o si el formulario es invslido
           className={`w-full font-bold py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-75 transition duration-200 ease-in-out
             ${
-              formik.isSubmitting || !formik.isValid // Estilos condicionales para el botón
+              formik.isSubmitting || !formik.isValid || isFetching
                 ? "bg-blue-400 text-gray-200 cursor-not-allowed"
                 : "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500"
             }
           `}
         >
-          {formik.isSubmitting ? "Procesando..." : "Pagar"}
+          {isFetching ? "Redireccionando..." : "Ir a MercadoPago"}
+          {isError && (
+            <div className="text-red-500 text-sm mt-2">
+              Error al cargar los datos de pago. {error?.message}
+            </div>
+          )}
         </button>
       </div>
     </div>

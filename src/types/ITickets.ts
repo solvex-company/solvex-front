@@ -37,6 +37,7 @@ export interface IDetailTicket {
   creation_date: string;
   id_status: TicketStatus;
   id_empleado: Employee;
+  id_resolution_ticket?: number;
 }
 
 export interface TicketResponseData {
@@ -44,4 +45,17 @@ export interface TicketResponseData {
   response: string;
   ticketStatus: string;
   helperEmail: string;
+}
+
+export interface TicketResolutionData {
+  id_resolution_ticket: number;
+  response: string;
+  date: string;
+  id_helper: {
+    id_user: string;
+    name: string;
+    lastname: string;
+    identification_number: string;
+    phone: string;
+  };
 }

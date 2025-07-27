@@ -43,3 +43,9 @@ export const EmployeeTicketsData = [
     estado: "Pendiente",
   },
 ];
+
+export const ResponseTicketData = {
+  description: "Ya se soluciono el prblema de la impresora",
+  helper: "Juan Pablo",
+  date: "24/7/2025",
+};

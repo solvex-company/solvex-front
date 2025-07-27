@@ -4,6 +4,7 @@
 import CardComponentForAdmin from "./cardComponent/CardComponentForAdmin";
 import ButtonComponent from "./buttonComponent/ButtonComponent";
 import Loader from "@/app/components/Loader/Loader";
+import UserFilter from "./userFilter/UserFilter";
 
 // types
 import { UserDto } from "@/dto/userDto";
@@ -14,6 +15,7 @@ import Swal from "sweetalert2";
 // hooks
 import useUpdateUserRole from "@/hooks/useUpdateUserRole";
 import useUsers from "@/hooks/useUsers";
+import { useState, useEffect } from "react";
 
 const ManageProfiles: React.FC = () => {
   const {
@@ -22,9 +24,59 @@ const ManageProfiles: React.FC = () => {
     error: errorUsers,
   } = useUsers();
 
-  const employees = users?.filter((user) => user.role.role_name === "Empleado");
+  const [filteredUsers, setFilteredUsers] = useState<UserDto[]>([]);
 
-  const helpers = users?.filter((user) => user.role.role_name === "Soporte");
+  useEffect(() => {
+    if (users) {
+      setFilteredUsers(users);
+    } // Inicializa con todos los usuarios al cargar
+  }, [users]);
+
+  // Función para aplicar los filtros
+  const handleFilterChange = ({
+    searchTerm,
+    userType,
+  }: {
+    searchTerm: string;
+    userType: "all" | "support" | "employee";
+  }) => {
+    if (!users) return;
+
+    let tempUsers = users;
+
+    // Filtrar por tipo de usuario
+    if (userType !== "all") {
+      tempUsers = tempUsers.filter((user) => {
+        const roleName = user.role.role_name.toLowerCase();
+
+        return (
+          (userType === "support" && roleName === "soporte") ||
+          (userType === "employee" && roleName === "empleado")
+        );
+      });
+    }
+
+    // Filtrar por término de búsqueda (nombre o email)
+    if (searchTerm) {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+      tempUsers = tempUsers.filter(
+        (user) =>
+          user.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+          user.credentials.email.toLowerCase().includes(lowerCaseSearchTerm) ||
+          user.lastname.toLowerCase().includes(lowerCaseSearchTerm)
+      );
+    }
+
+    setFilteredUsers(tempUsers);
+  };
+
+  const employees = filteredUsers?.filter(
+    (user) => user.role.role_name === "Empleado"
+  );
+
+  const helpers = filteredUsers?.filter(
+    (user) => user.role.role_name === "Soporte"
+  );
 
   const { mutate: changeUserRole, isPending: isUpdating } = useUpdateUserRole();
 
@@ -119,6 +171,7 @@ const ManageProfiles: React.FC = () => {
   return (
     <div className="w-full h-screen">
       <h2 className="text-2xl font-bold">Administrar Perfiles</h2>
+      <UserFilter onFilterChange={handleFilterChange} />
       <div className="p-3 mb-4">
         <h3 className="font-semibold mt-5 mb-1 tracking-wider text-lg">
           Soporte

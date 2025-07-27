@@ -107,3 +107,27 @@ export const postTicketResponse = async (data: TicketResponseData, token: string
     };
   }
 };
+
+export const getTicketResponseById = async (ticketResponseId: string, token: string) => {
+  try {
+    const res = await axiosApiBack.get(`/tickets/resolution/${ticketResponseId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data; // Esto debería ser el ticket directamente
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.response?.data?.message || error.message;
+      console.warn("Error al obtener la respuesta del ticket:", errorMessage);
+      return {
+        message: "Error al obtener la respuesta del ticket",
+        errors: errorMessage,
+      };
+    }
+    return {
+      message: "Error desconocido",
+      errors: "Ocurrió un error inesperado",
+    };
+  }
+};

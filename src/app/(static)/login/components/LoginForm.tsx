@@ -6,16 +6,17 @@ import React from "react";
 import { postLogin } from "@/services/auth";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useRouter } from "next/navigation";
+/* import { useRouter } from "next/navigation"; */
 import Swal from "sweetalert2";
 import { useAuthContext } from "@/context/AuthContext";
 /* import usePublic from "@/hooks/usePublic"; */
 import Link from "next/link";
 import GoogleLoginButton from "../../register/components/GoogleLoginButton";
+import { NextResponse } from "next/server";
 
 const LoginForm: React.FC = () => {
   /* usePublic(); */
-  const router = useRouter();
+  /* const router = useRouter(); */
   const { saveUserData } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -47,7 +48,7 @@ const LoginForm: React.FC = () => {
           const login = success;
           const token = data;
           saveUserData({ token, login });
-          router.push("/admin/dashboard");
+          NextResponse.next();
         } else {
           Swal.fire({
             icon: "error",

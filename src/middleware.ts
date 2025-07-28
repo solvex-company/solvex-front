@@ -5,9 +5,9 @@ import { JwtPayload } from "jwt-decode";
 
 // Configuración de rutas
 const PUBLIC_ROUTES = ['/login', '/register', '/about', '/']; // Añade aquí tus rutas públicas
-const ADMIN_ROUTES = ['/admin/*']; // Protege TODAS las rutas /admin/*
+const ADMIN_ROUTES = ['/admin']; // Protege TODAS las rutas /admin/*
 const HELPER_ROUTES = ['/helper']; // Protege TODAS las rutas /helper/*
-const EMPLOYEE_ROUTES = ['/employee/*']; // Protege TODAS las rutas /employee/*
+const EMPLOYEE_ROUTES = ['/employee']; // Protege TODAS las rutas /employee/*
 
 export interface CustomJwtPayload extends JwtPayload {
   id_role: number;
@@ -101,6 +101,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|admin|helper|employee).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|admin|helper|employee|unauthorized).*)',
   ],
 };

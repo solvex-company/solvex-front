@@ -44,7 +44,7 @@ export default function AuthCallbackPage() {
       }
     }
 
-    if (user) {
+    /* if (user) {
       let targetDashboard = "";
       if (user.id_role === 1) {
         targetDashboard = "/admin/dashboard";
@@ -57,7 +57,7 @@ export default function AuthCallbackPage() {
       if (targetDashboard && !pathname.startsWith(targetDashboard)) {
         router.push(targetDashboard);
       }
-    }
+    } */
   }, [user, router, saveUserData, searchParams, pathname]);
 
   return (

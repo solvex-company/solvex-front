@@ -18,7 +18,7 @@ function PasarelaPagos() {
         <li>Visualizar estadísticas clave como resolución de incidencias .</li>
       </ol>
 
-      <Link href={"/employee/pay-subscription"}>
+      <Link href={"/employee/checkout"}>
         <div className="flex justify-between items-center gap-10 p-10">
           <div
             // onClick={() => console.log("Basico $100")}

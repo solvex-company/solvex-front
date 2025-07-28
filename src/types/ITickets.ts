@@ -1,5 +1,4 @@
 export interface TicketFormValues {
-  codigo: string;
   area: Area | null;
   fecha: string;
   titulo: string;

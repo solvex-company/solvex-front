@@ -17,6 +17,7 @@ type Props = {
 function EmTicketDetail({ params }: Props) {
   const { token } = useAuthContext();
   const [ticket, setTicket] = useState<IDetailTicket | null>(null);
+
   const { id } = use(params);
 
   const [showTicketRespond, setShowTicketRespond] = useState(false);
@@ -26,7 +27,6 @@ function EmTicketDetail({ params }: Props) {
     if (!token) return;
 
     const data = await getTicketById(id, token);
-    console.log("Ticket data:", data); // <- Agrega esto
     setTicket(data);
   };
 
@@ -52,7 +52,6 @@ function EmTicketDetail({ params }: Props) {
     setShowTicketRespond(true);
   };
 
-  const hasResolution = ticket.id_resolution_ticket != null;
   return (
     <div className="py-5 w-[967px]">
       <h2 className="font-bold text-2xl pb-5">Detalle de MI ticket</h2>
@@ -64,9 +63,7 @@ function EmTicketDetail({ params }: Props) {
         Ver respuesta del ticket
       </button>
 
-      {showTicketRespond && hasResolution && ticket.id_resolution_ticket && (
-        <ViewTicketResponse resolutionTicketId={ticket.id_resolution_ticket.toString()} ticketRef={ticketRef} />
-      )}
+      {showTicketRespond && <ViewTicketResponse ticketRef={ticketRef} />}
     </div>
   );
 }

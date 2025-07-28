@@ -39,22 +39,19 @@ export interface IDetailTicket {
   id_resolution_ticket?: number;
 }
 
-export interface TicketResponseData {
+export interface IPostTicketResponseData {
   id_ticket: string;
   response: string;
   ticketStatus: string;
   helperEmail: string;
 }
 
-export interface TicketResolutionData {
+export interface IGetTicketResponse {
   id_resolution_ticket: number;
   response: string;
   date: string;
   id_helper: {
-    id_user: string;
     name: string;
     lastname: string;
-    identification_number: string;
-    phone: string;
   };
 }

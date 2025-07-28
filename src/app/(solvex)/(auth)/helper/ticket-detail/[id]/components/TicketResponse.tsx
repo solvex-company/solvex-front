@@ -37,7 +37,7 @@ function TicketResponse({ ticketRef, ticketId, onSuccess }: Props) {
         id_ticket: String(ticketId),
         response: values.description.trim(),
         ticketStatus: values.status,
-        helperEmail: user!.email,
+        helperEmail: user!.email!,
       };
 
       const response = await postTicketResponse(requestData, token!);

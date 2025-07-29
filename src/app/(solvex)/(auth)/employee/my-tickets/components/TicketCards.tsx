@@ -58,7 +58,7 @@ function TicketCards() {
           className={`flex flex-col justify-between items-center w-[300px] h-[200px] border border-l-[20px] rounded-md p-5 gap-5 
             ${getBorderColor(ticket.id_status.name)}`}
         >
-          <h2 className="text-xl text-center font-bold underline">{ticket.title}</h2>
+          <h2 className="text-xl text-center truncate font-bold underline w-full">{ticket.title}</h2>
           <p className="text-xl">
             <strong>Fecha:</strong>{" "}
             {format(parseISO(ticket.creation_date), "dd/MM/yyyy HH:ss", {

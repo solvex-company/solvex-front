@@ -30,7 +30,10 @@ export default function CreateTicketForm() {
     },
     validationSchema: Yup.object({
       area: Yup.object().required("Área es requerida"),
-      titulo: Yup.string().min(3, "Mínimo 3 caracteres").required("Requerido"),
+      titulo: Yup.string()
+        .min(3, "Mínimo 3 caracteres")
+        .max(50, "El título no puede exceder 50 caracteres")
+        .required("Requerido"),
       descripcion: Yup.string().min(10, "Mínimo 10 caracteres").required("Requerido"),
     }),
     onSubmit: async (values, { resetForm }) => {

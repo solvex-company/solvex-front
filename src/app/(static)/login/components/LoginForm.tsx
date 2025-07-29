@@ -12,6 +12,7 @@ import { useAuthContext } from "@/context/AuthContext";
 /* import usePublic from "@/hooks/usePublic"; */
 import Link from "next/link";
 import GoogleLoginButton from "../../register/components/GoogleLoginButton";
+/* import { NextResponse } from "next/server"; */
 
 const LoginForm: React.FC = () => {
   /* usePublic(); */
@@ -47,7 +48,7 @@ const LoginForm: React.FC = () => {
           const login = success;
           const token = data;
           saveUserData({ token, login });
-          router.push("/admin/dashboard");
+          router.push('/admin/dashboard');
         } else {
           Swal.fire({
             icon: "error",

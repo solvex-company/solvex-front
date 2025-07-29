@@ -47,6 +47,12 @@ function EmployeeChat() {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
   return (
     <div style={{ padding: "1rem" }}>
       <h2>Sala de Chat</h2>
@@ -72,6 +78,7 @@ function EmployeeChat() {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="Escribe un mensaje..."
           className="mt-3 mr-3 w-full h-[40px] bg-mainBg border border-accent rounded-lg p-1 pl-3 pr-3"
         />

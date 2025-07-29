@@ -78,13 +78,12 @@ function EmployeeChat() {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="Escribe un mensaje..."
           className="mt-3 mr-3 w-full h-[40px] bg-mainBg border border-accent rounded-lg p-1 pl-3 pr-3"
         />
         <button 
           onClick={sendMessage}
-          onKeyDown={handleKeyDown}
-          tabIndex={0}
           className="mt-3 p-1 pl-3 pr-3 w-fit h-[40px] bg-accent text-2xl text-white rounded-lg hover:bg-secondBg">
           Enviar
         </button>

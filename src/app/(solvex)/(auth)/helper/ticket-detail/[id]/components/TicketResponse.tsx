@@ -88,7 +88,7 @@ function TicketResponse({ ticketRef, ticketId, onSuccess }: Props) {
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
             <section className="flex justify-between items-center py-4">
-              <h2 className="font-bold text-start text-3xl ml-4">Respuesta del Ticket</h2>
+              <h2 className="font-bold text-start text-3xl ml-4">Responder el Ticket</h2>
               <div className="flex flex-col mr-6 ">
                 <label htmlFor="date">Fecha de Respuesta</label>
                 <input
@@ -119,7 +119,7 @@ function TicketResponse({ ticketRef, ticketId, onSuccess }: Props) {
 
             <section className="flex justify-center  gap-4 w-[920px] pb-4 ml-4">
               <div className="flex flex-col w-full ">
-                <label htmlFor="helper">Soporte que respondio el ticket</label>
+                <label htmlFor="helper">Soporte que esta respondiendo el ticket</label>
                 <input
                   type="text"
                   id="helper"

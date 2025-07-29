@@ -25,13 +25,13 @@ export const postRegister = async (data: FormikValues) => {
     };
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-      if (error.code === 'ECONNABORTED') {
+      if (error.code === "ECONNABORTED") {
         return {
           message: "Error de conexion",
           errors: "El servidor no respondio",
           statusCode: 408,
         };
-      } else if (error.code === 'ECONNREFUSED' || !error.response) {
+      } else if (error.code === "ECONNREFUSED" || !error.response) {
         return {
           message: "Error de conexion",
           errors: "No se pudo conectar con el servidor",
@@ -92,19 +92,18 @@ export const postLogin = async (data: FormikValues) => {
     };
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
-
-      if (error.code === 'ECONNABORTED') {
+      if (error.code === "ECONNABORTED") {
         return {
           message: "Error de conexion",
           errors: "El servidor no respondio",
           statusCode: 408,
         };
-      } else if (error.code === 'ECONNREFUSED' || !error.response) {
+      } else if (error.code === "ECONNREFUSED" || !error.response) {
         return {
           message: "Error de conexion",
           errors: "No se pudo conectar con el servidor",
           statusCode: 503,
-        }
+        };
       } else {
         //Verifica si es un error de Axios
         const errorMessage = error.response?.data?.message || error.message;
@@ -117,15 +116,15 @@ export const postLogin = async (data: FormikValues) => {
           errors: errorMessage,
           statusCode, //Incluye el código en la respuesta
         };
-      };
-    }  
+      }
+    }
 
     return {
       success: false,
       message: "Error desconocido",
       errors: "Ocurrió un error inesperado",
     };
-  };
+  }
 };
 
 export const getUsersInfo = async (token: string) => {

@@ -68,7 +68,7 @@ function EmTicketDetail({ params }: Props) {
   };
 
   return (
-    <div className="py-5 w-[967px]">
+    <div className=" flex flex-col justify-center py-5 w-[967px]">
       <h2 className="font-bold text-2xl pb-5">Detalle de MI ticket</h2>
       <TicketDetail ticket={ticket} />
 

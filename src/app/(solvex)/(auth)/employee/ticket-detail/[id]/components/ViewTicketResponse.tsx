@@ -26,7 +26,11 @@ function ViewTicketResponse({ response, index }: Props) {
       <h2 className="font-bold text-start text-3xl ml-4 my-6">Respuesta del Ticket #{index + 1}</h2>
       <div className="flex flex-col  items-start ml-4 mb-6">
         <h3>Descripcion de la respuesta</h3>
-        <p className="border border-accent rounded-md p-2 bg-white w-[923px] h-[170px]">{response.response}</p>
+
+        <p className="border border-accent rounded-md p-2 bg-white w-[923px] whitespace-pre-wrap break-words">
+          {response.response}
+        </p>
+
       </div>
       <section className="flex justify-center  gap-4 w-[920px] pb-6 ml-4">
         <div className="flex flex-col w-full ">

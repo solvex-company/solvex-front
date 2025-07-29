@@ -5,6 +5,7 @@ import { useFormik, FormikProvider } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 //Componentes
 import TicketHeaderFields from "./TicketHeaderFields";
@@ -18,6 +19,7 @@ import { useAuthContext } from "@/context/AuthContext";
 export default function CreateTicketForm() {
   const [images, setImages] = useState<File[]>([]);
   const { token } = useAuthContext();
+  const router = useRouter();
 
   const formik = useFormik<TicketFormValues>({
     initialValues: {
@@ -28,7 +30,14 @@ export default function CreateTicketForm() {
     },
     validationSchema: Yup.object({
       area: Yup.object().required("Área es requerida"),
-      titulo: Yup.string().min(3, "Mínimo 3 caracteres").required("Requerido"),
+
+      titulo: Yup.string()
+        .min(3, "Mínimo 3 caracteres")
+        .max(50, "El título no puede exceder 50 caracteres")
+        .required("Requerido"),
+
+      
+
       descripcion: Yup.string().min(10, "Mínimo 10 caracteres").required("Requerido"),
     }),
     onSubmit: async (values, { resetForm }) => {
@@ -53,6 +62,7 @@ export default function CreateTicketForm() {
 
         resetForm(); // Limpiar el formulario
         setImages([]); // Limpiar las imágenes
+        router.push("/employee/dashboard");
       } catch (error) {
         console.error("Error al crear el ticket:", error);
 

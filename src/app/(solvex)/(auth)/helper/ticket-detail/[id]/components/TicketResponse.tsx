@@ -7,11 +7,11 @@ import { Formik } from "formik";
 import React from "react";
 import Swal from "sweetalert2";
 import * as Yup from "yup";
+import { useRouter } from "next/navigation";
 
 type Props = {
   ticketRef: React.RefObject<HTMLDivElement | null>;
   ticketId: string;
-  onSuccess?: () => void;
 };
 
 const validationSchema = Yup.object({
@@ -19,9 +19,10 @@ const validationSchema = Yup.object({
   status: Yup.string().required("Estado es requerido"),
 });
 
-function TicketResponse({ ticketRef, ticketId, onSuccess }: Props) {
+function TicketResponse({ ticketRef, ticketId }: Props) {
   const { user, token } = useAuthContext();
   const fullName = user?.name ? `${user.name} ${user.lastname}` : `Nombre del usuario`;
+  const router = useRouter();
 
   const initialValues = {
     date: new Date().toISOString().split("T")[0],
@@ -62,7 +63,7 @@ function TicketResponse({ ticketRef, ticketId, onSuccess }: Props) {
         });
 
         resetForm();
-        if (onSuccess) onSuccess();
+        router.push("/helper/dashboard");
       } else {
         Swal.fire({
           title: "Error",
@@ -150,9 +151,11 @@ function TicketResponse({ ticketRef, ticketId, onSuccess }: Props) {
 
             <button
               type="submit"
-              className=" p-2 ml-4 my-4 h-12 w-[920px] text-white text-xl font-bold  rounded bg-blue-500 hover:bg-blue-600"
+              disabled={formik.isSubmitting}
+              className={`p-2 ml-4 my-4 h-12 w-[920px] text-white text-xl font-bold  rounded
+                ${formik.isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
             >
-              Responder ticket
+              {formik.isSubmitting ? "Enviando Respuesta..." : "Responder Ticket"}
             </button>
           </form>
         )}

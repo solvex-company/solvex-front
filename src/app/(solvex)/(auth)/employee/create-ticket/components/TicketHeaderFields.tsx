@@ -42,9 +42,7 @@ function TicketHeaderFields() {
   const handleAreaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedAreaId = parseInt(e.target.value);
     if (selectedAreaId) {
-      const selectedArea = areas.find(
-        (area) => area.id_area === selectedAreaId
-      );
+      const selectedArea = areas.find((area) => area.id_area === selectedAreaId);
       if (selectedArea) {
         setFieldValue("area", selectedArea);
       }
@@ -55,26 +53,12 @@ function TicketHeaderFields() {
 
   return (
     <div className="flex gap-4 items-start justify-between">
-      <div className="flex flex-col w-[112px] ">
-        <label htmlFor="codigo">Código</label>
-        <input
-          name="codigo"
-          id="codigo"
-          value={values.codigo}
-          disabled
-          className="border border-accent rounded-md p-2 h-[45px] w-full bg-white cursor-not-allowed"
-        />
-      </div>
       <div className="flex flex-col w-[588px]">
         <label htmlFor="area">Área de la que se genera el ticket</label>
         <select
           name="area"
           id="area"
-          value={
-            values.area && typeof values.area === "object"
-              ? values.area.id_area
-              : values.area || ""
-          }
+          value={values.area && typeof values.area === "object" ? values.area.id_area : values.area || ""}
           onChange={handleAreaChange}
           className="bg-mainBg border border-accent rounded-md p-2 h-[45px] w-full"
         >

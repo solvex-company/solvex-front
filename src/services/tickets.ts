@@ -1,4 +1,4 @@
-import { TicketResponseData } from "@/types/ITickets";
+import { IPostTicketResponseData } from "@/types/ITickets";
 import axios from "axios";
 
 const axiosApiBack = axios.create({
@@ -81,7 +81,8 @@ export const getTicketById = async (ticketId: string, token: string) => {
   }
 };
 
-export const postTicketResponse = async (data: TicketResponseData, token: string) => {
+//* PARA RESPUESTAS DE TICKETS ////////////////////////////////////////
+export const postTicketResponse = async (data: IPostTicketResponseData, token: string) => {
   try {
     const res = await axiosApiBack.post("/tickets/resolutionTicket", data, {
       headers: {
@@ -108,9 +109,9 @@ export const postTicketResponse = async (data: TicketResponseData, token: string
   }
 };
 
-export const getTicketResponseById = async (ticketResponseId: string, token: string) => {
+export const getTicketResponseByTicketId = async (ticketId: string, token: string) => {
   try {
-    const res = await axiosApiBack.get(`/tickets/resolution/${ticketResponseId}`, {
+    const res = await axiosApiBack.get(`/tickets/resolutionTickets/${ticketId} `, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

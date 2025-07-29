@@ -4,7 +4,7 @@ import { useAuthContext } from "@/context/AuthContext";
 
 function InfoDashboard() {
   const { user } = useAuthContext();
-  const fullName = user?.name ? `${user.name} ${user.lastname}` : `Nombre del usuario`;
+  const fullName = (user?.name && user?.lastname) ? `${user.name} ${user.lastname}` : `Nombre del usuario`;
   return (
     <section className="grid grid-cols-2 justify-center items-center w-full gap-3 py-6">
       <div>

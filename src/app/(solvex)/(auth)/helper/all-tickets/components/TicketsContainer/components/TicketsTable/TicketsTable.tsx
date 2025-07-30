@@ -12,6 +12,9 @@ import { useRouter } from "next/navigation";
 const TicketsTable: React.FC<{ tickets: ITicketsDto[] }> = ({ tickets }) => {
   const router = useRouter();
 
+  // Filtrar tickets que NO estén resueltos
+  const filteredTickets = tickets.filter((ticket) => ticket.id_status.name !== "Completed");
+
   return (
     <div>
       <table className="flex w-full flex-col h-max gap-2 mt-5 table-fixed">
@@ -24,7 +27,7 @@ const TicketsTable: React.FC<{ tickets: ITicketsDto[] }> = ({ tickets }) => {
           </tr>
         </thead>
         <tbody className="flex flex-col gap-3">
-          {tickets.map((ticket) => {
+          {filteredTickets.map((ticket) => {
             // Transformar el obj a un js nativo
             const dateObject = parseISO(ticket.creation_date);
             const formattedData = format(dateObject, "dd-MM-yyyy HH:mm", {

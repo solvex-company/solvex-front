@@ -32,7 +32,7 @@ const frontend = [
 const backend = [
   {
     imgSrc:
-      "https://ik.imagekit.io/SolvexCompany/DiegoBaca.png?updatedAt=1752502464720",
+      "https://ik.imagekit.io/SolvexCompany/Imagen%20de%20WhatsApp%202025-07-29%20a%20las%2023.39.32_1bcf52e2.jpg?updatedAt=1753880378975",
     name: "Diego baca",
     hobbies:
       "Desarrollador Full Stack, amante de la tecnología y la programación, siempre explorando nuevas herramientas y lenguajes para crear soluciones innovadoras.",
@@ -54,17 +54,17 @@ const backend = [
     name: "Tobias Gonzalez",
     hobbies:
       "Desarrollador Full Stack, amante de la tecnología y la programación, siempre explorando nuevas herramientas y lenguajes para crear soluciones innovadoras.",
-    linkedInSrc: "https://www.linkedin.com/in/franco-paganoni/",
-    githubSrc: "",
+    linkedInSrc: "https://www.linkedin.com/in/tobias-gonzalez-70b3a2291/",
+    githubSrc: "https://github.com/tobigonzalez99",
   },
   {
     imgSrc:
-      "https://ik.imagekit.io/SolvexCompany/AndreaLopez.jpg?updatedAt=1752436421303",
+      "https://ik.imagekit.io/SolvexCompany/AL_xpTuM6OlG.png?updatedAt=1753880672885",
     name: "Andrea Lopez",
     hobbies:
-      "Desarrollador Full Stack, amante de la tecnología y la programación, siempre explorando nuevas herramientas y lenguajes para crear soluciones innovadoras.",
-    linkedInSrc: "https://www.linkedin.com/in/franco-paganoni/",
-    githubSrc: "",
+      "Desarrolladora Full Stack, concentrada en  el Backend, donde disfruto controlando y optimizando el flujo de datos. Siempre buscando aprender cosas nuevas y expandir mis conocimientos en el mundo de la tecnología.",
+    linkedInSrc: "https://www.linkedin.com/in/andrea-lopez-b241abb2/",
+    githubSrc: "https://github.com/AVLopezSanchez",
   },
 ];
 

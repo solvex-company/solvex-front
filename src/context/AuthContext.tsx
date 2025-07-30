@@ -119,18 +119,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const requestInterceptor = AxiosApi.interceptors.request.use(
       (config) => {
-        // Leer el token directamente de localStorage en el momento de la petición
-        const storedAuthData = JSON.parse(
-          localStorage.getItem(USER_LOCAL_KEY) || "{}"
-        );
-        const currentToken = storedAuthData.token;
-
-        if (currentToken) {
-          config.headers.Authorization = `Bearer ${currentToken}`;
+        if (token) {
+          console.log(token);
+          config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
       },
       (error) => {
+        console.log("No llego el token");
         return Promise.reject(error);
       }
     );
@@ -150,7 +146,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       AxiosApi.interceptors.request.eject(requestInterceptor);
       AxiosApi.interceptors.response.eject(responseInterceptor);
     };
-  }, []);
+  }, [token]);
 
   return (
     <AuthContext.Provider

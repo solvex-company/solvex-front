@@ -4,12 +4,11 @@ import axios from "axios";
 export const passwordNullService = async (): Promise<boolean> => {
   try {
     const response = await AxiosApi.get("/users/is-password-null");
-    console.log(response);
 
-    if (!response.data) {
-      console.log("Error, no llego la data");
-      throw new Error("Error al fetchear la data");
-    }
+    // if (response.data) {
+    //   console.log("Error, no llego la data");
+    //   throw new Error("Error al fetchear la data");
+    // }
 
     return response.data;
   } catch (error: unknown) {

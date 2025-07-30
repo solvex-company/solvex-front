@@ -142,7 +142,7 @@ const ChangePasswordComponentForm: React.FC = () => {
         {isPasswordNull ? (
           <div className="p-3 bg-sky-200 text-center">
             <p className="text-bold">
-              Si se authentico con Google por favor elija una nueva contraseña
+              Si se autenticó con Google por favor elija una nueva contraseña
             </p>
           </div>
         ) : (

@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 const NavbarAuth = () => {
   const router = useRouter();
-  const { user, isAuth, resetUserData, /* isLoading  */} = useAuthContext();
+  const { user, isAuth, resetUserData /* isLoading  */ } = useAuthContext();
 
   const isAdmin = user?.id_role === 1;
   const isHelper = user?.id_role === 2;
@@ -36,14 +36,14 @@ const NavbarAuth = () => {
   useEffect(() => {
     if (!user) return;
 
-     if (user.id_role === 1) {
-       router.push("/admin/dashboard");
-     } else if (user.id_role === 2) {
-       router.push("/helper/dashboard");
-     } else if (user.id_role === 3) {
-       router.push("/employee/dashboard");
-     }
-   }, [user, router]);
+    if (user.id_role === 1) {
+      router.push("/admin/dashboard");
+    } else if (user.id_role === 2) {
+      router.push("/helper/dashboard");
+    } else if (user.id_role === 3) {
+      router.push("/employee/dashboard");
+    }
+  }, [user, router]);
 
   if (!isAuth) {
     return null;
@@ -177,7 +177,7 @@ const NavbarAuth = () => {
       <div className="flex flex-col mb-6">
         {(isEmployee || isHelper) && license && (
           <Link
-            href="/employee/checkout"
+            href="/employee/pay-plan"
             className="flex flex-col m-1 ml-3 mr-3 h-[80px] justify-center text-center text-[24px] rounded-lg bg-secondText text-mainBg hover:text-mainBg hover:bg-accent"
           >
             Adquiere más beneficios

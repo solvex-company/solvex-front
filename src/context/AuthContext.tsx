@@ -120,13 +120,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const requestInterceptor = AxiosApi.interceptors.request.use(
       (config) => {
         if (token) {
-          console.log(token);
           config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
       },
       (error) => {
-        console.log("No llego el token");
         return Promise.reject(error);
       }
     );

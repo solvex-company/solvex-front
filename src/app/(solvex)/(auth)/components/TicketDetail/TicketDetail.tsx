@@ -66,7 +66,7 @@ function TicketDetail({ ticket }: Props) {
       <section className="flex gap-4 pb-5">
         <div>
           <h3>Titulo</h3>
-          <p className="border border-accent rounded-md w-[494px] p-2 ">{ticket.title}</p>
+          <p className="border border-accent rounded-md w-[494px] truncate p-2 ">{ticket.title}</p>
         </div>
         <div>
           <h3>Area del ticket</h3>
@@ -76,7 +76,7 @@ function TicketDetail({ ticket }: Props) {
 
       <div className="pb-6">
         <h3>Descripción</h3>
-        <p className="border border-accent rounded-md  h-[179px] p-2">{ticket.description}</p>
+        <p className="border border-accent rounded-md w-full p-2 whitespace-pre-wrap break-words">{ticket.description}</p>
       </div>
 
       <div>

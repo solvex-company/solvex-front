@@ -43,7 +43,7 @@ const TicketsTable: React.FC<{ tickets: ITicketsDto[] }> = ({ tickets }) => {
                 onClick={handleClick}
               >
                 <td className="w-1/6">COD-{ticket.id_ticket}</td>
-                <td className="w-2/6">{ticket.title}</td>
+                <td className="w-2/6 truncate">{ticket.title}</td>
                 <td className="w-2/6">{formattedData}Hs</td>
                 <td className="w-1/6">
                   {ticket.id_empleado.name} {ticket.id_empleado.lastname}

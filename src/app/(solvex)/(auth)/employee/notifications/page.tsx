@@ -1,7 +1,7 @@
 import Notifications from "@/app/components/Notifications/Notifications";
 
-function notificationsPage() {
+export async function notificationsPage() {
   return <Notifications />;
 }
 
-export default notificationsPage;
+

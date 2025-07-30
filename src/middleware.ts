@@ -4,14 +4,13 @@ import { jwtDecode } from "jwt-decode";
 import { JwtPayload } from "jwt-decode";
 
 // Configuración de rutas
-const PUBLIC_ROUTES = ['/login', '/register', '/about', '/']; // Añade aquí tus rutas públicas
-const ADMIN_ROUTES = ['/admin']; // Protege TODAS las rutas /admin/*
-const HELPER_ROUTES = ['/helper']; // Protege TODAS las rutas /helper/*
-const EMPLOYEE_ROUTES = ['/employee']; // Protege TODAS las rutas /employee/*
+const PUBLIC_ROUTES = ['/login', '/register', '/about', '/']; 
+const ADMIN_ROUTES = ['/admin']; 
+const HELPER_ROUTES = ['/helper']; 
+const EMPLOYEE_ROUTES = ['/employee']; 
 
 export interface CustomJwtPayload extends JwtPayload {
   id_role: number;
-  // Aquí puedes añadir más campos personalizados de tu token si los hay
 }
 
 export enum UserRole {
@@ -22,85 +21,97 @@ export enum UserRole {
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  const token = (await cookies()).get('token')?.value; // Asume que el token está en una cookie llamada 'token'
+  const token = (await cookies()).get('token')?.value;
 
-  // 1. Redirección si el usuario está logueado y trata de acceder a rutas públicas
-  if (PUBLIC_ROUTES.some(route => pathname.startsWith(route))) {
-    if (token) {
-      try {
-        const decoded = jwtDecode<CustomJwtPayload>(token);
-        // Redirige según el rol
-        switch (decoded.id_role) {
-          case UserRole.ADMIN:
-            return NextResponse.redirect(new URL('/admin/dashboard', request.url));
-          case UserRole.HELPER:
-            return NextResponse.redirect(new URL('/helper/dashboard', request.url));
-          case UserRole.EMPLOYEE:
-            return NextResponse.redirect(new URL('/employee/dashboard', request.url));
-          default:
-            return NextResponse.redirect(new URL('/', request.url));
-        }
-      } catch (error) {
-        // Token inválido, permite el acceso a la ruta pública
-        console.warn(error);
-        return NextResponse.next();
-      }
+  console.log('Middleware ejecutándose en:', pathname);
+
+  // Verificar si es una ruta pública
+  const isPublicRoute = PUBLIC_ROUTES.some(route => {
+    if (route === '/') {
+      return pathname === '/';
     }
-    // Si no hay token, permite el acceso a la ruta pública
-    return NextResponse.next();
-  }
+    return pathname.startsWith(route);
+  });
 
-  // 2. Protección de rutas para usuarios logueados
+  // Si no hay token
   if (!token) {
-    // Si no hay token y no es una ruta pública, redirige al login
+    // Si es ruta pública, permitir acceso
+    if (isPublicRoute) {
+      return NextResponse.next();
+    }
+    // Si no es ruta pública, redirigir a login
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
+  // Si hay token, decodificarlo
   try {
     const decoded = jwtDecode<CustomJwtPayload>(token);
     const userRole = decoded.id_role;
 
-    // 3. Verificación de roles para rutas protegidas
-    if (ADMIN_ROUTES.some(route => pathname.startsWith(route)) && userRole !== UserRole.ADMIN) {
-      return NextResponse.redirect(new URL('/unauthorized', request.url));
-    }
-    
-    if (HELPER_ROUTES.some(route => pathname.startsWith(route)) && userRole !== UserRole.HELPER) {
-      return NextResponse.redirect(new URL('/unauthorized', request.url));
-    }
-    
-    if (EMPLOYEE_ROUTES.some(route => pathname.startsWith(route)) && userRole !== UserRole.EMPLOYEE) {
-      return NextResponse.redirect(new URL('/unauthorized', request.url));
+    // Definir el dashboard correcto para cada rol
+    const roleDashboards = {
+      [UserRole.ADMIN]: '/admin/dashboard',
+      [UserRole.HELPER]: '/helper/dashboard',
+      [UserRole.EMPLOYEE]: '/employee/dashboard'
+    };
+
+    const userDashboard = roleDashboards[userRole];
+
+    // Si está en una ruta pública y tiene token válido
+    if (isPublicRoute) {
+      // Solo redirigir si no está ya en su dashboard
+      if (pathname !== userDashboard) {
+        return NextResponse.redirect(new URL(userDashboard, request.url));
+      }
+      return NextResponse.next();
     }
 
-    // 4. Evitar que usuarios accedan a rutas de otros roles
-    // Ejemplo: si un employee trata de acceder a rutas de admin
-    /* if (userRole === UserRole.EMPLOYEE && 
-        (ADMIN_ROUTES.some(route => pathname.startsWith(route)) || 
-         HELPER_ROUTES.some(route => pathname.startsWith(route)))) {
-      return NextResponse.redirect(new URL('/employee/dashboard', request.url));
-    } */
+    // Verificar acceso a rutas protegidas por rol
+    if (ADMIN_ROUTES.some(route => pathname.startsWith(route))) {
+      if (userRole !== UserRole.ADMIN) {
+        return NextResponse.redirect(new URL('/unauthorized', request.url));
+      }
+    }
+    
+    if (HELPER_ROUTES.some(route => pathname.startsWith(route))) {
+      if (userRole !== UserRole.HELPER) {
+        return NextResponse.redirect(new URL('/unauthorized', request.url));
+      }
+    }
+    
+    if (EMPLOYEE_ROUTES.some(route => pathname.startsWith(route))) {
+      if (userRole !== UserRole.EMPLOYEE) {
+        return NextResponse.redirect(new URL('/unauthorized', request.url));
+      }
+    }
 
-    // Si todo está bien, permite el acceso
+    // Si llegó hasta aquí, tiene acceso
     return NextResponse.next();
 
   } catch (error) {
-    // Token inválido, redirige al login
-    console.warn(error);
+    // Token inválido
+    console.warn('Token inválido:', error);
+    
+    // Si está en ruta pública, permitir acceso (eliminando cookie inválida sería ideal)
+    if (isPublicRoute) {
+      return NextResponse.next();
+    }
+    
+    // Si no es ruta pública, redirigir a login
     return NextResponse.redirect(new URL('/login', request.url));
   }
 }
 
-// Configuración del middleware para que se ejecute en las rutas especificadas
+// Configuración del middleware - INCLUIR todas las rutas excepto APIs
 export const config = {
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
-     * - api (API routes)
+     * - api (API routes) - IMPORTANTE: excluir TODAS las APIs
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|admin|helper|employee|unauthorized).*)',
+    '/((?!api/|_next/static|_next/image|favicon.ico|auth/callback).*)',
   ],
 };

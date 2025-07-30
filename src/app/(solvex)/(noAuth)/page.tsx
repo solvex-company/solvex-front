@@ -72,36 +72,21 @@ function Home() {
       </section>
 
       <section className="m-auto h-[600px] w-[850px]">
-        <h2 className="text-3xl text-center text-mainText font-bold pb-3">Planes</h2>
+        <h2 className="text-3xl text-center text-mainText font-bold pb-3">Plan</h2>
         <p className="text-lg pt-3">
-          Obtén un perfil de administrador y potencia la gestión de tu mesa de soporte. <br /> Con un perfil de administrador,
-          tendrás acceso a herramientas exclusivas que te permitirán:
+          Adquiriendo el plan, recibirás notificaciones instantáneas al correo electrónico cuando:
         </p>
         <ol className="list-disc pl-5 pt-3 text-lg">
-          <li>Asignar usuarios al rol de soporte para que puedean atender tickets.</li>
-          <li>Visualizar estadísticas clave como resolución de incidencias .</li>
+          <li>Cree un ticket nuevo (para estar al tanto de sus tickets).</li>
+          <li>Te responden a un ticket (y puedes dar seguimiento rápidamente).</li>
+          <li>Tu rol de usuario ha sido cambiado (de empleado a soporte y viceversa).</li>
         </ol>
-        <p className="pt-4 text-lg">
-          Simplifica la operación diaria, toma decisiones basadas en datos y mejora la eficiencia de tu servicio. <br />
-          <strong>¡Actualiza ahora y lleva tu soporte al siguiente nivel! </strong>
-        </p>
 
         <Link href={"/login"} className="">
-          <div className="flex justify-between items-center gap-10 p-10">
-            <div className="flex flex-col justify-center items-center w-[300px] h-[200px] border border-resolved border-t-[20px] rounded-xl ">
-              <h3 className="text-4xl font-bold text-mainText pb-8">Basico</h3>
-              <h2 className="text-4xl text-resolved font-bold">$100</h2>
-              <p className="text-2xl text-resolved">1 año</p>
-            </div>
-            <div className="flex flex-col justify-center items-center w-[300px] h-[200px] border border-process border-t-[20px] rounded-xl ">
-              <h3 className="text-4xl font-bold text-mainText pb-8">Plus</h3>
-              <h2 className="text-4xl text-process font-bold">$255</h2>
-              <p className="text-2xl text-process">3 año</p>
-            </div>
-            <div className="flex flex-col justify-center items-center w-[300px] h-[200px] border border-pending border-t-[20px] rounded-xl ">
+          <div className="flex justify-center items-center gap-10 p-10">
+            <div className="flex flex-col justify-center items-center w-fit h-[200px] pl-6 pr-6 border border-process border-t-[20px] rounded-xl ">
               <h3 className="text-4xl font-bold text-mainText pb-8">Premium</h3>
-              <h2 className="text-4xl text-pending font-bold">$375</h2>
-              <p className="text-2xl text-pending">5 año</p>
+              <h2 className="text-4xl text-process font-bold">$5</h2>
             </div>
           </div>
         </Link>

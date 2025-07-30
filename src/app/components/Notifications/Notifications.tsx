@@ -1,7 +1,7 @@
 const Notifications: React.FC = () => {
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-xl">Notificaciones</h1>
+      <h1 className="text-xl font-bold">NOTIFICACIONES</h1>
       <div className="bg-white shadow-md rounded-lg divide-y divide-gray-200 mt-3">
         <ul className="flex flex-col gap-2">
           <li className="p-4 hover:bg-gray-100 cursor-pointer text-lg">

@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { FormikValues } from "formik";
-import { cookies } from "next/headers"
+import { cookies } from "next/headers";
 
 const axiosApiBack = axios.create({
   baseURL: process.env.API_URL, //localhost:4000
@@ -58,16 +58,16 @@ export const postRegister = async (data: FormikValues) => {
 };
 
 export async function deleteTokenCookie() {
-  (await cookies()).delete('token');
+  (await cookies()).delete("token");
 }
 
 export async function createTokenCookie(cookie: string) {
-  (await cookies()).set('token', cookie, {
-      httpOnly: true,
-      secure: ['development', 'production'].includes(process.env.NODE_ENV),
-      maxAge: 60 * 60 * 24,
-      path: '/',
-    });
+  (await cookies()).set("token", cookie, {
+    httpOnly: true,
+    secure: ["development", "production"].includes(process.env.NODE_ENV),
+    maxAge: 60 * 60 * 24,
+    path: "/",
+  });
 }
 
 export const postLogin = async (data: FormikValues) => {

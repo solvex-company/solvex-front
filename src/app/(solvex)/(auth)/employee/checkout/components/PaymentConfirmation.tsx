@@ -64,15 +64,11 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
   };
 
   const planPrices: { [key: string]: number } = {
-    "1": 100, // Precio para Basico
-    "2": 255, // Precio para Plus
-    "3": 375, // Precio para Premium
+    "1": 5,
   };
 
   const planNames: { [key: string]: string } = {
-    "1": "Basico",
-    "2": "Plus",
-    "3": "Premium",
+    "1": "Único",
   };
 
   const selectedPlanValue = formik.values.installments;
@@ -81,7 +77,7 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
   const paymentsTotal = planPrices[selectedPlanValue] || 0;
 
   return (
-    <div className="flex flex-col lg:flex-row bg-gray-100 min-h-screen p-4 sm:p-8 justify-center items-start">
+    <div className="flex flex-col lg:flex-row bg-gray-100 min-h-full p-4 sm:p-8 justify-center items-start">
       <div className="bg-white rounded-lg shadow-md p-6 sm:p-8 w-full lg:w-3/5 xl:w-2/5 mb-6 lg:mb-0 lg:mr-8">
         <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-6">
           Para terminar, confirma tu pago
@@ -132,9 +128,7 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
                 <option value="" disabled>
                   Elige
                 </option>
-                <option value="1">Basico</option>
-                <option value="2">Plus</option>
-                <option value="3">Premium</option>
+                <option value="1">Único</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-200">
                 <svg

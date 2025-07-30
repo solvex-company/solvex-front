@@ -177,7 +177,7 @@ const NavbarAuth = () => {
       <div className="flex flex-col mb-6">
         {(isEmployee || isHelper) && license && (
           <Link
-            href="/employee/checkout"
+            href="/employee/pay-plan"
             className="flex flex-col m-1 ml-3 mr-3 h-[80px] justify-center text-center text-[24px] rounded-lg bg-secondText text-mainBg hover:text-mainBg hover:bg-accent"
           >
             Adquiere más beneficios

@@ -62,7 +62,7 @@ const Notifications: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-xl">Notificaciones</h1>
+      <h1 className="text-xl font-bold">NOTIFICACIONES</h1>
       <div className="bg-white shadow-md rounded-lg divide-y divide-gray-200 mt-3">
         {notifications.length === 0 ? (
           <div className="p-4 text-center text-gray-500">

@@ -18,16 +18,27 @@ function TicketCards() {
   const { data: tickets, isLoading, error } = useTickets();
   const router = useRouter();
 
-  console.log("Tickets:", tickets);
+  const filteredTickets = tickets?.filter(
+    (ticket) =>
+      ticket.id_empleado.identification_number === user?.identification_number
+  );
 
-  const filteredTickets = tickets?.filter((ticket) => ticket.id_empleado.identification_number === user?.identification_number);
-
-  if (isLoading) return <Loader />;
+  if (isLoading)
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center">
+        <p>Cargando tickets...</p>
+        <Loader />
+      </div>
+    );
 
   if (error) return <div>¡Hubo un error al cargar los tickets!</div>;
 
   if (!filteredTickets || filteredTickets.length === 0) {
-    return <div>¡No hay tickets para mostrar!</div>;
+    return (
+      <div className="w-full h-60 flex flex-col items-center justify-center">
+        <p className="text-xl">¡No hay tickets para mostrar!</p>
+      </div>
+    );
   }
 
   // Función para asignar color según estado
@@ -54,11 +65,15 @@ function TicketCards() {
       {filteredTickets.map((ticket, index) => (
         <div
           key={index}
-          onClick={() => router.push(`/employee/ticket-detail/${ticket.id_ticket}`)}
+          onClick={() =>
+            router.push(`/employee/ticket-detail/${ticket.id_ticket}`)
+          }
           className={`flex flex-col justify-between items-center w-[300px] h-[200px] border border-l-[20px] rounded-md p-5 gap-5 
             ${getBorderColor(ticket.id_status.name)}`}
         >
-          <h2 className="text-xl text-center truncate font-bold underline w-full">{ticket.title}</h2>
+          <h2 className="text-xl text-center truncate font-bold underline w-full">
+            {ticket.title}
+          </h2>
           <p className="text-xl">
             <strong>Fecha:</strong>{" "}
             {format(parseISO(ticket.creation_date), "dd/MM/yyyy HH:ss", {

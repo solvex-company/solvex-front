@@ -4,7 +4,7 @@ import AxiosApi from "@/app/api/axiosInstance";
 export type ChangePasswordResponse = string;
 
 export interface ChangePasswordPayload {
-  oldPassword: string;
+  oldPassword?: string;
   newPassword: string;
   newPassword2: string;
 }

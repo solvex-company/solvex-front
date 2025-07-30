@@ -27,6 +27,8 @@ export const useChangePassword = () => {
         confirmButtonText: "Aceptar",
       });
       queryClient.invalidateQueries({ queryKey: ["users"] });
+
+      queryClient.invalidateQueries({ queryKey: ["passwordNull"] });
     },
 
     onError: (error) => {

@@ -68,33 +68,35 @@ function EmTicketDetail({ params }: Props) {
   };
 
   return (
-    <div className=" flex flex-col justify-center py-5 w-[967px]">
-      <h2 className="font-bold text-2xl pb-5">Detalle de MI ticket</h2>
-      <TicketDetail ticket={ticket} />
+    <div className="flex justify-center w-full">
+      <div className=" flex flex-col justify-center py-5 w-[967px]">
+        <h2 className="font-bold text-2xl pb-5">Detalle de mi ticket</h2>
+        <TicketDetail ticket={ticket} />
 
-      {ticketResponses.length > 0 ? (
-        <>
-          <button
-            onClick={handleTicketClick}
-            className="w-[967px] text-white text-center text-xl bg-accent rounded-md hover:opacity-70 p-2 mt-6"
-          >
-            Ver respuesta del ticket
-          </button>
+        {ticketResponses.length > 0 ? (
+          <>
+            <button
+              onClick={handleTicketClick}
+              className="w-[967px] text-white text-center text-xl bg-accent rounded-md hover:opacity-70 p-2 mt-6"
+            >
+              Ver respuesta del ticket
+            </button>
 
-          {showTicketRespond && (
-            <div ref={ticketRef}>
-              {ticketResponses.map((response, index) => (
-                <ViewTicketResponse key={response.id_resolution_ticket} response={response} index={index} />
-              ))}
-            </div>
-          )}
-        </>
-      ) : (
-        <div className="text-center mt-10">
-          <h2 className="text-accent italic text-2xl mb-2">No hay ninguna respuesta a este ticket de momento</h2>
-          <p className="text-secondText text-xl">Espera a que algun soporte revise tu caso</p>
-        </div>
-      )}
+            {showTicketRespond && (
+              <div ref={ticketRef}>
+                {ticketResponses.map((response, index) => (
+                  <ViewTicketResponse key={response.id_resolution_ticket} response={response} index={index} />
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="text-center mt-10">
+            <h2 className="text-accent italic text-2xl mb-2">No hay ninguna respuesta a este ticket de momento</h2>
+            <p className="text-secondText text-xl">Espera a que algun soporte revise tu caso</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ import { deleteTokenCookie } from "@/services/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+/* import { useEffect } from "react"; */
 
 /* import Loader from "@/app/components/Loader/Loader"; */
 
@@ -33,7 +33,7 @@ const NavbarAuth = () => {
     );
   } */
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (!user) return;
 
      if (user.id_role === 1) {
@@ -43,7 +43,9 @@ const NavbarAuth = () => {
      } else if (user.id_role === 3) {
        router.push("/employee/dashboard");
      }
-   }, [user, router]);
+   }, [user, router]); */
+
+  
 
   if (!isAuth) {
     return null;
@@ -184,7 +186,7 @@ const NavbarAuth = () => {
       <div className="flex flex-col mb-6">
         {(isEmployee || isHelper) && license && (
           <Link
-            href="/employee/pay-plan"
+            href="/employee/checkout"
             className="flex flex-col m-1 ml-3 mr-3 h-[80px] justify-center text-center text-[24px] rounded-lg bg-secondText text-mainBg hover:text-mainBg hover:bg-accent"
           >
             Adquiere más beneficios

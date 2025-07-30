@@ -11,6 +11,7 @@ export interface User {
   id_role: number;
   name: string;
   lastname: string;
+  paymentApproved: boolean;
   phone?: string;
   identification_number?: string;
 }
@@ -56,6 +57,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         id_role: decodedPayload.id_role,
         name: fullUserInfo.name,
         lastname: fullUserInfo.lastname,
+        paymentApproved: decodedPayload.paymentApproved,
         phone: fullUserInfo.phone,
         identification_number: fullUserInfo.identification_number,
       };

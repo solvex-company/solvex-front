@@ -172,13 +172,6 @@ const NavbarAuth = () => {
             >
               Chat
             </Link>
-            <Link
-              href={"/employee/notifications"}
-              className="relative flex flex-col m-1 ml-3 mr-3 h-[40px] justify-center text-center text-[24px] text-secondText rounded-lg hover:text-mainBg hover:bg-accent"
-            >
-              <span className="absolute flex items-center justify-center w-5 h-5 rounded-full bg-red-500 -top-1 -right-1 text-sm text-white"></span>
-              Notificaciones
-            </Link>
           </div>
         )}
       </div>

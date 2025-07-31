@@ -27,7 +27,7 @@ const Notifications: React.FC = () => {
           const data = await getNotifications(token!);
           setNotifications(data);
         } catch (error) {
-          console.error("Error al obtener notificaciones:", error);
+          if (error) throw new Error("Hubo un error aqui");
           setError("Error al cargar las notificaciones");
         } finally {
           setIsLoading(false);
@@ -53,7 +53,9 @@ const Notifications: React.FC = () => {
     return (
       <div className="container mx-auto p-4">
         <h1 className="text-xl">Notificaciones</h1>
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mt-3">{error}</div>
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mt-3">
+          {error}
+        </div>
       </div>
     );
   }
@@ -63,7 +65,9 @@ const Notifications: React.FC = () => {
       <h1 className="text-xl font-bold">NOTIFICACIONES</h1>
       <div className="bg-white shadow-md rounded-lg divide-y divide-gray-200 mt-3">
         {notifications.length === 0 ? (
-          <div className="p-4 text-center text-gray-500">No tienes notificaciones</div>
+          <div className="p-4 text-center text-gray-500">
+            No tienes notificaciones
+          </div>
         ) : (
           <ul className="flex flex-col">
             {notifications.map((notification) => (
@@ -73,7 +77,9 @@ const Notifications: React.FC = () => {
               >
                 <strong>{notification.title}:</strong> {notification.message}
                 {notification.createdAt && (
-                  <div className="text-sm text-gray-500 mt-1">{new Date(notification.createdAt).toLocaleString()}</div>
+                  <div className="text-sm text-gray-500 mt-1">
+                    {new Date(notification.createdAt).toLocaleString()}
+                  </div>
                 )}
               </li>
             ))}

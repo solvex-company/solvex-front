@@ -13,7 +13,9 @@ const TicketsTable: React.FC<{ tickets: ITicketsDto[] }> = ({ tickets }) => {
   const router = useRouter();
 
   // Filtrar tickets que NO estén resueltos
-  const filteredTickets = tickets.filter((ticket) => ticket.id_status.name !== "Completed");
+  const filteredTickets = tickets.filter(
+    (ticket) => ticket.id_status.name !== "Completed"
+  );
 
   return (
     <div>
@@ -35,7 +37,6 @@ const TicketsTable: React.FC<{ tickets: ITicketsDto[] }> = ({ tickets }) => {
             });
 
             const handleClick = () => {
-              console.log(`Ticket ID: ${ticket.id_ticket} clicked`);
               router.push(`/helper/ticket-detail/${ticket.id_ticket}`);
             };
 

@@ -1,6 +1,6 @@
 "use server";
 
-import axios from 'axios';
+import axios from "axios";
 
 const axiosApiBack = axios.create({
   baseURL: process.env.API_URL, //localhost:4000
@@ -17,7 +17,7 @@ export const getNotifications = async (token: string) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.message || error.message;
-      console.warn("Error al obtener las notificaciones", errorMessage);
+
       return {
         message: "Error al obtener las notificaciones",
         errors: errorMessage,
@@ -28,4 +28,4 @@ export const getNotifications = async (token: string) => {
       errors: "Ocurrió un error inesperado",
     };
   }
-}
+};

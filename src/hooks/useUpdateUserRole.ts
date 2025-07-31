@@ -13,7 +13,6 @@ export const useUpdateUserRole = () => {
     // Invalidar la cache de usuarios después de actualizar el rol
     // Esto asegura que la lista de usuarios se actualice automáticamente
     onSuccess: () => {
-      console.log("Invalidando caché de usuarios...");
       // Invalida la consulta de usuarios para que se vuelva a obtener la lista actualizada
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },

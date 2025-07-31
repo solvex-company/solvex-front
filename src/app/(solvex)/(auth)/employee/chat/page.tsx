@@ -24,16 +24,15 @@ function EmployeeChat() {
   }, []);
 
   useEffect(() => {
-    console.log(token);
     if (!token) return;
 
     socket = io(process.env.NEXT_PUBLIC_API_URL, {
       auth: { token },
     });
 
-    socket.on("connect", () => {
-      console.log("Connected:", socket.id);
-    });
+    // socket.on("connect", () => {
+    //   console.log("Connected:", socket.id);
+    // });
 
     socket.on("onMessage", (msg: Message) => {
       setMessages((prev) => [...prev, msg]);
@@ -69,8 +68,15 @@ function EmployeeChat() {
         }}
       >
         {messages.map((msg, idx) => (
-          <p key={idx} className="border-1 border-accent rounded-lg p-1 pl-2 pr-2">
-            <strong className={msg.user.role === "empleado" ? "bg-accent" : "bg-inputBg"}>
+          <p
+            key={idx}
+            className="border-1 border-accent rounded-lg p-1 pl-2 pr-2"
+          >
+            <strong
+              className={
+                msg.user.role === "empleado" ? "bg-accent" : "bg-inputBg"
+              }
+            >
               {msg.user.name} ({msg.user.role}):
             </strong>{" "}
             {msg.content}

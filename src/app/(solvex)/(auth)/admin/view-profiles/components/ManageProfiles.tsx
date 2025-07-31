@@ -154,10 +154,6 @@ const ManageProfiles: React.FC = () => {
             popup: "swal2-popup--error",
           },
         });
-        console.error(
-          "Error al confirmar cambio de rol después del Swal:",
-          error
-        );
       }
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       Swal.fire({

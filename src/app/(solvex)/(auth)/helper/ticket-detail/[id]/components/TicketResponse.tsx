@@ -15,13 +15,17 @@ type Props = {
 };
 
 const validationSchema = Yup.object({
-  description: Yup.string().min(10, "Mínimo 10 caracteres").required("Descripcion es requerida"),
+  description: Yup.string()
+    .min(10, "Mínimo 10 caracteres")
+    .required("Descripcion es requerida"),
   status: Yup.string().required("Estado es requerido"),
 });
 
 function TicketResponse({ ticketRef, ticketId }: Props) {
   const { user, token } = useAuthContext();
-  const fullName = user?.name ? `${user.name} ${user.lastname}` : `Nombre del usuario`;
+  const fullName = user?.name
+    ? `${user.name} ${user.lastname}`
+    : `Nombre del usuario`;
   const router = useRouter();
 
   const initialValues = {
@@ -31,7 +35,10 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
     status: "",
   };
 
-  const handleOnSubmit = async (values: typeof initialValues, { resetForm }: { resetForm: () => void }) => {
+  const handleOnSubmit = async (
+    values: typeof initialValues,
+    { resetForm }: { resetForm: () => void }
+  ) => {
     try {
       // Crear el objeto de datos
       const requestData = {
@@ -42,7 +49,6 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
       };
 
       const response = await postTicketResponse(requestData, token!);
-      console.log(requestData);
 
       // Verificar si hay error del servicio (statusCode >= 400)
       if (response.statusCode && response.statusCode >= 400) {
@@ -73,7 +79,7 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
       }
     } catch (error) {
       // Log del error solo para desarrollo (opcional)
-      console.error("Error al responder el ticket:", error);
+      if (error) throw new Error("Hubo un error aqui");
 
       Swal.fire({
         title: "Error",
@@ -84,12 +90,21 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
   };
 
   return (
-    <div ref={ticketRef} className="mt-10 bg-mainBg border border-secondText rounded-xl">
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleOnSubmit}>
+    <div
+      ref={ticketRef}
+      className="mt-10 bg-mainBg border border-secondText rounded-xl"
+    >
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleOnSubmit}
+      >
         {(formik) => (
           <form onSubmit={formik.handleSubmit}>
             <section className="flex justify-between items-center py-4">
-              <h2 className="font-bold text-start text-3xl ml-4">Responder el Ticket</h2>
+              <h2 className="font-bold text-start text-3xl ml-4">
+                Responder el Ticket
+              </h2>
               <div className="flex flex-col mr-6 ">
                 <label htmlFor="date">Fecha de Respuesta</label>
                 <input
@@ -114,13 +129,17 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
                 className="border border-accent rounded-md p-2 bg-white w-[923px] h-[170px]"
               />
               {formik.touched.description && formik.errors.description && (
-                <p className="text-red-500 text-lg">{formik.errors.description}</p>
+                <p className="text-red-500 text-lg">
+                  {formik.errors.description}
+                </p>
               )}
             </div>
 
             <section className="flex justify-center  gap-4 w-[920px] pb-4 ml-4">
               <div className="flex flex-col w-full ">
-                <label htmlFor="helper">Soporte que esta respondiendo el ticket</label>
+                <label htmlFor="helper">
+                  Soporte que esta respondiendo el ticket
+                </label>
                 <input
                   type="text"
                   id="helper"
@@ -145,7 +164,9 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
                   <option value="pending">Pendiente</option>
                   <option value="Completed">Resuelto</option>
                 </select>
-                {formik.touched.status && formik.errors.status && <p className="text-red-500 text-lg">{formik.errors.status}</p>}
+                {formik.touched.status && formik.errors.status && (
+                  <p className="text-red-500 text-lg">{formik.errors.status}</p>
+                )}
               </div>
             </section>
 
@@ -153,9 +174,15 @@ function TicketResponse({ ticketRef, ticketId }: Props) {
               type="submit"
               disabled={formik.isSubmitting}
               className={`p-2 ml-4 my-4 h-12 w-[920px] text-white text-xl font-bold  rounded
-                ${formik.isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
+                ${
+                  formik.isSubmitting
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-500 hover:bg-blue-600"
+                }`}
             >
-              {formik.isSubmitting ? "Enviando Respuesta..." : "Responder Ticket"}
+              {formik.isSubmitting
+                ? "Enviando Respuesta..."
+                : "Responder Ticket"}
             </button>
           </form>
         )}

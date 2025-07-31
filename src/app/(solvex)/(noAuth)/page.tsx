@@ -76,7 +76,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="flex items-center justify-center bg-mainBg h-[527px] p-24 mb-10 gap-7">
+      <section className="flex items-center justify-center bg-mainBg h-[527px] p-24 mb-5 gap-7">
         <Image
           src={
             "https://ik.imagekit.io/SolvexCompany/hero2.png?updatedAt=1751902001380"
@@ -107,20 +107,11 @@ function Home() {
         <h1 className="text-4xl text-center text-mainText font-bold pb-3">
           Plan
         </h1>
-        <p className="text-xl pt-3">
-          Adquiriendo el plan, recibirás notificaciones instantáneas al correo
-          electrónico cuando:
+        <p className="text-xl text-center pt-3">
+          Adquiriendo el plan, podras aceder a una seccion de notificaciones en
+          la barra de navegacion que informara sobre los tickets existentes para
+          que puedas dar seguimiento y te mantengas actualizado.
         </p>
-        <ol className="list-disc pl-5 pt-3 text-lg flex flex-col gap-2 mt-2">
-          <li>Cree un ticket nuevo, para estar al tanto de sus tickets.</li>
-          <li>
-            Cuando respondan un ticket, y puede dar seguimiento rápidamente.
-          </li>
-          <li>
-            Tu rol de usuario ha sido cambiado, de empleado a soporte o
-            viceversa.
-          </li>
-        </ol>
 
         <Link href={"/login"} className="">
           <div className="flex justify-center items-center gap-10 p-10">

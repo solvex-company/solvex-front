@@ -3,7 +3,10 @@
 import { Suspense, useEffect } from "react";
 
 import { createTokenCookie } from "@/services/auth";
-import { useSearchParams, useRouter /* , usePathname */ } from "next/navigation";
+import {
+  useSearchParams,
+  useRouter /* , usePathname */,
+} from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
 
 // comoponents
@@ -45,21 +48,6 @@ function AuthCallbackContent() {
         return;
       }
     }
-
-    /* if (user) {
-      let targetDashboard = "";
-      if (user.id_role === 1) {
-        targetDashboard = "/admin/dashboard";
-      } else if (user.id_role === 2) {
-        targetDashboard = "/helper/dashboard";
-      } else if (user.id_role === 3) {
-        targetDashboard = "/employee/dashboard";
-      }
-
-      if (targetDashboard && !pathname.startsWith(targetDashboard)) {
-        router.push(targetDashboard);
-      }
-    } */
   }, [user, router, saveUserData, searchParams]);
 
   return (

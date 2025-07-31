@@ -7,7 +7,6 @@ const checkoutService = async (): Promise<payloadCheckout> => {
     const response = await AxiosApi.get("/payments/checkout");
 
     if (!response.data) {
-      console.error("No se retorno la data");
       throw new Error("El servicio de checkout no retorno data");
     }
 

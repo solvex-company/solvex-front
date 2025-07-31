@@ -22,15 +22,25 @@ const RegisterForm: React.FC = () => {
     typeId: Yup.number()
       .required("Debes seleccionar un tipo de identificación") // Campo obligatorio
       .oneOf([1, 2, 3], "Tipo de identificación no válido"),
-    email: Yup.string().email("Email inválido").required("El correo es requerido"),
+    email: Yup.string()
+      .email("Email inválido")
+      .required("El correo es requerido"),
     identification_number: Yup.string()
       .min(4, "El numero de identificación debe tener 4 numeros")
       .required("El numero de identificación es requerido"),
-    phone: Yup.string().min(4, "El numero de teléfono debe tener 4 números").required("El teléfono es requerido"),
+    phone: Yup.string()
+      .min(4, "El numero de teléfono debe tener 4 números")
+      .required("El teléfono es requerido"),
     password: Yup.string()
       .min(8, "La contraseña debe tener al menos 8 caracteres")
-      .matches(/^(?=.*[A-Z])/, "La contraseña debe contener al menos una mayúscula")
-      .matches(/^(?=.*[!@#$%^&*(),.?":{}|<>])/, "La contraseña debe contener al menos un carácter especial")
+      .matches(
+        /^(?=.*[A-Z])/,
+        "La contraseña debe contener al menos una mayúscula"
+      )
+      .matches(
+        /^(?=.*[!@#$%^&*(),.?":{}|<>])/,
+        "La contraseña debe contener al menos un carácter especial"
+      )
       .required("La contraseña es requerida"),
     password2: Yup.string()
       .required("Confirma tu contraseña")
@@ -56,7 +66,10 @@ const RegisterForm: React.FC = () => {
           try {
             const res = await postRegister(values);
 
-            if (!res.errors && res.message === "Usuario registrado correctamente") {
+            if (
+              !res.errors &&
+              res.message === "Usuario registrado correctamente"
+            ) {
               return Swal.fire({
                 icon: "success",
                 title: "Éxito",
@@ -71,8 +84,6 @@ const RegisterForm: React.FC = () => {
             }
 
             if (res.errors) {
-              console.log("1-", res.errors);
-
               if (res.statusCode === 503 || res.statusCode === 408) {
                 return Swal.fire({
                   icon: "error",
@@ -111,7 +122,7 @@ const RegisterForm: React.FC = () => {
               confirmButtonColor: "#4da6ff",
             });
           } catch (error) {
-            console.log("2-", error);
+            if (error) throw new Error("Hubo un error aqui");
             return Swal.fire({
               icon: "error",
               title: "Error inesperado",
@@ -132,7 +143,11 @@ const RegisterForm: React.FC = () => {
                 className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
                 placeholder="Nombre"
               />
-              <ErrorMessage name="name" component="div" className="error w-[380px] text-red-500 text-left" />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className="error w-[380px] text-red-500 text-left"
+              />
             </div>
 
             <div className="flex flex-col items-center">
@@ -143,29 +158,49 @@ const RegisterForm: React.FC = () => {
                 className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
                 placeholder="Apellido"
               />
-              <ErrorMessage name="lastname" component="div" className="error w-[380px] text-red-500 text-left" />
+              <ErrorMessage
+                name="lastname"
+                component="div"
+                className="error w-[380px] text-red-500 text-left"
+              />
             </div>
 
             <div className="flex flex-col items-center">
-              <label className="mt-1 w-[380px] text-sm">Tipo de Identificación</label>
-              <Field name="typeId" as="select" className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600">
+              <label className="mt-1 w-[380px] text-sm">
+                Tipo de Identificación
+              </label>
+              <Field
+                name="typeId"
+                as="select"
+                className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
+              >
                 <option value={0}>Tipo de Identificación</option>
                 <option value={1}>CC</option>
                 <option value={2}>DNI</option>
                 <option value={3}>Pasaporte</option>
               </Field>
-              <ErrorMessage name="typeId" component="div" className="error w-[380px] text-red-500 text-left" />
+              <ErrorMessage
+                name="typeId"
+                component="div"
+                className="error w-[380px] text-red-500 text-left"
+              />
             </div>
 
             <div className="flex flex-col items-center">
-              <label className="mt-1 w-[380px] text-sm">Número de Identificación</label>
+              <label className="mt-1 w-[380px] text-sm">
+                Número de Identificación
+              </label>
               <Field
                 name="identification_number"
                 type="number"
                 className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
                 placeholder="Número de Identificación"
               />
-              <ErrorMessage name="identification_number" component="div" className="error w-[380px] text-red-500 text-left" />
+              <ErrorMessage
+                name="identification_number"
+                component="div"
+                className="error w-[380px] text-red-500 text-left"
+              />
             </div>
 
             <div className="flex flex-col items-center">
@@ -176,7 +211,11 @@ const RegisterForm: React.FC = () => {
                 className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
                 placeholder="Telefono"
               />
-              <ErrorMessage name="phone" component="div" className="error w-[380px] text-red-500 text-left" />
+              <ErrorMessage
+                name="phone"
+                component="div"
+                className="error w-[380px] text-red-500 text-left"
+              />
             </div>
 
             <div className="flex flex-col items-center">
@@ -187,7 +226,11 @@ const RegisterForm: React.FC = () => {
                 className="p-1 pl-4 bg-inputBg w-[380px] h-[40px] rounded-md placeholder-gray-600"
                 placeholder="Correo Ej: ejemplo@mail.com"
               />
-              <ErrorMessage name="email" component="div" className="error w-[380px] text-red-500 text-left" />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="error w-[380px] text-red-500 text-left"
+              />
             </div>
             <div className="flex flex-col items-center">
               <label className="mt-1 w-[380px] text-sm">Contraseña</label>
@@ -206,10 +249,16 @@ const RegisterForm: React.FC = () => {
                   {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
                 </span>
               </div>
-              <ErrorMessage name="password" component="div" className="error w-[380px] text-red-500 text-left" />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="error w-[380px] text-red-500 text-left"
+              />
             </div>
             <div className="flex flex-col items-center">
-              <label className="mt-1 w-[380px] text-sm">Repetir Contraseña</label>
+              <label className="mt-1 w-[380px] text-sm">
+                Repetir Contraseña
+              </label>
               <div className="flex justify-between w-[380px] relative">
                 <Field
                   name="password2"
@@ -225,7 +274,11 @@ const RegisterForm: React.FC = () => {
                   {showPassword2 ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
                 </span>
               </div>
-              <ErrorMessage name="password2" component="div" className="error w-[380px] text-red-500 text-left" />
+              <ErrorMessage
+                name="password2"
+                component="div"
+                className="error w-[380px] text-red-500 text-left"
+              />
             </div>
 
             <div className="flex flex-col items-center">
@@ -240,7 +293,10 @@ const RegisterForm: React.FC = () => {
             <div className="flex flex-col items-center pt-4">
               <p>
                 ¿Ya tienes cuenta?{" "}
-                <Link className="text-blue-500 hover:text-blue-800" href="/login">
+                <Link
+                  className="text-blue-500 hover:text-blue-800"
+                  href="/login"
+                >
                   Inicia sesión
                 </Link>{" "}
               </p>

@@ -9,14 +9,11 @@ export const fetchEmployees = async (): Promise<UserDto[]> => {
     const response = await AxiosApi.get("/users/employees");
 
     if (!response.data) {
-      console.error("No data found");
       return [];
     }
 
     return response.data;
   } catch (error: unknown) {
-    console.log("Hubo un error al obtener los usuarios", error);
-
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.message || error.message;
 
@@ -32,15 +29,11 @@ export const fetchHelpers = async (): Promise<UserDto[]> => {
     const response = await AxiosApi.get("/users/helpers");
 
     if (!response.data) {
-      console.log("Data not found");
-
       throw new Error("No hay data retornada");
     }
 
     return response.data;
   } catch (error: unknown) {
-    console.log("error al fetchear usuarios", error);
-
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.message || error.message;
 
@@ -56,15 +49,11 @@ export const updateUserRole = async (id: string): Promise<UpdateUserDto> => {
     const response = await AxiosApi.put(`/users/changeRol/${id}`);
 
     if (!response.data) {
-      console.log("Data not found");
-
       throw new Error("No hay data retornada");
     }
 
     return response.data;
   } catch (error: unknown) {
-    console.log("error al modificar usuarios", error);
-
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.message || error.message;
 
@@ -80,15 +69,11 @@ export const fetchAllUsers = async (): Promise<UserDto[]> => {
     const response = await AxiosApi.get("/users");
 
     if (!response.data) {
-      console.log("Data not found");
-
       throw new Error("No hay data retornada");
     }
 
     return response.data;
   } catch (error: unknown) {
-    console.log("error al fetchear usuarios", error);
-
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.message || error.message;
 
@@ -104,15 +89,11 @@ export const fetchStatistics = async (): Promise<IStatisticsDto> => {
     const response = await AxiosApi.get("/tickets/report/summary");
 
     if (!response.data) {
-      console.log("Data not found");
-
       throw new Error("No hay data retornada");
     }
 
     return response.data;
   } catch (error: unknown) {
-    console.log("error al fetchear estadisticas", error);
-
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.message || error.message;
 

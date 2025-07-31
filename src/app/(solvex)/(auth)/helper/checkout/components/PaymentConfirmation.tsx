@@ -31,10 +31,8 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
       installments: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async () => {
       // esta función solo se llama si la validacion es exitosa
-
-      console.log("Formulario enviado con éxito:", values);
 
       try {
         const result = await refetch();
@@ -42,18 +40,9 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
         // si la llamada fue exitosa y tenemos la URL de pago, redirigimos
         if (result.isSuccess && result.data && result.data.paymentUrl) {
           router.push(result.data.paymentUrl);
-        } else {
-          console.error("No se recibió una URL de pago válida.");
-          alert(
-            "No se pudo obtener la URL de pago. Por favor, contacta a soporte."
-          );
         }
-      } catch (err) {
-        console.error(
-          "Error inesperado al intentar obtener la URL de pago:",
-          err
-        );
-        alert("Ocurrió un error inesperado al preparar el pago.");
+      } catch (error) {
+        if (error) throw new Error("Hubo un error aqui");
       }
     },
   });

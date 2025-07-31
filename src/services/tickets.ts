@@ -17,7 +17,7 @@ export const getAreaTicket = async (token: string) => {
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.message || error.message;
-      console.warn("Error al obtener áreas:", errorMessage);
+
       return {
         message: "Error al obtener las áreas",
         errors: errorMessage,
@@ -42,7 +42,7 @@ export const postCreateTicket = async (formData: FormData, token: string) => {
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.message || error.message;
       const statusCode = error.response?.status;
-      console.warn(`Error ${statusCode}:`, errorMessage);
+
       return {
         message: "Error al crear el ticket",
         errors: errorMessage,
@@ -68,7 +68,7 @@ export const getTicketById = async (ticketId: string, token: string) => {
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.message || error.message;
-      console.warn("Error al obtener el ticket:", errorMessage);
+
       return {
         message: "Error al obtener el ticket",
         errors: errorMessage,
@@ -82,7 +82,10 @@ export const getTicketById = async (ticketId: string, token: string) => {
 };
 
 //* PARA RESPUESTAS DE TICKETS ////////////////////////////////////////
-export const postTicketResponse = async (data: IPostTicketResponseData, token: string) => {
+export const postTicketResponse = async (
+  data: IPostTicketResponseData,
+  token: string
+) => {
   try {
     const res = await axiosApiBack.post("/tickets/resolutionTicket", data, {
       headers: {
@@ -95,7 +98,7 @@ export const postTicketResponse = async (data: IPostTicketResponseData, token: s
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.message || error.message;
       const statusCode = error.response?.status;
-      console.warn(`Error ${statusCode}:`, errorMessage);
+
       return {
         message: "Error al responder al ticket",
         errors: errorMessage,
@@ -109,18 +112,24 @@ export const postTicketResponse = async (data: IPostTicketResponseData, token: s
   }
 };
 
-export const getTicketResponseByTicketId = async (ticketId: string, token: string) => {
+export const getTicketResponseByTicketId = async (
+  ticketId: string,
+  token: string
+) => {
   try {
-    const res = await axiosApiBack.get(`/tickets/resolutionTickets/${ticketId} `, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await axiosApiBack.get(
+      `/tickets/resolutionTickets/${ticketId} `,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return res.data; // Esto debería ser el ticket directamente
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.message || error.message;
-      console.warn("Error al obtener la respuesta del ticket:", errorMessage);
+
       return {
         message: "Error al obtener la respuesta del ticket",
         errors: errorMessage,

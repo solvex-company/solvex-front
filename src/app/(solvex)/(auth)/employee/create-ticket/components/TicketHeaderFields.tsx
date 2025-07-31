@@ -9,29 +9,27 @@ import { Area } from "@/types/ITickets";
 import { useAuthContext } from "@/context/AuthContext";
 
 function TicketHeaderFields() {
-  const { values, setFieldValue, touched, errors } = useFormikContext<TicketFormValues>();
+  const { values, setFieldValue, touched, errors } =
+    useFormikContext<TicketFormValues>();
   const [areas, setAreas] = useState<Area[]>([]);
   const { token } = useAuthContext();
 
   useEffect(() => {
     const fetchAreas = async () => {
       if (!token) {
-        console.warn("Token no disponible, evitando fetchAreas");
         return;
       }
 
       try {
-        console.log("fetchAreas ejecutado");
         const areasData = await getAreaTicket(token);
 
         if (Array.isArray(areasData)) {
           setAreas(areasData);
         } else {
-          console.error(" Error al obtener áreas:", areasData?.message ?? areasData);
           setAreas([]);
         }
       } catch (error) {
-        console.error(" Error en fetchAreas:", error);
+        if (error) throw new Error("Hubo un error aqui");
         setAreas([]);
       }
     };
@@ -42,7 +40,9 @@ function TicketHeaderFields() {
   const handleAreaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedAreaId = parseInt(e.target.value);
     if (selectedAreaId) {
-      const selectedArea = areas.find((area) => area.id_area === selectedAreaId);
+      const selectedArea = areas.find(
+        (area) => area.id_area === selectedAreaId
+      );
       if (selectedArea) {
         setFieldValue("area", selectedArea);
       }
@@ -58,7 +58,11 @@ function TicketHeaderFields() {
         <select
           name="area"
           id="area"
-          value={values.area && typeof values.area === "object" ? values.area.id_area : values.area || ""}
+          value={
+            values.area && typeof values.area === "object"
+              ? values.area.id_area
+              : values.area || ""
+          }
           onChange={handleAreaChange}
           className="bg-mainBg border border-accent rounded-md p-2 h-[45px] w-full"
         >
@@ -70,7 +74,11 @@ function TicketHeaderFields() {
             </option>
           ))}
         </select>
-        <div className="min-h">{touched.area && errors.area && <p className="text-red-500 text-lg">{errors.area}</p>}</div>
+        <div className="min-h">
+          {touched.area && errors.area && (
+            <p className="text-red-500 text-lg">{errors.area}</p>
+          )}
+        </div>
       </div>
       <div className="flex flex-col w-[235px]">
         <label htmlFor="fecha">Fecha de creacion</label>

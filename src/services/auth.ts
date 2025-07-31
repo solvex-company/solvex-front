@@ -9,12 +9,10 @@ const axiosApiBack = axios.create({
 });
 
 export const postRegister = async (data: FormikValues) => {
-  console.log(data);
   try {
     const res = await axiosApiBack.post("/auth/signup", data);
 
     if (!res.data) {
-      console.log(1, res.data);
       return {
         message: "Error al registrar al usuario",
         errors: res.data,
@@ -41,7 +39,6 @@ export const postRegister = async (data: FormikValues) => {
         // 👈 Verifica si es un error de Axios
         const errorMessage = error.response?.data?.message || error.message;
         const statusCode = error.response?.status; // 👈 Obtiene el código (ej: 409)
-        console.warn(`Error ${statusCode}:`, errorMessage);
 
         return {
           message: "Error al registrar al usuario",
@@ -73,17 +70,15 @@ export async function createTokenCookie(cookie: string) {
 export const postLogin = async (data: FormikValues) => {
   try {
     const res = await axiosApiBack.post("/auth/signin", data);
-    console.log("Respuesta del servidor:", res.data);
 
     if (!res.data) {
-      console.warn("Formato de datos de inicio de sesion invalido", res.data);
       return {
         success: false,
         message: "Error al iniciar sesion",
         errors: res.data,
       };
     }
-    console.log("Respuesta del servidor:", res);
+
     await createTokenCookie(res.data);
     return {
       success: true,
@@ -108,7 +103,6 @@ export const postLogin = async (data: FormikValues) => {
         //Verifica si es un error de Axios
         const errorMessage = error.response?.data?.message || error.message;
         const statusCode = error.response?.status; //Obtiene el código (ej: 409)
-        console.warn(`Error ${statusCode}:`, errorMessage);
 
         return {
           success: false,
@@ -138,7 +132,7 @@ export const getUsersInfo = async (token: string) => {
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       const errorMessage = error.response?.data?.message || error.message;
-      console.warn("Error al obtener informacion del usuario", errorMessage);
+
       return {
         message: "Error al obtener la informacion del usuario",
         errors: errorMessage,

@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         })
       );
     } catch (error) {
-      console.error("Error al guardar datos de usuario:", error);
+      if (error) throw new Error("Hubo un error aqui");
       resetUserData();
     }
   };
@@ -105,10 +105,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           resetUserData();
         }
       } catch (error) {
-        console.error(
-          "Error al inicializar la autenticación desde localStorage:",
-          error
-        );
+        if (error) throw new Error("Hubo un error aqui");
         resetUserData();
       } finally {
         setIsLoading(false);
@@ -135,7 +132,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       (response) => response,
       (error) => {
         if (error.response && error.response.status === 401) {
-          console.warn("Requerimiento NO autorizado. Limpiando sesión.");
           resetUserData();
         }
         return Promise.reject(error);

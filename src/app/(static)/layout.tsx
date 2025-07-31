@@ -6,7 +6,7 @@ export interface ILayout {
   children: React.ReactNode;
 }
 
-export const LayoutAuth: React.FC<ILayout> = ({ children }) => {
+const LayoutAuth: React.FC<ILayout> = ({ children }) => {
   return (
     <div className="flex w-screen h-screen bg-blue-500">
       <div className="flex-[.5] flex flex-col justify-center items-center bg-blue-500">
@@ -20,9 +20,7 @@ export const LayoutAuth: React.FC<ILayout> = ({ children }) => {
           />
         </Link>
       </div>
-      <div className="flex-[.5] flex flex-col justify-center items-center rounded-l-3xl bg-white">
-        {children}
-      </div>
+      <div className="flex-[.5] flex flex-col justify-center items-center rounded-l-3xl bg-white">{children}</div>
     </div>
   );
 };

@@ -8,7 +8,7 @@ let socket: Socket;
 type Message = {
   user: {
     name: string;
-    role: string; 
+    role: string;
   };
   content: string;
 };
@@ -17,13 +17,17 @@ function EmployeeChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
 
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const token = user.token;
+  const [token, setToken] = useState<string | null>(null);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    setToken(user.token);
+  }, []);
+
   useEffect(() => {
     console.log(token);
     if (!token) return;
 
-    socket = io("http://localhost:4000", {
+    socket = io(process.env.NEXT_PUBLIC_API_URL, {
       auth: { token },
     });
 
@@ -38,7 +42,7 @@ function EmployeeChat() {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [token]);
 
   const sendMessage = () => {
     if (input.trim()) {
@@ -66,7 +70,7 @@ function EmployeeChat() {
       >
         {messages.map((msg, idx) => (
           <p key={idx} className="border-1 border-accent rounded-lg p-1 pl-2 pr-2">
-            <strong className={msg.user.role === 'empleado' ? 'bg-accent' : 'bg-inputBg' }>
+            <strong className={msg.user.role === "empleado" ? "bg-accent" : "bg-inputBg"}>
               {msg.user.name} ({msg.user.role}):
             </strong>{" "}
             {msg.content}
@@ -82,9 +86,10 @@ function EmployeeChat() {
           placeholder="Escribe un mensaje..."
           className="mt-3 mr-3 w-full h-[40px] bg-mainBg border border-accent rounded-lg p-1 pl-3 pr-3"
         />
-        <button 
+        <button
           onClick={sendMessage}
-          className="mt-3 p-1 pl-3 pr-3 w-fit h-[40px] bg-accent text-2xl text-white rounded-lg hover:bg-secondBg">
+          className="mt-3 p-1 pl-3 pr-3 w-fit h-[40px] bg-accent text-2xl text-white rounded-lg hover:bg-secondBg"
+        >
           Enviar
         </button>
       </div>
@@ -92,4 +97,4 @@ function EmployeeChat() {
   );
 }
 
-export default EmployeeChat;
+export default EmployeeChat;

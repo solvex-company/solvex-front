@@ -1,5 +1,5 @@
 import React from "react";
-import TicketDetail from "../../components/TicketDetail/TicketDetail";
+import TicketDetail from "../../../components/TicketDetail/TicketDetail";
 import { otherDetailTicketData } from "@/helpers/ticketData";
 
 function EmTicketDetail() {

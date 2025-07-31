@@ -35,7 +35,7 @@ const backend = [
       "https://ik.imagekit.io/SolvexCompany/Imagen%20de%20WhatsApp%202025-07-29%20a%20las%2023.39.32_1bcf52e2.jpg?updatedAt=1753880378975",
     name: "Diego baca",
     hobbies:
-      "Desarrollador Full Stack, amante de la tecnología y la programación, siempre explorando nuevas herramientas y lenguajes para crear soluciones innovadoras.",
+      "Desarrollador Full Stack, mi pasión por la tecnología me impulsa constantemente en el universo de la programación. Disfruto cada desafío que me permite explorar nuevas herramientas y lenguajes, siempre con el objetivo de implementar soluciones innovadoras.",
     linkedInSrc: "https://www.linkedin.com/in/franco-paganoni/",
     githubSrc: "",
   },
@@ -44,7 +44,7 @@ const backend = [
       "https://ik.imagekit.io/SolvexCompany/LuizMendez.jpg?updatedAt=1752502657004",
     name: "Luis Mendez",
     hobbies:
-      "Desarrollador Full Stack, amante de la tecnología y la programación, siempre explorando nuevas herramientas y lenguajes para crear soluciones innovadoras.",
+      "Soy un desarrollador Full Stack al que le encanta la tecnología y la programación. Siempre estoy buscando y probando cosas nuevas, ya sean herramientas o lenguajes, para crear soluciones innovadoras que realmente funcionen.",
     linkedInSrc: "https://www.linkedin.com/in/franco-paganoni/",
     githubSrc: "",
   },

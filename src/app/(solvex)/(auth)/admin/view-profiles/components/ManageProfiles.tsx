@@ -80,7 +80,13 @@ const ManageProfiles: React.FC = () => {
 
   const { mutate: changeUserRole, isPending: isUpdating } = useUpdateUserRole();
 
-  if (isLoadingusers) return <Loader />;
+  if (isLoadingusers)
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center">
+        <p className="text-xl">Cargando usuarios...</p>
+        <Loader />
+      </div>
+    );
   if (errorUsers) return <div>Error al cargar usuarios</div>;
 
   // crear una funcion generica

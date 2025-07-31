@@ -11,10 +11,10 @@ export const approvedPaymentService =
     try {
       const response = await AxiosApi.get("/payments/is-approved");
 
-      if (response.data) {
-        console.log("Error, no llego la data");
-        throw new Error("Error al fetchear la data");
-      }
+      // if (response.data) {
+      //   console.log("Error, no llego la data");
+      //   throw new Error("Error al fetchear la data");
+      // }
 
       return response.data;
     } catch (error: unknown) {

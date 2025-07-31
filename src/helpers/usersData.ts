@@ -6,7 +6,7 @@ export const adminData = {
   //////////////////////////////////
   password: "",
   //////////////////////////////////
-  license: "Basico",
+  license: "Premium",
 };
 
 export const helperData = {};

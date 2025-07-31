@@ -7,7 +7,7 @@ function PasarelaPagos() {
       <h1 className="text-4xl text-center text-mainText font-bold pb-3">
         Plan
       </h1>
-      <p className="text-xl pt-3">
+      <p className="text-xl pt-3 text-center">
         Al adquirir el plan premium, desbloquearás acceso exclusivo a un panel
         de notificaciones integrado en la barra de navegación, diseñado para
         mantenerte del desempeño de tus colaboradores. Todo organizado de manera

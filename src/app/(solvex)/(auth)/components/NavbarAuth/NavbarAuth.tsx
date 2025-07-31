@@ -6,21 +6,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 // import { useEffect } from "react";
-import useApprovedPayment from "@/hooks/useApprovedPayment";
+/* import useApprovedPayment from "@/hooks/useApprovedPayment"; */
 
 import Loader from "@/app/components/Loader/Loader";
 
 const NavbarAuth = () => {
   const router = useRouter();
   const { user, resetUserData, isLoading } = useAuthContext();
-  const { data } = useApprovedPayment();
+  /* const { data } = useApprovedPayment(); */
 
-  const approvedPayment = data?.paymentApproved;
+  const approvedPayment = user?.paymentApproved;
 
   const isAdmin = user?.id_role === 1;
   const isHelper = user?.id_role === 2;
   const isEmployee = user?.id_role === 3;
-  const license = true;
+  //const license = false;
 
   const logout = async () => {
     resetUserData();
@@ -181,7 +181,7 @@ const NavbarAuth = () => {
       </div>
 
       <div className="flex flex-col mb-6">
-        {isHelper && license && (
+        {isHelper && !approvedPayment && (
           <Link
             href="/helper/pay-plan"
             className="flex flex-col m-1 ml-3 mr-3 h-[80px] justify-center text-center text-[24px] rounded-lg bg-secondText text-mainBg hover:text-mainBg hover:bg-accent"

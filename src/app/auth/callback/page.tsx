@@ -2,12 +2,14 @@
 
 import { useEffect } from "react";
 
+
 import { createTokenCookie } from "@/services/auth";
 import { useSearchParams, useRouter/* , usePathname */ } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
 
 // comoponents
 import Loader from "@/app/components/Loader/Loader";
+
 
 export default function AuthCallbackPage() {
   const searchParams = useSearchParams();

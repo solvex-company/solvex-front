@@ -1,10 +1,10 @@
-import { User } from "./index";
+import { IUser } from "./index";
 
 export default interface IAuthContext {
-  user: User | null;
+  user: IUser | null;
   token: string | null;
-  login: (user: User, token: string) => void;
+  login: (user: IUser, token: string) => void;
   logout: () => void;
   isLoggedIn: boolean;
-  setUser: (user: User | null) => void;
+  setUser: (user: IUser | null) => void;
 }

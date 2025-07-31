@@ -1,3 +1,4 @@
+
 "use client";
 
 //React
@@ -94,6 +95,7 @@ function HelTicketDetail({ params }: Props) {
           </div>
         )}
       </div>
+
     </div>
   );
 }

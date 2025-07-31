@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useState, use, useRef } from "react";
@@ -96,6 +97,7 @@ function EmTicketDetail({ params }: Props) {
             <p className="text-secondText text-xl">Espera a que algun soporte revise tu caso</p>
           </div>
         )}
+
       </div>
     </div>
   );

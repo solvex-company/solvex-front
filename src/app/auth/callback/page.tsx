@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, Suspense } from "react";
+import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
 
-function AuthCallbackPage() {
+export default function AuthCallbackPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -35,12 +35,4 @@ function AuthCallbackPage() {
   }, [user, router, saveUserData, searchParams]);
 
   return <div>Procesando autenticación...</div>;
-}
-
-export default function Page() {
-  return (
-    <Suspense fallback={<div>Procesando autenticación...</div>}>
-      <AuthCallbackPage />
-    </Suspense>
-  );
 }

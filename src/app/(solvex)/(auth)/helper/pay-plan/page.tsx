@@ -8,20 +8,13 @@ function PasarelaPagos() {
         Plan
       </h1>
       <p className="text-xl pt-3">
-        Adquiriendo este plan, recibirás notificaciones instantáneas al correo
-        electrónico cuando:
+        Al adquirir el plan premium, desbloquearás acceso exclusivo a un panel
+        de notificaciones integrado en la barra de navegación, diseñado para
+        mantenerte del desempeño de tus colaboradores. Todo organizado de manera
+        intuitiva para que estés siempre informado.
       </p>
-      <ol className="list-disc pl-5 pt-3 text-lg flex flex-col gap-2 mt-2">
-        <li>Cree un ticket nuevo, para estar al tanto de sus tickets.</li>
-        <li>
-          Cuando respondan un ticket, y puede dar seguimiento rápidamente.
-        </li>
-        <li>
-          Tu rol de usuario ha sido cambiado, de empleado a soporte o viceversa.
-        </li>
-      </ol>
 
-      <Link href={"/employee/checkout"}>
+      <Link href={"/helper/checkout"}>
         <div className="flex justify-between items-center gap-10 p-10">
           <div className="flex flex-col justify-center items-center w-[300px] h-[200px] border border-accent border-t-[20px] rounded-xl ">
             <h3 className="text-4xl font-bold text-mainText pb-8">Premium</h3>

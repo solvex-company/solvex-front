@@ -18,8 +18,6 @@ export const approvedPaymentService =
 
       return response.data;
     } catch (error: unknown) {
-      console.log("error de tipo: ", error);
-
       if (axios.isAxiosError(error)) {
         const errorMessage = error.response?.data?.message || error.message;
 

@@ -23,8 +23,6 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const token = (await cookies()).get("token")?.value;
 
-  console.log("Middleware ejecutándose en:", pathname);
-
   // Verificar si es una ruta pública
   const isPublicRoute = PUBLIC_ROUTES.some((route) => {
     if (route === "/") {
@@ -89,7 +87,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   } catch (error) {
     // Token inválido
-    console.warn("Token inválido:", error);
+    if (error)
+      throw new Error(
+        `hubo un error aqui: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
 
     // Si está en ruta pública, permitir acceso (eliminando cookie inválida sería ideal)
     if (isPublicRoute) {

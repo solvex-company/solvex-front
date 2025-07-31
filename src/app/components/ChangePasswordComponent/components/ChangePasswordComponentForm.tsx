@@ -115,7 +115,6 @@ const ChangePasswordComponentForm: React.FC = () => {
     }
 
     if (!user?.id_user) {
-      console.error("No se encontró el ID del usuario");
       return;
     }
 

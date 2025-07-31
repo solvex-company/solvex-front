@@ -1,17 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
-
+import { Suspense, useEffect } from "react";
 
 import { createTokenCookie } from "@/services/auth";
-import { useSearchParams, useRouter/* , usePathname */ } from "next/navigation";
+import { useSearchParams, useRouter /* , usePathname */ } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
 
 // comoponents
 import Loader from "@/app/components/Loader/Loader";
 
-
-export default function AuthCallbackPage() {
+function AuthCallbackContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   /* const pathname = usePathname(); // Get the current pathname */
@@ -28,7 +26,7 @@ export default function AuthCallbackPage() {
       }, 2000);
       const createCookie = async () => {
         await createTokenCookie(token);
-      }
+      };
 
       createCookie();
 
@@ -62,12 +60,27 @@ export default function AuthCallbackPage() {
         router.push(targetDashboard);
       }
     } */
-  }, [user, router]);
+  }, [user, router, saveUserData, searchParams]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-full gap-3">
       <h2 className="text-xl">Procesando autenticación...</h2>
       <Loader />
     </div>
+  );
+}
+
+export default function AuthCallbackPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex flex-col items-center justify-center h-screen w-full gap-3">
+          <h2 className="text-xl">Cargando...</h2>
+          <Loader />
+        </div>
+      }
+    >
+      <AuthCallbackContent />
+    </Suspense>
   );
 }

@@ -1,13 +1,13 @@
-import { NextResponse, type NextRequest } from 'next/server';
-import { cookies } from 'next/headers';
+import { NextResponse, type NextRequest } from "next/server";
+import { cookies } from "next/headers";
 import { jwtDecode } from "jwt-decode";
 import { JwtPayload } from "jwt-decode";
 
 // Configuración de rutas
-const PUBLIC_ROUTES = ['/login', '/register', '/about', '/']; 
-const ADMIN_ROUTES = ['/admin']; 
-const HELPER_ROUTES = ['/helper']; 
-const EMPLOYEE_ROUTES = ['/employee']; 
+const PUBLIC_ROUTES = ["/login", "/register", "/about", "/"];
+const ADMIN_ROUTES = ["/admin"];
+const HELPER_ROUTES = ["/helper"];
+const EMPLOYEE_ROUTES = ["/employee"];
 
 export interface CustomJwtPayload extends JwtPayload {
   id_role: number;
@@ -16,19 +16,19 @@ export interface CustomJwtPayload extends JwtPayload {
 export enum UserRole {
   ADMIN = 1,
   HELPER = 2,
-  EMPLOYEE = 3
+  EMPLOYEE = 3,
 }
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  const token = (await cookies()).get('token')?.value;
+  const token = (await cookies()).get("token")?.value;
 
-  console.log('Middleware ejecutándose en:', pathname);
+  console.log("Middleware ejecutándose en:", pathname);
 
   // Verificar si es una ruta pública
-  const isPublicRoute = PUBLIC_ROUTES.some(route => {
-    if (route === '/') {
-      return pathname === '/';
+  const isPublicRoute = PUBLIC_ROUTES.some((route) => {
+    if (route === "/") {
+      return pathname === "/";
     }
     return pathname.startsWith(route);
   });
@@ -40,7 +40,7 @@ export async function middleware(request: NextRequest) {
       return NextResponse.next();
     }
     // Si no es ruta pública, redirigir a login
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   // Si hay token, decodificarlo
@@ -50,12 +50,12 @@ export async function middleware(request: NextRequest) {
 
     // Definir el dashboard correcto para cada rol
     const roleDashboards = {
-      [UserRole.ADMIN]: '/admin/dashboard',
-      [UserRole.HELPER]: '/helper/dashboard',
-      [UserRole.EMPLOYEE]: '/employee/dashboard'
+      [UserRole.ADMIN]: "/admin/dashboard",
+      [UserRole.HELPER]: "/helper/dashboard",
+      [UserRole.EMPLOYEE]: "/employee/dashboard",
     };
 
-    const userDashboard = roleDashboards[userRole];
+    const userDashboard = roleDashboards[userRole as UserRole];
 
     // Si está en una ruta pública y tiene token válido
     if (isPublicRoute) {
@@ -67,38 +67,37 @@ export async function middleware(request: NextRequest) {
     }
 
     // Verificar acceso a rutas protegidas por rol
-    if (ADMIN_ROUTES.some(route => pathname.startsWith(route))) {
+    if (ADMIN_ROUTES.some((route) => pathname.startsWith(route))) {
       if (userRole !== UserRole.ADMIN) {
-        return NextResponse.redirect(new URL('/unauthorized', request.url));
+        return NextResponse.redirect(new URL("/unauthorized", request.url));
       }
     }
-    
-    if (HELPER_ROUTES.some(route => pathname.startsWith(route))) {
+
+    if (HELPER_ROUTES.some((route) => pathname.startsWith(route))) {
       if (userRole !== UserRole.HELPER) {
-        return NextResponse.redirect(new URL('/unauthorized', request.url));
+        return NextResponse.redirect(new URL("/unauthorized", request.url));
       }
     }
-    
-    if (EMPLOYEE_ROUTES.some(route => pathname.startsWith(route))) {
+
+    if (EMPLOYEE_ROUTES.some((route) => pathname.startsWith(route))) {
       if (userRole !== UserRole.EMPLOYEE) {
-        return NextResponse.redirect(new URL('/unauthorized', request.url));
+        return NextResponse.redirect(new URL("/unauthorized", request.url));
       }
     }
 
     // Si llegó hasta aquí, tiene acceso
     return NextResponse.next();
-
   } catch (error) {
     // Token inválido
-    console.warn('Token inválido:', error);
-    
+    console.warn("Token inválido:", error);
+
     // Si está en ruta pública, permitir acceso (eliminando cookie inválida sería ideal)
     if (isPublicRoute) {
       return NextResponse.next();
     }
-    
+
     // Si no es ruta pública, redirigir a login
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 }
 
@@ -112,6 +111,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api/|_next/static|_next/image|favicon.ico|auth/callback).*)',
+    "/((?!api/|_next/static|_next/image|favicon.ico|auth/callback).*)",
   ],
 };

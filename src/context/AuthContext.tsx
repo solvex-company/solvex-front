@@ -6,10 +6,12 @@ import { jwtDecode } from "jwt-decode";
 import { createContext, useContext, useEffect, useState } from "react";
 
 export interface User {
+  id_user: string;
   email: string;
   id_role: number;
-  name?: string;
-  lastname?: string;
+  name: string;
+  lastname: string;
+  paymentApproved: boolean;
   phone?: string;
   identification_number?: string;
 }
@@ -21,9 +23,10 @@ type SaveUserPayload = {
 
 type AuthContextType = {
   //States
-  user?: User | null;
-  token?: string | null;
-  isAuth: boolean | null;
+  user: User | null;
+  token: string | null;
+  isAuth: boolean;
+  isLoading: boolean;
   //Actions
   saveUserData: (data: SaveUserPayload) => void;
   resetUserData: () => void;
@@ -36,33 +39,43 @@ const USER_LOCAL_KEY = "user";
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [isAuth, setIsAuth] = useState<AuthContextType["isAuth"]>(null);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const saveUserData = async (data: SaveUserPayload) => {
-    setToken(data.token);
-    setIsAuth(data.login);
+    try {
+      setToken(data.token);
+      setIsAuth(data.login);
 
-    const payload = await getUsersInfo(data.token);
-    const payload2 = jwtDecode<User>(data.token);
+      const decodedPayload = jwtDecode<User>(data.token);
 
-    const userData: User = {
-      email: payload2.email,
-      id_role: payload2.id_role,
-      name: payload.name,
-      lastname: payload.lastname,
-      phone: payload.phone,
-      identification_number: payload.identification_number,
-    };
+      const fullUserInfo = await getUsersInfo(data.token);
 
-    setUser(userData);
-    localStorage.setItem(
-      USER_LOCAL_KEY,
-      JSON.stringify({
-        token: data.token,
-        login: data.login,
-        user: userData,
-      })
-    );
+      const userData: User = {
+        id_user: fullUserInfo.id_user,
+        email: decodedPayload.email,
+        id_role: decodedPayload.id_role,
+        name: fullUserInfo.name,
+        lastname: fullUserInfo.lastname,
+        paymentApproved: decodedPayload.paymentApproved,
+        phone: fullUserInfo.phone,
+        identification_number: fullUserInfo.identification_number,
+      };
+
+      setUser(userData);
+
+      localStorage.setItem(
+        USER_LOCAL_KEY,
+        JSON.stringify({
+          token: data.token,
+          isAuth: data.login,
+          user: userData,
+        })
+      );
+    } catch (error) {
+      console.error("Error al guardar datos de usuario:", error);
+      resetUserData();
+    }
   };
 
   const resetUserData = () => {
@@ -73,28 +86,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    const storage = JSON.parse(localStorage.getItem(USER_LOCAL_KEY) || "{}");
+    const initializeAuth = async () => {
+      try {
+        const storedAuthData = JSON.parse(
+          localStorage.getItem(USER_LOCAL_KEY) || "{}"
+        );
 
-    if (storage === undefined || !Object.keys(storage)?.length) {
-      setIsAuth(false);
-      return;
-    }
+        if (
+          storedAuthData &&
+          storedAuthData.token &&
+          storedAuthData.user &&
+          storedAuthData.isAuth
+        ) {
+          setToken(storedAuthData.token);
+          setUser(storedAuthData.user);
+          setIsAuth(storedAuthData.isAuth);
+        } else {
+          resetUserData();
+        }
+      } catch (error) {
+        console.error(
+          "Error al inicializar la autenticación desde localStorage:",
+          error
+        );
+        resetUserData();
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    if (storage.token) {
-      setToken(storage.token);
-      const payload = jwtDecode<User>(storage.token);
-      setUser(payload); // Ajusta la interfaz si es necesario
-    }
-
-    const storageType: Storage = storage;
-    setUser(storage.user);
-    setToken(storageType?.token);
-    setIsAuth(storage?.login);
+    initializeAuth();
   }, []);
 
-  // configuracion de interceptor AXIOS
-  // añade el token de autorizacion a cada solicitud
-  // interceptor de solicitud
   useEffect(() => {
     const requestInterceptor = AxiosApi.interceptors.request.use(
       (config) => {
@@ -108,26 +131,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     );
 
-    // interceptor de respuesta
-    // para manejar errores globales, ej: token expirados
     const responseInterceptor = AxiosApi.interceptors.response.use(
       (response) => response,
-
-      // Si la API nos devuelve un 401 - no autorizado
       (error) => {
         if (error.response && error.response.status === 401) {
-          console.warn("Requerimiento NO autorizado.");
-          // limpiar el estado de autenticacion
+          console.warn("Requerimiento NO autorizado. Limpiando sesión.");
           resetUserData();
         }
-        // rechazar la promesa para propagar el error
         return Promise.reject(error);
       }
     );
 
-    // función de limpieza:
-    // muy importante para eliminar los interceptores cuando el componente se desmonte
-    // o cuando el token cambie, para evitar que se dupliquen o usen un token obsoleto.
     return () => {
       AxiosApi.interceptors.request.eject(requestInterceptor);
       AxiosApi.interceptors.response.eject(responseInterceptor);
@@ -140,6 +154,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         user,
         token,
         isAuth,
+        isLoading,
         saveUserData,
         resetUserData,
       }}

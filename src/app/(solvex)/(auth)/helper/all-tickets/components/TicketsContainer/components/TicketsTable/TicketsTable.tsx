@@ -7,7 +7,14 @@ import { es } from "date-fns/locale";
 // Dto
 import { ITicketsDto } from "@/dto/ticketsDto";
 
+import { useRouter } from "next/navigation";
+
 const TicketsTable: React.FC<{ tickets: ITicketsDto[] }> = ({ tickets }) => {
+  const router = useRouter();
+
+  // Filtrar tickets que NO estén resueltos
+  const filteredTickets = tickets.filter((ticket) => ticket.id_status.name !== "Completed");
+
   return (
     <div>
       <table className="flex w-full flex-col h-max gap-2 mt-5 table-fixed">
@@ -20,7 +27,7 @@ const TicketsTable: React.FC<{ tickets: ITicketsDto[] }> = ({ tickets }) => {
           </tr>
         </thead>
         <tbody className="flex flex-col gap-3">
-          {tickets.map((ticket) => {
+          {filteredTickets.map((ticket) => {
             // Transformar el obj a un js nativo
             const dateObject = parseISO(ticket.creation_date);
             const formattedData = format(dateObject, "dd-MM-yyyy HH:mm", {
@@ -29,6 +36,7 @@ const TicketsTable: React.FC<{ tickets: ITicketsDto[] }> = ({ tickets }) => {
 
             const handleClick = () => {
               console.log(`Ticket ID: ${ticket.id_ticket} clicked`);
+              router.push(`/helper/ticket-detail/${ticket.id_ticket}`);
             };
 
             return (
@@ -38,7 +46,7 @@ const TicketsTable: React.FC<{ tickets: ITicketsDto[] }> = ({ tickets }) => {
                 onClick={handleClick}
               >
                 <td className="w-1/6">COD-{ticket.id_ticket}</td>
-                <td className="w-2/6">{ticket.title}</td>
+                <td className="w-2/6 truncate">{ticket.title}</td>
                 <td className="w-2/6">{formattedData}Hs</td>
                 <td className="w-1/6">
                   {ticket.id_empleado.name} {ticket.id_empleado.lastname}

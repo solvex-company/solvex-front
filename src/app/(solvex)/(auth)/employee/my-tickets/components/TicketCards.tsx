@@ -7,26 +7,38 @@ import Loader from "@/app/components/Loader/Loader";
 import useTickets from "@/hooks/useTickets";
 import { useAuthContext } from "@/context/AuthContext";
 
-// import Link from "next/link";
+// services
 import React from "react";
 import { format, parseISO } from "date-fns";
 import { es } from "date-fns/locale";
+import { useRouter } from "next/navigation";
 
 function TicketCards() {
   const { user } = useAuthContext();
   const { data: tickets, isLoading, error } = useTickets();
+  const router = useRouter();
 
   const filteredTickets = tickets?.filter(
     (ticket) =>
       ticket.id_empleado.identification_number === user?.identification_number
   );
 
-  if (isLoading) return <Loader />;
+  if (isLoading)
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center">
+        <p>Cargando tickets...</p>
+        <Loader />
+      </div>
+    );
 
   if (error) return <div>¡Hubo un error al cargar los tickets!</div>;
 
   if (!filteredTickets || filteredTickets.length === 0) {
-    return <div>¡No hay tickets para mostrar!</div>;
+    return (
+      <div className="w-full h-60 flex flex-col items-center justify-center">
+        <p className="text-xl">¡No hay tickets para mostrar!</p>
+      </div>
+    );
   }
 
   // Función para asignar color según estado
@@ -34,10 +46,17 @@ function TicketCards() {
     switch (estado) {
       case "pending":
         return "border-pending";
-      case "En proceso":
-        return "border-process";
-      case "Resuelto":
+      case "Completed":
         return "border-resolved";
+    }
+  };
+
+  const translateStatus = (statusName: string) => {
+    switch (statusName) {
+      case "pending":
+        return "PENDIENTE";
+      case "Completed":
+        return "RESUELTO";
     }
   };
 
@@ -45,12 +64,14 @@ function TicketCards() {
     <div className="grid grid-cols-3 gap-5 pt-5 cursor-pointer">
       {filteredTickets.map((ticket, index) => (
         <div
-          onClick={() => console.log(`Ticket ID: ${ticket.id_ticket} clicked`)}
           key={index}
+          onClick={() =>
+            router.push(`/employee/ticket-detail/${ticket.id_ticket}`)
+          }
           className={`flex flex-col justify-between items-center w-[300px] h-[200px] border border-l-[20px] rounded-md p-5 gap-5 
             ${getBorderColor(ticket.id_status.name)}`}
         >
-          <h2 className="text-xl text-center font-bold underline">
+          <h2 className="text-xl text-center truncate font-bold underline w-full">
             {ticket.title}
           </h2>
           <p className="text-xl">
@@ -61,10 +82,9 @@ function TicketCards() {
           </p>
           <p className="text-xl">
             <strong>Estado: </strong>
-            {ticket.id_status.name}
+            {translateStatus(ticket.id_status.name)}
           </p>
         </div>
-        // </Link>
       ))}
     </div>
   );

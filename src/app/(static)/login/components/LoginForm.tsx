@@ -8,10 +8,12 @@ import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import { useAuthContext } from "@/context/AuthContext";
+import { useAuthContext, User } from "@/context/AuthContext";
 /* import usePublic from "@/hooks/usePublic"; */
 import Link from "next/link";
 import GoogleLoginButton from "../../register/components/GoogleLoginButton";
+import { jwtDecode } from "jwt-decode";
+/* import { NextResponse } from "next/server"; */
 
 const LoginForm: React.FC = () => {
   /* usePublic(); */
@@ -47,7 +49,17 @@ const LoginForm: React.FC = () => {
           const login = success;
           const token = data;
           saveUserData({ token, login });
-          router.push("/admin/dashboard");
+          const decoded = jwtDecode<User>(token);
+          const userRole = decoded.id_role;
+          if (userRole) {
+            if (userRole === 1) {
+              router.push("/admin/dashboard");
+            } else if (userRole === 2) {
+              router.push("/helper/dashboard");
+            } else if (userRole === 3) {
+              router.push("/employee/dashboard");
+            }
+          }
         } else {
           Swal.fire({
             icon: "error",

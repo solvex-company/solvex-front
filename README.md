@@ -4,11 +4,15 @@ Repositorio del Front del proyecto final.
 
 ---
 
-### Tecnologias a utilizar (de momento)
+### Tecnologías utilizadas:
 
-- Next
+- Next.js
 - TypeScript
 - Talwind CSS
+
+### 🔗 **Enlaces importantes:**
+- 🌐 Deploy en Vercel: https://solvex-front.vercel.app/
+- 🎨 Diseño en Figma: https://www.figma.com/design/zUdYjVJlQNGNe46GoGxf5r/Dise%C3%B1o-de--P%C3%A1gina-Solvex-Company?node-id=0-1&t=Uxp6O2WL915ZVqzZ-1
 
 ### Rutas de Git Flow
 
